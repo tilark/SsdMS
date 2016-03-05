@@ -13,6 +13,7 @@ namespace SsdMS.Models
     // 可以通过将更多属性添加到用户类来添加用户的用户数据，请访问 http://go.microsoft.com/fwlink/?LinkID=317594 了解详细信息。
     public class ApplicationUser : IdentityUser
     {
+        public virtual InfoUsers InfoUser { get; set; } 
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {
             // 请注意，authenticationType 必须与 CookieAuthenticationOptions.AuthenticationType 中定义的相应项匹配
@@ -30,7 +31,7 @@ namespace SsdMS.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("SsdMSConnection", throwIfV1Schema: false)
         {
         }
 
