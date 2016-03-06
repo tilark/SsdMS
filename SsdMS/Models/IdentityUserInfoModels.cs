@@ -6,55 +6,64 @@ using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 namespace SsdMS.Models
 {
-    public class InfoUsers
+    public class BaseTimeStamp
+    {
+        [Timestamp]
+        public Byte[] TimeStamp { get; set; }
+    }
+    
+    public class InfoUser : BaseTimeStamp
     {
         [Key]
         [Display(Name = "用户编号")]
-        public uint UserId { get; set; }
+        [ScaffoldColumn(false)]
+        public Int64 UserId { get; set; }
         [Display(Name = "工号")]
         public string EmployeeNo { get; set; }
          [Display(Name = "姓名")]
         public string UserName { get; set; }
          [Display(Name = "出生日期")]
         public DateTime BirthDate { get; set; }
-         [MaxLength(4), Display(Name = "性别")]
+         [MaxLength(20), Display(Name = "性别")]
         public string Sex {get; set;}
-       [MaxLength(11), Display(Name = "工作电话")]
+       [MaxLength(30), Display(Name = "工作电话")]
         public string Phone1 { get; set; }
-        [MaxLength(11), Display(Name = "住宅电话")]
+        [MaxLength(30), Display(Name = "住宅电话")]
         public string Phone2 { get; set; }
-        [MaxLength(11), Display(Name = "电话3")]
+        [MaxLength(30), Display(Name = "电话3")]
         public string Phone3 { get; set; }
-        [MaxLength(11), Display(Name = "电话4")]
+        [MaxLength(30), Display(Name = "电话4")]
         public string Phone4 { get; set; }
-        [MaxLength(11), Display(Name = "电话5")]
+        [MaxLength(30), Display(Name = "电话5")]
         public string Phone5 { get; set; }
         [ Display(Name = "邮箱")]
         public string Email { get; set; }
-        public uint DepartDutyID { get; set; }
-        public uint ProfessionID { get; set; }
+        public Int64 DepartDutyID { get; set; }
+        public Int64 ProfessionID { get; set; }
         public virtual ICollection<DepartDuty> DepartDuties { get; set; }
-        public virtual Professions Profession { get; set; }
+        public virtual Profession Profession { get; set; }
 
 
     }
-    public class DepartDuty
+    public class DepartDuty : BaseTimeStamp
     {
         [Key]
         [Display(Name = "科室职务编号")]
-        public uint DepartDutyID { get; set; }
-        public uint DepartmentID { get; set; }
+        [ScaffoldColumn(false)]
+        public Int64 DepartDutyID { get; set; }
+        public Int64 DepartmentID { get; set; }
       
-        public uint DutyID { get; set; }
-        public virtual Departments Department { get; set; }
-        public virtual Duties Duty { get; set; }
+        public Int64 DutyID { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual Duty Duty { get; set; }
 
     }
-    public class Departments
+    public class Department : BaseTimeStamp
     {
         [Key]
         [Display(Name = "科室编号")]
-        public uint DepartmentID { get; set; }
+        [ScaffoldColumn(false)]
+        public Int64 DepartmentID { get; set; }
         [Display(Name = "科室名称")]
         public string DepartmentName { get; set; }
         [Display(Name = "科室电话号码1")]
@@ -65,24 +74,26 @@ namespace SsdMS.Models
         public string DepartmentPhone3 { get; set; }
         [Display(Name = "科室电话号码4")]
         public string DepartmentPhone4 { get; set; }
-         [MaxLength(30), Display(Name = "科室描述")]
+         [Display(Name = "科室描述")]
         public string DepartmentDescrip { get; set; }
 
     }
-    public class Duties
+    public class Duty : BaseTimeStamp
     {
         [Key]
         [Display(Name = "职务编号")]
-        public uint DutyID { get; set; }
-         [Display(Name = "职务")]
+        [ScaffoldColumn(false)]
+        public Int64 DutyID { get; set; }
+         [Display(Name = "职务"), MaxLength(50)]
         public string DutyName { get; set; }
 
     }
-    public class Professions
+    public class Profession : BaseTimeStamp
     {
         [Key]
         [Display(Name = "职称编号")]
-        public uint ProfessionID { get; set; }
+        [ScaffoldColumn(false)]
+        public Int64 ProfessionID { get; set; }
         [Display(Name = "职称")]
         public string ProfessionName { get; set; }
     }

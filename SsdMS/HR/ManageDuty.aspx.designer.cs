@@ -7,18 +7,27 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace SsdMS {
+namespace SsdMS.HR {
     
     
-    public partial class SiteMaster {
+    public partial class ManageDuty {
         
         /// <summary>
-        /// MainContent 控件。
+        /// lblErrorMessage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
+        
+        /// <summary>
+        /// lvDuty 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView lvDuty;
     }
 }

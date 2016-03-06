@@ -170,6 +170,7 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Admin\ManageRoles.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -179,6 +180,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Admin\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="HR\ManageDepartment.aspx" />
+    <Content Include="HR\ManageDuty.aspx" />
+    <Content Include="HR\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -333,6 +342,25 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\ManageRoles.aspx.cs">
+      <DependentUpon>ManageRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageRoles.aspx.designer.cs">
+      <DependentUpon>ManageRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603050322318_AddBasicData.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603050322318_AddBasicData.Designer.cs">
+      <DependentUpon>201603050322318_AddBasicData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603050401258_UpdateDataSize.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603050401258_UpdateDataSize.Designer.cs">
+      <DependentUpon>201603050401258_UpdateDataSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603050421347_AddTimeStamp.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603050421347_AddTimeStamp.Designer.cs">
+      <DependentUpon>201603050421347_AddTimeStamp.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -362,6 +390,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HR\ManageDepartment.aspx.cs">
+      <DependentUpon>ManageDepartment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageDepartment.aspx.designer.cs">
+      <DependentUpon>ManageDepartment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR\ManageDuty.aspx.cs">
+      <DependentUpon>ManageDuty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageDuty.aspx.designer.cs">
+      <DependentUpon>ManageDuty.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\InfoUserActions.cs" />
+    <Compile Include="Logic\RoleActions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IdentityUserInfoModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -390,6 +434,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603050322318_AddBasicData.resx">
+      <DependentUpon>201603050322318_AddBasicData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603050401258_UpdateDataSize.resx">
+      <DependentUpon>201603050401258_UpdateDataSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603050421347_AddTimeStamp.resx">
+      <DependentUpon>201603050421347_AddTimeStamp.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
