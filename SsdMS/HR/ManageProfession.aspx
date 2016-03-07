@@ -10,7 +10,7 @@
                     <LayoutTemplate>
                             <table class="table table-hover">
                             <tr>
-                                <th>职务</th>
+                                <th>职称</th>
                                 <th>操作</th>
                             </tr>  
                         

@@ -18,7 +18,7 @@ namespace SsdMS.Models
         [Display(Name = "用户编号")]
         [ScaffoldColumn(false)]
         public Int64 UserId { get; set; }
-        [Display(Name = "工号")]
+        [MaxLength(20), Display(Name = "工号")]
         public string EmployeeNo { get; set; }
          [Display(Name = "姓名")]
         public string UserName { get; set; }
@@ -36,7 +36,7 @@ namespace SsdMS.Models
         public string Phone4 { get; set; }
         [MaxLength(30), Display(Name = "电话5")]
         public string Phone5 { get; set; }
-        [ Display(Name = "邮箱")]
+        [MaxLength(100), Display(Name = "邮箱")]
         public string Email { get; set; }
         public Int64 DepartDutyID { get; set; }
         public Int64 ProfessionID { get; set; }
@@ -64,15 +64,15 @@ namespace SsdMS.Models
         [Display(Name = "科室编号")]
         [ScaffoldColumn(false)]
         public Int64 DepartmentID { get; set; }
-        [Display(Name = "科室名称")]
+        [MaxLength(50), Display(Name = "科室名称")]
         public string DepartmentName { get; set; }
-        [Display(Name = "科室电话号码1")]
+        [MaxLength(30), Display(Name = "科室电话号码1")]
         public string DepartmentPhone1 { get; set; }
-        [Display(Name = "科室电话号码2")]
+        [MaxLength(30), Display(Name = "科室电话号码2")]
         public string DepartmentPhone2 { get; set; }
-        [Display(Name = "科室电话号码3")]
+        [MaxLength(30), Display(Name = "科室电话号码3")]
         public string DepartmentPhone3 { get; set; }
-        [Display(Name = "科室电话号码4")]
+        [MaxLength(30), Display(Name = "科室电话号码4")]
         public string DepartmentPhone4 { get; set; }
          [Display(Name = "科室描述")]
         public string DepartmentDescrip { get; set; }
@@ -94,7 +94,7 @@ namespace SsdMS.Models
         [Display(Name = "职称编号")]
         [ScaffoldColumn(false)]
         public Int64 ProfessionID { get; set; }
-        [Display(Name = "职称")]
+        [Display(Name = "职称"), MaxLength(50)]
         public string ProfessionName { get; set; }
     }
 }

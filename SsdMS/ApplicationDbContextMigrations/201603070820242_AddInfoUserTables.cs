@@ -3,7 +3,7 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddBasicData : DbMigration
+    public partial class AddInfoUserTables : DbMigration
     {
         public override void Up()
         {
@@ -14,6 +14,7 @@ namespace SsdMS.ApplicationDbContextMigrations
                         DepartDutyID = c.Long(nullable: false, identity: true),
                         DepartmentID = c.Long(nullable: false),
                         DutyID = c.Long(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         InfoUser_UserId = c.Long(),
                     })
                 .PrimaryKey(t => t.DepartDutyID)
@@ -29,12 +30,13 @@ namespace SsdMS.ApplicationDbContextMigrations
                 c => new
                     {
                         DepartmentID = c.Long(nullable: false, identity: true),
-                        DepartmentName = c.String(),
-                        DepartmentPhone1 = c.String(),
-                        DepartmentPhone2 = c.String(),
-                        DepartmentPhone3 = c.String(),
-                        DepartmentPhone4 = c.String(),
-                        DepartmentDescrip = c.String(maxLength: 30),
+                        DepartmentName = c.String(maxLength: 50),
+                        DepartmentPhone1 = c.String(maxLength: 30),
+                        DepartmentPhone2 = c.String(maxLength: 30),
+                        DepartmentPhone3 = c.String(maxLength: 30),
+                        DepartmentPhone4 = c.String(maxLength: 30),
+                        DepartmentDescrip = c.String(),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.DepartmentID);
             
@@ -43,7 +45,8 @@ namespace SsdMS.ApplicationDbContextMigrations
                 c => new
                     {
                         DutyID = c.Long(nullable: false, identity: true),
-                        DutyName = c.String(maxLength: 20),
+                        DutyName = c.String(maxLength: 50),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.DutyID);
             
@@ -52,18 +55,19 @@ namespace SsdMS.ApplicationDbContextMigrations
                 c => new
                     {
                         UserId = c.Long(nullable: false, identity: true),
-                        EmployeeNo = c.String(),
+                        EmployeeNo = c.String(maxLength: 20),
                         UserName = c.String(),
                         BirthDate = c.DateTime(nullable: false),
-                        Sex = c.String(maxLength: 4),
-                        Phone1 = c.String(maxLength: 11),
-                        Phone2 = c.String(maxLength: 11),
-                        Phone3 = c.String(maxLength: 11),
-                        Phone4 = c.String(maxLength: 11),
-                        Phone5 = c.String(maxLength: 11),
-                        Email = c.String(),
+                        Sex = c.String(maxLength: 20),
+                        Phone1 = c.String(maxLength: 30),
+                        Phone2 = c.String(maxLength: 30),
+                        Phone3 = c.String(maxLength: 30),
+                        Phone4 = c.String(maxLength: 30),
+                        Phone5 = c.String(maxLength: 30),
+                        Email = c.String(maxLength: 100),
                         DepartDutyID = c.Long(nullable: false),
                         ProfessionID = c.Long(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.UserId)
                 .ForeignKey("dbo.Professions", t => t.ProfessionID, cascadeDelete: true)
@@ -74,7 +78,8 @@ namespace SsdMS.ApplicationDbContextMigrations
                 c => new
                     {
                         ProfessionID = c.Long(nullable: false, identity: true),
-                        ProfessionName = c.String(),
+                        ProfessionName = c.String(maxLength: 50),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.ProfessionID);
             

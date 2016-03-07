@@ -374,17 +374,9 @@
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603050322318_AddBasicData.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603050322318_AddBasicData.Designer.cs">
-      <DependentUpon>201603050322318_AddBasicData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603050401258_UpdateDataSize.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603050401258_UpdateDataSize.Designer.cs">
-      <DependentUpon>201603050401258_UpdateDataSize.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603050421347_AddTimeStamp.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603050421347_AddTimeStamp.Designer.cs">
-      <DependentUpon>201603050421347_AddTimeStamp.cs</DependentUpon>
+    <Compile Include="ApplicationDbContextMigrations\201603070820242_AddInfoUserTables.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603070820242_AddInfoUserTables.Designer.cs">
+      <DependentUpon>201603070820242_AddInfoUserTables.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -629,14 +621,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603050322318_AddBasicData.resx">
-      <DependentUpon>201603050322318_AddBasicData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603050401258_UpdateDataSize.resx">
-      <DependentUpon>201603050401258_UpdateDataSize.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603050421347_AddTimeStamp.resx">
-      <DependentUpon>201603050421347_AddTimeStamp.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603070820242_AddInfoUserTables.resx">
+      <DependentUpon>201603070820242_AddInfoUserTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

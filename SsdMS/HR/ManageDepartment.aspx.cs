@@ -64,6 +64,7 @@ namespace SsdMS.HR
                     if (ModelState.IsValid)
                     {
                         // 在此保存更改，例如 MyDataLayer.SaveChanges();
+                        //不重名，更改科室名称
                         var query = context.Departments.Where(name => String.Compare(name.DepartmentName, txtDepartmentname.Text) == 0).FirstOrDefault();
                         if (query == null)
                         {
@@ -72,7 +73,22 @@ namespace SsdMS.HR
                             item.DepartmentPhone2 = txtEditDepartmentPhone2.Text;
                             item.DepartmentPhone3 = txtEditDepartmentPhone3.Text;
                             item.DepartmentPhone4 = txtEditDepartmentPhone4.Text;
+                            item.DepartmentDescrip = txtEditDepartmentDescrip.Text;
                             context.SaveChanges();
+                        }
+                        //query不为null，有两种情况，一种是更改自己的信息，需完成修改；另一种是B更名为了A，此时不能够完成修改。
+                        //检查item.id与query.id是否相同，如果相同，说明改的是同一个，如果不同，但name却相同，则不能完成修改。
+                        else
+                        {
+                            if(item.DepartmentID == query.DepartmentID)
+                            {
+                                item.DepartmentPhone1 = txtEditDepartmentPhone1.Text;
+                                item.DepartmentPhone2 = txtEditDepartmentPhone2.Text;
+                                item.DepartmentPhone3 = txtEditDepartmentPhone3.Text;
+                                item.DepartmentPhone4 = txtEditDepartmentPhone4.Text;
+                                item.DepartmentDescrip = txtEditDepartmentDescrip.Text;
+                                context.SaveChanges();
+                            }
                         }
                     }
                 }

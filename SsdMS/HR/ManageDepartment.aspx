@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageDepartment.aspx.cs" Inherits="SsdMS.HR.ManageDepartment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
        <div class="clo-md-12">
-        <h3>管理职务</h3>
+        <h3>管理科室</h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <asp:ListView runat="server" ID="lvDepartment" ItemType="SsdMS.Models.Department" DataKeyNames="DepartmentID"  
@@ -17,6 +17,7 @@
                                 <th>科室电话4</th>
                                 <th>科室描述</th>
                                 <th>操作</th>
+                                <th></th>
                             </tr>  
                         
                                 <asp:PlaceHolder runat="server" ID="itemPlaceholder" />                
@@ -41,12 +42,14 @@
                             
                             <td>                       
                                 <asp:Button ID="EditButton" runat="server" Text="编辑" CommandName="Edit" CssClass="btn btn-primary" /> 
+                            </td>
+                            <td>    
                                 <asp:Button ID="DeleteButton" runat="server" Text="删除" CommandName="Delete" CssClass="btn btn-danger" OnClientClick="javascript:return confirm('确认删除选中的用户记录？');"/> 
                             </td>
  
                         </tr>
                     </ItemTemplate>
-                                    <EditItemTemplate>
+                         <EditItemTemplate>
                             <tr>              
                                 <td><asp:TextBox runat="server" ID="txtEditDepartmentName" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentName %>"></asp:TextBox></td> 
                                 <td><asp:TextBox runat="server" ID="txtEditDepartmentPhone1" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentPhone1 %>"></asp:TextBox></td> 
@@ -57,6 +60,8 @@
                                 
                                 <td>
                                     <asp:Button ID="UpdateButton" runat="server" CommandName="Update" Text="Update" CssClass="btn btn-info"/>
+                                </td>
+                                <td>
                                     <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-warning"/>
                                 </td>
 

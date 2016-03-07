@@ -7,13 +7,13 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddTimeStamp : IMigrationMetadata
+    public sealed partial class AddInfoUserTables : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTimeStamp));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddInfoUserTables));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603050421347_AddTimeStamp"; }
+            get { return "201603070820242_AddInfoUserTables"; }
         }
         
         string IMigrationMetadata.Source
