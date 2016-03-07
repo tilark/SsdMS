@@ -37,7 +37,7 @@
                     </ItemTemplate>
                                     <EditItemTemplate>
                             <tr>              
-                                <td><asp:TextBox runat="server" ID="txtEditProfessionName" Visible="true" Text="<%#Item.ProfessionName %>"></asp:TextBox>   </td> 
+                                <td><asp:TextBox runat="server" ID="txtEditProfessionName" Visible="true" CssClass="form-control" Text="<%#Item.ProfessionName %>"></asp:TextBox>   </td> 
                                 <td>
                                     <asp:Button ID="UpdateButton" runat="server" CommandName="Update" Text="Update" CssClass="btn btn-info"/>
                                     <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-warning"/>

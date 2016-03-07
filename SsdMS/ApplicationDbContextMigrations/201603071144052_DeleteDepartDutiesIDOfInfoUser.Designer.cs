@@ -7,13 +7,13 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddInfoUserTables : IMigrationMetadata
+    public sealed partial class DeleteDepartDutiesIDOfInfoUser : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddInfoUserTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DeleteDepartDutiesIDOfInfoUser));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603070820242_AddInfoUserTables"; }
+            get { return "201603071144052_DeleteDepartDutiesIDOfInfoUser"; }
         }
         
         string IMigrationMetadata.Source

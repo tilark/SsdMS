@@ -209,6 +209,7 @@
     </Content>
     <Content Include="HR\ManageDepartment.aspx" />
     <Content Include="HR\ManageDuty.aspx" />
+    <Content Include="HR\ManageListUsers.aspx" />
     <Content Include="HR\ManageProfession.aspx" />
     <Content Include="HR\Web.config">
       <SubType>Designer</SubType>
@@ -374,9 +375,9 @@
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603070820242_AddInfoUserTables.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603070820242_AddInfoUserTables.Designer.cs">
-      <DependentUpon>201603070820242_AddInfoUserTables.cs</DependentUpon>
+    <Compile Include="ApplicationDbContextMigrations\201603071144052_DeleteDepartDutiesIDOfInfoUser.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603071144052_DeleteDepartDutiesIDOfInfoUser.Designer.cs">
+      <DependentUpon>201603071144052_DeleteDepartDutiesIDOfInfoUser.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -582,6 +583,13 @@
     <Compile Include="HR\ManageDuty.aspx.designer.cs">
       <DependentUpon>ManageDuty.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HR\ManageListUsers.aspx.cs">
+      <DependentUpon>ManageListUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageListUsers.aspx.designer.cs">
+      <DependentUpon>ManageListUsers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HR\ManageProfession.aspx.cs">
       <DependentUpon>ManageProfession.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -621,8 +629,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603070820242_AddInfoUserTables.resx">
-      <DependentUpon>201603070820242_AddInfoUserTables.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603071144052_DeleteDepartDutiesIDOfInfoUser.resx">
+      <DependentUpon>201603071144052_DeleteDepartDutiesIDOfInfoUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -38,7 +38,6 @@ namespace SsdMS.Models
         public string Phone5 { get; set; }
         [MaxLength(100), Display(Name = "邮箱")]
         public string Email { get; set; }
-        public Int64 DepartDutyID { get; set; }
         public Int64 ProfessionID { get; set; }
         public virtual ICollection<DepartDuty> DepartDuties { get; set; }
         public virtual Profession Profession { get; set; }

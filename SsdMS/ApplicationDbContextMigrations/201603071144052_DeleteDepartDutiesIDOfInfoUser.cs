@@ -3,7 +3,7 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddInfoUserTables : DbMigration
+    public partial class DeleteDepartDutiesIDOfInfoUser : DbMigration
     {
         public override void Up()
         {
@@ -65,7 +65,6 @@ namespace SsdMS.ApplicationDbContextMigrations
                         Phone4 = c.String(maxLength: 30),
                         Phone5 = c.String(maxLength: 30),
                         Email = c.String(maxLength: 100),
-                        DepartDutyID = c.Long(nullable: false),
                         ProfessionID = c.Long(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
