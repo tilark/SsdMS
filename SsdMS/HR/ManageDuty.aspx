@@ -1,11 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageDuty.aspx.cs" Inherits="SsdMS.HR.ManageDuty" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <p>
-    <p><asp:ValidationSummary ShowModelStateErrors="true" runat="server" /></p>
     <p></p>
    
-    <div class="clo-md-6">
+    <div class="clo-md-12">
+        <p><asp:ValidationSummary ShowModelStateErrors="true" runat="server" /></p>
         <h3>管理职务</h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>

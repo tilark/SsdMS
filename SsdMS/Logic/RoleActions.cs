@@ -37,6 +37,7 @@ namespace SsdMS.Logic
                         }
                         var user = new ApplicationUser();
                         user.UserName = adminName;
+                        user.InfoUser = null;
                         var adminResult = userManager.Create(user, password);
                         //Add User Admin to Role Administrator
                         if (adminResult.Succeeded)

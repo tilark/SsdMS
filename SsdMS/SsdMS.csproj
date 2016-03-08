@@ -207,10 +207,13 @@
     <Content Include="Admin\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="HR\ManageAddUser.aspx" />
     <Content Include="HR\ManageDepartment.aspx" />
     <Content Include="HR\ManageDuty.aspx" />
     <Content Include="HR\ManageListUsers.aspx" />
     <Content Include="HR\ManageProfession.aspx" />
+    <Content Include="HR\ManageResetPassword.aspx" />
+    <Content Include="HR\ManageUserDetail.aspx" />
     <Content Include="HR\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -569,6 +572,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HR\ManageAddUser.aspx.cs">
+      <DependentUpon>ManageAddUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageAddUser.aspx.designer.cs">
+      <DependentUpon>ManageAddUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HR\ManageDepartment.aspx.cs">
       <DependentUpon>ManageDepartment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -596,6 +606,20 @@
     </Compile>
     <Compile Include="HR\ManageProfession.aspx.designer.cs">
       <DependentUpon>ManageProfession.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR\ManageResetPassword.aspx.cs">
+      <DependentUpon>ManageResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageResetPassword.aspx.designer.cs">
+      <DependentUpon>ManageResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR\ManageUserDetail.aspx.cs">
+      <DependentUpon>ManageUserDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageUserDetail.aspx.designer.cs">
+      <DependentUpon>ManageUserDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Logic\InfoUserActions.cs" />
     <Compile Include="Logic\RoleActions.cs" />
