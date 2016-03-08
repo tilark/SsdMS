@@ -73,7 +73,7 @@ namespace SsdMS.HR
                             item.DepartmentPhone2 = txtEditDepartmentPhone2.Text;
                             item.DepartmentPhone3 = txtEditDepartmentPhone3.Text;
                             item.DepartmentPhone4 = txtEditDepartmentPhone4.Text;
-                            item.DepartmentDescrip = txtEditDepartmentDescrip.Text;
+                            item.DepartmentDescription = txtEditDepartmentDescrip.Text;
                             context.SaveChanges();
                         }
                         //query不为null，有两种情况，一种是更改自己的信息，需完成修改；另一种是B更名为了A，此时不能够完成修改。
@@ -86,7 +86,7 @@ namespace SsdMS.HR
                                 item.DepartmentPhone2 = txtEditDepartmentPhone2.Text;
                                 item.DepartmentPhone3 = txtEditDepartmentPhone3.Text;
                                 item.DepartmentPhone4 = txtEditDepartmentPhone4.Text;
-                                item.DepartmentDescrip = txtEditDepartmentDescrip.Text;
+                                item.DepartmentDescription = txtEditDepartmentDescrip.Text;
                                 context.SaveChanges();
                             }
                         }
@@ -153,7 +153,7 @@ namespace SsdMS.HR
                             item.DepartmentPhone2 = txtInsertDepartmentPhone2.Text;
                             item.DepartmentPhone3 = txtInsertDepartmentPhone3.Text;
                             item.DepartmentPhone4 = txtInsertDepartmentPhone4.Text;
-                            item.DepartmentDescrip = txtInsertDepartmentDescrip.Text;
+                            item.DepartmentDescription = txtInsertDepartmentDescrip.Text;
                             context.Departments.Add(item);
                             context.SaveChanges();
                         }

@@ -378,9 +378,9 @@
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603071144052_DeleteDepartDutiesIDOfInfoUser.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603071144052_DeleteDepartDutiesIDOfInfoUser.Designer.cs">
-      <DependentUpon>201603071144052_DeleteDepartDutiesIDOfInfoUser.cs</DependentUpon>
+    <Compile Include="ApplicationDbContextMigrations\201603081343030_UpdateInfoUsers.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603081343030_UpdateInfoUsers.Designer.cs">
+      <DependentUpon>201603081343030_UpdateInfoUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -653,8 +653,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603071144052_DeleteDepartDutiesIDOfInfoUser.resx">
-      <DependentUpon>201603071144052_DeleteDepartDutiesIDOfInfoUser.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603081343030_UpdateInfoUsers.resx">
+      <DependentUpon>201603081343030_UpdateInfoUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

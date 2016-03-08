@@ -44,6 +44,34 @@ namespace SsdMS.Logic
                         {
                             var result = userManager.AddToRole(user.Id, "Administrators");
                         }
+                        else
+                        {
+                            Department adminDepartment = context.Departments.Where(d => String.Compare(d.DepartmentName, "Admin") == 0).FirstOrDefault();
+                            if (adminDepartment == null)
+                            {
+                                adminDepartment = new Department { DepartmentName = "Admin" };
+                                context.SaveChanges();
+                            }
+                            Duty adminDuty = context.Duties.Where(d => String.Compare(d.DutyName, "Admin") == 0).FirstOrDefault();
+                            if (adminDuty == null)
+                            {
+                                adminDuty = new Duty { DutyName = "Admin" };
+                                context.SaveChanges();
+                            }
+                            Profession adminProfession = context.Professions.Where(d => String.Compare(d.ProfessionName, "Admin") == 0).FirstOrDefault();
+                            if (adminProfession == null)
+                            {
+                                adminProfession = new Profession { ProfessionName = "Admin" };
+                                context.SaveChanges();
+                            }
+                            DepartmentDuty adminDepartmentDuty = new DepartmentDuty();
+                            InfoUser adminInfoUser = new InfoUser() { UserName = "Admin" };
+                            adminDepartmentDuty.InfoUser = adminInfoUser;
+                            context.SaveChanges();
+                            user.InfoUser = adminInfoUser;
+                            adminInfoUser.ApplicationUser = user;
+                            context.SaveChanges();
+                        }
                     }
 
                 }

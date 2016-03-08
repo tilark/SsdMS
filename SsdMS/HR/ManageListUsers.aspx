@@ -8,7 +8,7 @@
         <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/HR/ManageAddUser.aspx">增加用户</asp:HyperLink>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-                <asp:ListView runat="server" ID="lvInfoUser" ItemType="SsdMS.Models.InfoUser" DataKeyNames="Id"                     
+                <asp:ListView runat="server" ID="lvInfoUser" ItemType="SsdMS.Models.ApplicationUser" DataKeyNames="Id"                     
                     SelectMethod="lvInfoUser_GetData" DeleteMethod="lvInfoUser_DeleteItem">
                     <LayoutTemplate>
                             <table class="table table-hover">
@@ -36,11 +36,15 @@
                     </LayoutTemplate>
                     <ItemTemplate>
                         <tr>
-                            <td><asp:Label runat="server" ID="lblInfoUserName" Visible="true" Text="<%# Item.UserName %>"></asp:Label>  </td>  
+                            <td><asp:Label runat="server" ID="lblInfoUserName" Visible="true" Text="<%# Item.InfoUser.UserName %>"></asp:Label>  </td>  
+                            <td><asp:Label runat="server" ID="lblEmployeeNo" Visible="true" Text="<%# Item.InfoUser.EmployeeNo %>"></asp:Label>  </td>
+                            <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%# Item.InfoUser.BirthDate %>"></asp:Label>  </td>   
+
+<%--                            <td><asp:Label runat="server" ID="lblInfoUserName" Visible="true" Text="<%# Item.UserName %>"></asp:Label>  </td>  
                             <td><asp:Label runat="server" ID="lblEmployeeNo" Visible="true" Text="<%# Item.EmployeeNo %>"></asp:Label>  </td>
                             <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%# Item.BirthDate %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblPhone1" Visible="true" Text="<%# Item.Phone1 %>"></asp:Label>  </td>   
-                            <td><asp:Label runat="server" ID="lblPhone2" Visible="true" Text="<%# Item.Phone2 %>"></asp:Label>  </td>  
+                            <td><asp:Label runat="server" ID="lblPhone2" Visible="true" Text="<%# Item.Phone2 %>"></asp:Label>  </td>  --%>
                             <td><asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HR/ManageUserDetail.aspx" CssClass="btn btn-primary">详情</asp:HyperLink></td>
                             <td><asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/HR/ManageResetPassword.aspx" CssClass="btn btn-warning">重置密码</asp:HyperLink></td> 
                             <td>                      

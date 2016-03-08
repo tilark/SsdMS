@@ -17,13 +17,17 @@ namespace SsdMS.Models
         [Key]
         [Display(Name = "用户编号")]
         [ScaffoldColumn(false)]
-        public Int64 UserId { get; set; }
+        public Int64 InfoUserId { get; set; }
         [MaxLength(20), Display(Name = "工号")]
         public string EmployeeNo { get; set; }
          [Display(Name = "姓名")]
         public string UserName { get; set; }
          [Display(Name = "出生日期")]
         public DateTime BirthDate { get; set; }
+        [Display(Name = "身份证"),MaxLength(30)]
+        public string IDCard { get; set; }
+        [Display(Name = "联系地址")]
+        public string Address { get; set; }
          [MaxLength(20), Display(Name = "性别")]
         public string Sex {get; set;}
        [MaxLength(30), Display(Name = "工作电话")]
@@ -38,23 +42,28 @@ namespace SsdMS.Models
         public string Phone5 { get; set; }
         [MaxLength(100), Display(Name = "邮箱")]
         public string Email { get; set; }
+        [Display(Name = "简介")]
+        public string InfoUserDescription { get; set; }
         public Int64 ProfessionID { get; set; }
-        public virtual ICollection<DepartDuty> DepartDuties { get; set; }
+        public ICollection<DepartmentDuty> DepartmentDuties { get; set; }
         public virtual Profession Profession { get; set; }
-
+        [Required]        
+        public ApplicationUser ApplicationUser { get; set; }  //级联ApplicationUser删除
 
     }
-    public class DepartDuty : BaseTimeStamp
+    public class DepartmentDuty : BaseTimeStamp
     {
         [Key]
         [Display(Name = "科室职务编号")]
         [ScaffoldColumn(false)]
-        public Int64 DepartDutyID { get; set; }
+        public Int64 DepartmentDutyID { get; set; }
         public Int64 DepartmentID { get; set; }
-      
+
         public Int64 DutyID { get; set; }
         public virtual Department Department { get; set; }
         public virtual Duty Duty { get; set; }
+        [Required]
+        public InfoUser InfoUser { get; set; } //级联InfoUser删除
 
     }
     public class Department : BaseTimeStamp
@@ -74,7 +83,7 @@ namespace SsdMS.Models
         [MaxLength(30), Display(Name = "科室电话号码4")]
         public string DepartmentPhone4 { get; set; }
          [Display(Name = "科室描述")]
-        public string DepartmentDescrip { get; set; }
+        public string DepartmentDescription { get; set; }
 
     }
     public class Duty : BaseTimeStamp
@@ -85,6 +94,8 @@ namespace SsdMS.Models
         public Int64 DutyID { get; set; }
          [Display(Name = "职务"), MaxLength(50)]
         public string DutyName { get; set; }
+        [Display(Name = "职务描述")]
+        public string DutyDescription { get; set; }
 
     }
     public class Profession : BaseTimeStamp
@@ -95,5 +106,7 @@ namespace SsdMS.Models
         public Int64 ProfessionID { get; set; }
         [Display(Name = "职称"), MaxLength(50)]
         public string ProfessionName { get; set; }
+        [Display(Name = "职称描述")]
+        public string ProfessionDescription { get; set; }
     }
 }

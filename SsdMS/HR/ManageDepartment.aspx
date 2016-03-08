@@ -38,7 +38,7 @@
                             <td><asp:Label runat="server" ID="lblDepartmentPhone2" Visible="true" Text="<%# Item.DepartmentPhone2 %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblDepartmentPhone3" Visible="true" Text="<%# Item.DepartmentPhone3 %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblDepartmentPhone4" Visible="true" Text="<%# Item.DepartmentPhone4 %>"></asp:Label>  </td>   
-                            <td><asp:Label runat="server" ID="lblDepartmentDescrip" Visible="true" Text="<%# Item.DepartmentDescrip %>"></asp:Label>  </td>   
+                            <td><asp:Label runat="server" ID="lblDepartmentDescrip" Visible="true" Text="<%# Item.DepartmentDescription %>"></asp:Label>  </td>   
                             
                             <td>                       
                                 <asp:Button ID="EditButton" runat="server" Text="编辑" CommandName="Edit" CssClass="btn btn-primary" /> 
@@ -56,7 +56,7 @@
                                 <td><asp:TextBox runat="server" ID="txtEditDepartmentPhone2" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentPhone2 %>"></asp:TextBox></td> 
                                 <td><asp:TextBox runat="server" ID="txtEditDepartmentPhone3" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentPhone3 %>"></asp:TextBox></td> 
                                 <td><asp:TextBox runat="server" ID="txtEditDepartmentPhone4" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentPhone4 %>"></asp:TextBox></td> 
-                                <td><asp:TextBox runat="server" ID="txtEditDepartmentDescrip" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentDescrip %>"></asp:TextBox></td> 
+                                <td><asp:TextBox runat="server" ID="txtEditDepartmentDescrip" Visible="true" CssClass="form-control" Text="<%#Item.DepartmentDescription %>"></asp:TextBox></td> 
                                 
                                 <td>
                                     <asp:Button ID="UpdateButton" runat="server" CommandName="Update" Text="Update" CssClass="btn btn-info"/>

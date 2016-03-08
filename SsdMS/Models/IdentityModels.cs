@@ -14,6 +14,7 @@ namespace SsdMS.Models
     // 可以通过将更多属性添加到用户类来添加用户的用户数据，请访问 http://go.microsoft.com/fwlink/?LinkID=317594 了解详细信息。
     public class ApplicationUser : IdentityUser
     {
+        
         public virtual InfoUser InfoUser { get; set; } 
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {
@@ -41,7 +42,7 @@ namespace SsdMS.Models
             return new ApplicationDbContext();
         }
         public DbSet<Models.InfoUser> InfoUsers { get; set; }
-        public DbSet<Models.DepartDuty> DepartDuties { get; set; }
+        public DbSet<Models.DepartmentDuty> DepartmentDuties { get; set; }
         public DbSet<Models.Department> Departments { get; set; }
         public DbSet<Models.Duty> Duties { get; set; }
         public DbSet<Models.Profession> Professions { get; set; }
