@@ -20,6 +20,7 @@ namespace SsdMS.Logic
         public Dictionary<Int64, string> GetDutyDic()
         {
             Dictionary<Int64, string> DutyDic = new Dictionary<Int64, string>();
+            DutyDic.Add(-1, "--请选择--");
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 var queryDuties = context.Duties;
@@ -36,6 +37,7 @@ namespace SsdMS.Logic
         public Dictionary<Int64, string> GetDepartmentDic()
         {
             Dictionary<Int64, string> departmentDic = new Dictionary<Int64,string>();
+            departmentDic.Add(-1, "--请选择--");
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 var queryDepartments = context.Departments;
@@ -52,6 +54,7 @@ namespace SsdMS.Logic
         public Dictionary<Int64, string> GetProfessionDic()
         {
             Dictionary<Int64, string> ProfessionDic = new Dictionary<Int64, string>();
+            ProfessionDic.Add(-1, "--请选择--");
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 var queryProfessions = context.Professions;

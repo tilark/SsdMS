@@ -27,34 +27,40 @@ namespace SsdMS.ApplicationDbContextMigrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            //context.Departments.AddOrUpdate(
-            //   new Department { DepartmentID = 1, DepartmentName = "Admin" }
-            //   );
-            //context.SaveChanges();
+            context.Departments.AddOrUpdate(
+               new Department { DepartmentID = 1, DepartmentName = "Admin" }
+               );
+            context.SaveChanges();
 
-            //context.Duties.AddOrUpdate(
-            //    new Duty { DutyID = 1, DutyName = "Admin" }
-            //    );
-            //context.SaveChanges();
+            context.Duties.AddOrUpdate(
+                new Duty { DutyID = 1, DutyName = "Admin" }
+                );
+            context.SaveChanges();
 
-            //context.Professions.AddOrUpdate(
-            //    new Profession { ProfessionID = 1, ProfessionName = "Admin" }
-            //    );
-            //context.SaveChanges();
+            context.Professions.AddOrUpdate(
+                new Profession { ProfessionID = 1, ProfessionName = "Admin" }
+                );
+            context.SaveChanges();
 
-            //var department = new Department();
-            //department.DepartmentName = "Admin";
-            //var duty = context.Duties.Find(1);
-            //var profession = context.Professions.Find(1);
-            //context.InfoUsers.AddOrUpdate(
-            //    new InfoUser { InfoUserID = 1, UserName = "Admin", Profession = profession, BirthDate = DateTime.Now, ProfessionID = profession.ProfessionID }
-            //    );
-            //context.SaveChanges();
-            //var infouser = context.InfoUsers.Find(6);
-            //context.DepartmentDuties.AddOrUpdate(
-            //    new DepartmentDuty {  DepartmentID = department.DepartmentID, DutyID = duty.DutyID, InfoUserID = infouser.InfoUserID, Department = department, Duty = duty, InfoUser = infouser }
-            //    );
-            //context.SaveChanges();
+            var department = context.Departments.Find(1);
+            var duty = context.Duties.Find(1);
+            var profession = context.Professions.Find(1);
+            if (department != null && profession != null)
+            {
+                context.InfoUsers.AddOrUpdate(
+                               new InfoUser { UserName = "Admin", Profession = profession, BirthDate = DateTime.Now, ProfessionID = profession.ProfessionID }
+                               );
+                context.SaveChanges();
+                var infouser = context.InfoUsers.Find(1);
+                if (infouser != null)
+                {
+                    context.DepartmentDuties.AddOrUpdate(
+                                        new DepartmentDuty { DepartmentID = department.DepartmentID, DutyID = duty.DutyID, InfoUserID = infouser.InfoUserID, Department = department, Duty = duty, InfoUser = infouser }
+                                        );
+                    context.SaveChanges();
+                }
+
+            }
         }
     }
 }

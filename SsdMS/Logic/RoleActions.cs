@@ -17,6 +17,51 @@ namespace SsdMS.Logic
         public RoleActions()
         {
         }
+        internal void CreateBasicRoles()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                    {
+                        if (!roleManager.RoleExists("Administrators"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("Administrators"));
+                        }
+                        if (!roleManager.RoleExists("普通用户"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("普通用户"));
+                        }
+                        if (!roleManager.RoleExists("科室成员"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("科室成员"));
+                        }
+                        if (!roleManager.RoleExists("科室组长"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("科室组长"));
+                        }
+                        if (!roleManager.RoleExists("科室负责人"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("科室负责人"));
+                        }
+                        if (!roleManager.RoleExists("质控办事员"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("质控办事员"));
+                        }
+                        if (!roleManager.RoleExists("质控管理员"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("质控管理员"));
+                        }
+                        if (!roleManager.RoleExists("上传员"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("上传员"));
+                        }
+                    }
+                }
+            }
+
+        }
         /// <summary>
         /// 程序初始化时创建Administrators权限组和一个Administrator成员
         /// </summary>

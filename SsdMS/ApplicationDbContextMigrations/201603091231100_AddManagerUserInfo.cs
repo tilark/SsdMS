@@ -3,7 +3,7 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddUserInfo : DbMigration
+    public partial class AddManagerUserInfo : DbMigration
     {
         public override void Up()
         {
@@ -18,8 +18,8 @@ namespace SsdMS.ApplicationDbContextMigrations
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.DepartmentDutyID)
-                .ForeignKey("dbo.Departments", t => t.DepartmentID, cascadeDelete: false)
-                .ForeignKey("dbo.Duties", t => t.DutyID, cascadeDelete: false)
+                .ForeignKey("dbo.Departments", t => t.DepartmentID, cascadeDelete: true)
+                .ForeignKey("dbo.Duties", t => t.DutyID, cascadeDelete: true)
                 .ForeignKey("dbo.InfoUsers", t => t.InfoUserID, cascadeDelete: true)
                 .Index(t => t.DepartmentID)
                 .Index(t => t.DutyID)
@@ -73,7 +73,7 @@ namespace SsdMS.ApplicationDbContextMigrations
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.InfoUserID)
-                .ForeignKey("dbo.Professions", t => t.ProfessionID, cascadeDelete: false)
+                .ForeignKey("dbo.Professions", t => t.ProfessionID, cascadeDelete: true)
                 .Index(t => t.ProfessionID);
             
             CreateTable(

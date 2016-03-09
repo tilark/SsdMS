@@ -379,9 +379,9 @@
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603090137167_AddUserInfo.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603090137167_AddUserInfo.Designer.cs">
-      <DependentUpon>201603090137167_AddUserInfo.cs</DependentUpon>
+    <Compile Include="ApplicationDbContextMigrations\201603091231100_AddManagerUserInfo.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603091231100_AddManagerUserInfo.Designer.cs">
+      <DependentUpon>201603091231100_AddManagerUserInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -661,8 +661,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603090137167_AddUserInfo.resx">
-      <DependentUpon>201603090137167_AddUserInfo.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603091231100_AddManagerUserInfo.resx">
+      <DependentUpon>201603091231100_AddManagerUserInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
