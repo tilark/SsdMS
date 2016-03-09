@@ -4,6 +4,10 @@
         <h3>管理职称</h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
+                <p>
+                    <asp:ValidationSummary ID="ValidationSummary1" ShowModelStateErrors="true" runat="server" />
+                </p>
+                <p></p>
                 <asp:ListView runat="server" ID="lvProfession" ItemType="SsdMS.Models.Profession" DataKeyNames="ProfessionID"  
                     InsertItemPosition="LastItem" InsertMethod="lvProfession_InsertItem"
                     SelectMethod="lvProfession_GetData" UpdateMethod="lvProfession_UpdateItem" DeleteMethod="lvProfession_DeleteItem">

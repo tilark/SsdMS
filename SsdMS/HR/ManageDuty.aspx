@@ -4,10 +4,12 @@
     <p></p>
    
     <div class="clo-md-12">
-        <p><asp:ValidationSummary ShowModelStateErrors="true" runat="server" /></p>
+        
         <h3>管理职务</h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
+                <p><asp:ValidationSummary ShowModelStateErrors="true" runat="server" /></p>
+                <p></p>
                 <asp:ListView runat="server" ID="lvDuty" ItemType="SsdMS.Models.Duty" DataKeyNames="DutyID"  
                     InsertItemPosition="LastItem" InsertMethod="lvDuty_InsertItem"
                     SelectMethod="lvDuty_GetData" UpdateMethod="lvDuty_UpdateItem" DeleteMethod="lvDuty_DeleteItem">

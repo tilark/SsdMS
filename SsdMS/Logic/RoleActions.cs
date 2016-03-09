@@ -69,7 +69,7 @@ namespace SsdMS.Logic
                             adminDepartmentDuty.InfoUser = adminInfoUser;
                             context.SaveChanges();
                             user.InfoUser = adminInfoUser;
-                            adminInfoUser.ApplicationUser = user;
+                            //adminInfoUser.ApplicationUser = user;
                             context.SaveChanges();
                         }
                     }

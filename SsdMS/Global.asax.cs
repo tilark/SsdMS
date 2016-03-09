@@ -16,8 +16,8 @@ namespace SsdMS
             // 在应用程序启动时运行的代码
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            RoleActions roleAction = new RoleActions();
-            roleAction.CreateAdmin();
+            //RoleActions roleAction = new RoleActions();
+            //roleAction.CreateAdmin();
         }
     }
 }

@@ -23,12 +23,12 @@ namespace SsdMS.HR
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
-        public IQueryable<SsdMS.Models.ApplicationUser> lvInfoUser_GetData()
+        public IQueryable<SsdMS.Models.InfoUser> lvInfoUser_GetData()
         {
-            IQueryable<SsdMS.Models.ApplicationUser> query = null;
+            IQueryable<SsdMS.Models.InfoUser> query = null;
             ApplicationDbContext context = new ApplicationDbContext();
             //query = context.InfoUsers.OrderBy(u => u.UserName);
-            query = context.Users;
+            query = context.InfoUsers.OrderBy(o => o.UserName);
             return query;
         }
 

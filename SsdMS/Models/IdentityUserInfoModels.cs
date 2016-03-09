@@ -17,7 +17,7 @@ namespace SsdMS.Models
         [Key]
         [Display(Name = "用户编号")]
         [ScaffoldColumn(false)]
-        public Int64 InfoUserId { get; set; }
+        public Int64 InfoUserID { get; set; }
         [MaxLength(20), Display(Name = "工号")]
         public string EmployeeNo { get; set; }
          [Display(Name = "姓名")]
@@ -47,8 +47,6 @@ namespace SsdMS.Models
         public Int64 ProfessionID { get; set; }
         public ICollection<DepartmentDuty> DepartmentDuties { get; set; }
         public virtual Profession Profession { get; set; }
-        [Required]        
-        public ApplicationUser ApplicationUser { get; set; }  //级联ApplicationUser删除
 
     }
     public class DepartmentDuty : BaseTimeStamp
@@ -62,8 +60,8 @@ namespace SsdMS.Models
         public Int64 DutyID { get; set; }
         public virtual Department Department { get; set; }
         public virtual Duty Duty { get; set; }
-        [Required]
-        public InfoUser InfoUser { get; set; } //级联InfoUser删除
+        public Int64 InfoUserID { get; set; }
+        public virtual InfoUser InfoUser { get; set; } 
 
     }
     public class Department : BaseTimeStamp

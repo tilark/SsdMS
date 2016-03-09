@@ -80,6 +80,14 @@ namespace SsdMS.HR
                     ModelState.AddModelError("", String.Format("未找到 id 为 {0} 的项", dutyID));
                     return;
                 }
+                //检查在DepartmentDuty中是否存在该信息
+                var queryDepartmentDuty = context.DepartmentDuties.Where(d => d.Duty.DutyID == dutyID).FirstOrDefault();
+                if (queryDepartmentDuty != null)
+                {
+                    //DepartemtnDuty 中存在该信息，不能删除
+                    ModelState.AddModelError("", String.Format("在科室职务表中存在 {0} 的项，请更改后再删除", item.DutyName));
+                    return;
+                }
                 TryUpdateModel(item);
                 if (ModelState.IsValid)
                 {

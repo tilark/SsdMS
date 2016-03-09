@@ -105,6 +105,14 @@ namespace SsdMS.HR
                     ModelState.AddModelError("", String.Format("未找到 id 为 {0} 的项", professionID));
                     return;
                 }
+                //检查在InfoUser中是否存在该信息
+                var queryInfoUser = context.InfoUsers.Where(d => d.Profession.ProfessionID == professionID).FirstOrDefault();
+                if (queryInfoUser != null)
+                {
+                    //InfoUser 中存在该信息，不能删除
+                    ModelState.AddModelError("", String.Format("在用户信息中存在 {0} 的项，请更改后再删除", item.ProfessionName));
+                    return;
+                }
                 TryUpdateModel(item);
                 if (ModelState.IsValid)
                 {

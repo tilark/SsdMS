@@ -4,6 +4,8 @@
         <h3>管理科室</h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
+                <p><asp:ValidationSummary ID="ValidationSummary1" ShowModelStateErrors="true" runat="server" /></p>
+                <p></p>
                 <asp:ListView runat="server" ID="lvDepartment" ItemType="SsdMS.Models.Department" DataKeyNames="DepartmentID"  
                     InsertItemPosition="LastItem" InsertMethod="lvDepartment_InsertItem"
                     SelectMethod="lvDepartment_GetData" UpdateMethod="lvDepartment_UpdateItem" DeleteMethod="lvDepartment_DeleteItem">

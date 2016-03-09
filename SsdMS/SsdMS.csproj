@@ -209,6 +209,7 @@
     </Content>
     <Content Include="HR\ManageAddUser.aspx" />
     <Content Include="HR\ManageDepartment.aspx" />
+    <Content Include="HR\ManageDepartmentDuty.aspx" />
     <Content Include="HR\ManageDuty.aspx" />
     <Content Include="HR\ManageListUsers.aspx" />
     <Content Include="HR\ManageProfession.aspx" />
@@ -378,9 +379,9 @@
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603081343030_UpdateInfoUsers.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603081343030_UpdateInfoUsers.Designer.cs">
-      <DependentUpon>201603081343030_UpdateInfoUsers.cs</DependentUpon>
+    <Compile Include="ApplicationDbContextMigrations\201603090137167_AddUserInfo.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603090137167_AddUserInfo.Designer.cs">
+      <DependentUpon>201603090137167_AddUserInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -586,6 +587,13 @@
     <Compile Include="HR\ManageDepartment.aspx.designer.cs">
       <DependentUpon>ManageDepartment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HR\ManageDepartmentDuty.aspx.cs">
+      <DependentUpon>ManageDepartmentDuty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageDepartmentDuty.aspx.designer.cs">
+      <DependentUpon>ManageDepartmentDuty.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HR\ManageDuty.aspx.cs">
       <DependentUpon>ManageDuty.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -653,8 +661,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603081343030_UpdateInfoUsers.resx">
-      <DependentUpon>201603081343030_UpdateInfoUsers.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603090137167_AddUserInfo.resx">
+      <DependentUpon>201603090137167_AddUserInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
