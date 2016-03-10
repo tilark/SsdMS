@@ -213,8 +213,11 @@
     <Content Include="HR\ManageDuty.aspx" />
     <Content Include="HR\ManageListUsers.aspx" />
     <Content Include="HR\ManageProfession.aspx" />
+    <Content Include="HR\ManageResetAccount.aspx" />
     <Content Include="HR\ManageResetPassword.aspx" />
     <Content Include="HR\ManageUserDetail.aspx" />
+    <Content Include="HR\ManageUserRoles.aspx" />
+    <Content Include="HR\TestDepartmentDutyToMulti.aspx" />
     <Content Include="HR\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -615,6 +618,13 @@
     <Compile Include="HR\ManageProfession.aspx.designer.cs">
       <DependentUpon>ManageProfession.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HR\ManageResetAccount.aspx.cs">
+      <DependentUpon>ManageResetAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageResetAccount.aspx.designer.cs">
+      <DependentUpon>ManageResetAccount.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HR\ManageResetPassword.aspx.cs">
       <DependentUpon>ManageResetPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -628,6 +638,20 @@
     </Compile>
     <Compile Include="HR\ManageUserDetail.aspx.designer.cs">
       <DependentUpon>ManageUserDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR\ManageUserRoles.aspx.cs">
+      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageUserRoles.aspx.designer.cs">
+      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR\TestDepartmentDutyToMulti.aspx.cs">
+      <DependentUpon>TestDepartmentDutyToMulti.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\TestDepartmentDutyToMulti.aspx.designer.cs">
+      <DependentUpon>TestDepartmentDutyToMulti.aspx</DependentUpon>
     </Compile>
     <Compile Include="Logic\InfoUserActions.cs" />
     <Compile Include="Logic\RoleActions.cs" />

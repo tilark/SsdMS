@@ -16,10 +16,12 @@
                             <tr>
                                 <th>用户名</th>
                                 <th>工号</th>
-                                <th>出生日期</th>
                                 <th>工作电话</th>
                                 <th>住宅电话</th>
+                                <th>出生日期</th>
                                 <th>操作</th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>  
@@ -40,12 +42,13 @@
 
                             <td><asp:Label runat="server" ID="lblInfoUserName" Visible="true" Text="<%# Item.UserName %>"></asp:Label>  </td>  
                             <td><asp:Label runat="server" ID="lblEmployeeNo" Visible="true" Text="<%# Item.EmployeeNo %>"></asp:Label>  </td>
-                            <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%# Item.BirthDate %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblPhone1" Visible="true" Text="<%# Item.Phone1 %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblPhone2" Visible="true" Text="<%# Item.Phone2 %>"></asp:Label>  </td>  
-                            <td><%--<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HR/ManageUserDetail.aspx?infoUserID=<%#:Item.InfoUserID %>" CssClass="btn btn-primary">详情</asp:HyperLink>--%></td>
+                            <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%# Item.BirthDate %>"></asp:Label>  </td>   
                             <td><a href="ManageUserDetail.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">详情</a></td>
-                            <td><asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/HR/ManageResetPassword.aspx" CssClass="btn btn-warning">重置密码</asp:HyperLink></td> 
+                            <td><a href="ManageUserRoles.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">管理权限</a></td>
+                            <td><a href="ManageResetPassword.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">重置密码</a></td>
+                            <td><a href="ManageResetAccount.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">更改登录名</a></td>
                             <td>                      
                                 <asp:Button ID="DeleteButton" runat="server" Text="删除" CommandName="Delete" CssClass="btn btn-danger" OnClientClick="javascript:return confirm('确认删除选中的用户记录？');"/> 
                             </td>

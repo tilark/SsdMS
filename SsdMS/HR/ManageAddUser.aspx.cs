@@ -17,8 +17,14 @@ namespace SsdMS.HR
 {
     public partial class ManageAddUser : System.Web.UI.Page
     {
+        private static List<TempDepartmentDuty> listTempDepDuty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (listTempDepDuty == null)
+            {
+                listTempDepDuty = new List<TempDepartmentDuty>();
+            }
             if (!IsPostBack)
             {
                 InitDataBind();
@@ -90,22 +96,45 @@ namespace SsdMS.HR
                         {
                             //成功才能加入InfoUser 的DepartmentDuty的信息.
                             //DepartmentDuty
-                            var newDepartmentDuty = new DepartmentDuty();
-                            newDepartmentDuty.DepartmentID = Int64.Parse(ddlDepartment.SelectedValue);
-                            newDepartmentDuty.DutyID = Int64.Parse(ddlDuty.SelectedValue);
-                            newDepartmentDuty.InfoUser = insertedInfoUser;
-                            try
+                            foreach(var departDuty in listTempDepDuty)
                             {
-                                context.DepartmentDuties.Add(newDepartmentDuty);
-                                context.SaveChanges();
+                                var tempDepartmentDuty = new DepartmentDuty();
+                                tempDepartmentDuty.DepartmentID = Int64.Parse(departDuty.DepartmentID);
+                                tempDepartmentDuty.DutyID = Int64.Parse(departDuty.DutyID);
+                                tempDepartmentDuty.InfoUser = insertedInfoUser;
+                                try
+                                {
+                                    context.DepartmentDuties.Add(tempDepartmentDuty);
+                                    context.SaveChanges();
 
+                                }
+                                catch (DbUpdateException ex)
+                                {
+                                    ModelState.AddModelError("", ex);
+                                }
                             }
-                            catch (DbUpdateException ex)
+                            //var newDepartmentDuty = new DepartmentDuty();
+                            //newDepartmentDuty.DepartmentID = Int64.Parse(ddlDepartment.SelectedValue);
+                            //newDepartmentDuty.DutyID = Int64.Parse(ddlDuty.SelectedValue);
+                            ////将InfoUser添加到DepartmentDuty中，就能建立连接
+                            //newDepartmentDuty.InfoUser = insertedInfoUser;
+                            //try
+                            //{
+                            //    context.DepartmentDuties.Add(newDepartmentDuty);
+                            //    context.SaveChanges();
+
+                            //}
+                            //catch (DbUpdateException ex)
+                            //{
+                            //    ModelState.AddModelError("", ex);
+                            //}
+                            //用完ListTempDepDuty后删除
+                            if (listTempDepDuty != null)
                             {
-                                ModelState.AddModelError("", ex);
+                                listTempDepDuty = null;
                             }
                             //获取刚插入的DepartmentDuty
-                            var insertedDepartmentDuty = context.DepartmentDuties.Find(context.DepartmentDuties.Max(p => p.DepartmentDutyID));
+                            //var insertedDepartmentDuty = context.DepartmentDuties.Find(context.DepartmentDuties.Max(p => p.DepartmentDutyID));
 
                             //Add to InfoUser
                             //insertedInfoUser.DepartmentDuties.Add(insertedDepartmentDuty);
@@ -139,6 +168,15 @@ namespace SsdMS.HR
 
 
 
-
+        protected void btnAddDepartDuties_Click(object sender, EventArgs e)
+        {
+            //需添加除重操作
+            TempDepartmentDuty temDepartmentDuty = new TempDepartmentDuty();
+            temDepartmentDuty.DepartmentID = ddlDepartment.SelectedValue;
+            temDepartmentDuty.DutyID = ddlDuty.SelectedValue;
+            temDepartmentDuty.DepartmentDutyName = ddlDepartment.SelectedItem.Text + "-" + ddlDuty.SelectedItem.Text;
+            listTempDepDuty.Add(temDepartmentDuty);
+            lboxDepartDuties.Items.Add(temDepartmentDuty.DepartmentDutyName);
+        }
     }
 }

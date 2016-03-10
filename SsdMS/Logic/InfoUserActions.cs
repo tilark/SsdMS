@@ -10,6 +10,12 @@ using System.Data.Entity.Infrastructure;
 using System.Web.ModelBinding;
 namespace SsdMS.Logic
 {
+    public class TempDepartmentDuty
+    {
+        public string DepartmentID { get; set; }
+        public string DutyID { get; set; }
+        public string DepartmentDutyName { get; set; }
+    }
     public class InfoUserActions
     {
         public InfoUserActions()
@@ -66,5 +72,7 @@ namespace SsdMS.Logic
             return ProfessionDic;
         }
         #endregion
+
+        
     }
 }

@@ -113,7 +113,22 @@
             <asp:CompareValidator ID="CompareValidator2" runat="server" CssClass="text-danger" ErrorMessage="必须选择一个职务" ControlToValidate="ddlDuty" Type="Integer" ValueToCompare="-1" Operator="NotEqual"></asp:CompareValidator>
             </div>      
         </div>
-         <h6>还可以新增多个科室与职务</h6>                         
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+                <asp:Button runat="server" ID="btnAddDepartDuties" OnClick="btnAddDepartDuties_Click" Text="添加科室职务" CssClass="btn btn-primary" />
+            </div>
+            <div class="col-md-8">
+                <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:ListBox ID="lboxDepartDuties" runat="server" CssClass="form-control" SelectionMode="Multiple"></asp:ListBox>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnAddDepartDuties" EventName="Click" />
+                    </Triggers>
+                </asp:UpdatePanel>   
+            </div>
+        </div>
+                                
         <div class="form-group">
             <div class="col-md-2 col-md-offset-2">
                 <asp:Button runat="server" ID="btnAddUser" OnClick="btnAddUser_Click" Text="新增" CssClass="btn btn-primary" />
