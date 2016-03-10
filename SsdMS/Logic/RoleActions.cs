@@ -25,10 +25,6 @@ namespace SsdMS.Logic
                 {
                     using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
                     {
-                        if (!roleManager.RoleExists("Administrators"))
-                        {
-                            var roleresult = roleManager.Create(new IdentityRole("Administrators"));
-                        }
                         if (!roleManager.RoleExists("普通用户"))
                         {
                             var roleresult = roleManager.Create(new IdentityRole("普通用户"));
@@ -56,6 +52,10 @@ namespace SsdMS.Logic
                         if (!roleManager.RoleExists("上传员"))
                         {
                             var roleresult = roleManager.Create(new IdentityRole("上传员"));
+                        }
+                        if (!roleManager.RoleExists("Administrators"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("Administrators"));
                         }
                     }
                 }

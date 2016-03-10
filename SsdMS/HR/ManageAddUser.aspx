@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="创建新用户" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageAddUser.aspx.cs" Inherits="SsdMS.HR.ManageAddUser" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
-        <asp:HyperLink ID="HyperLink1" runat="server" CssClass="btn btn-primary">返回管理用户界面</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink1" runat="server" CssClass="btn btn-primary" NavigateUrl="~/HR/ManageListUsers.aspx">返回管理用户界面</asp:HyperLink>
     </p>
     <p></p>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageDepartmentDuty.aspx.cs" Inherits="SsdMS.HR.ManageDepartmentDuty" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <div class="clo-md-12">
-        <h3>管理科室</h3>
+        <h3>管理科室职务</h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <p><asp:ValidationSummary ID="ValidationSummary1" ShowModelStateErrors="true" runat="server" /></p>
@@ -11,6 +11,8 @@
                     <LayoutTemplate>
                             <table class="table table-hover">
                             <tr>
+                                <th>用户名</th>
+                                <th>工号</th>
                                 <th>科室名称</th>
                                 <th>职务名称</th>
                                 <th>操作</th>
@@ -30,6 +32,8 @@
                     </LayoutTemplate>
                     <ItemTemplate>
                         <tr>
+                            <td><asp:Label runat="server" ID="lblUserName" Visible="true" Text="<%# Item.InfoUser.UserName %>"></asp:Label>  </td> 
+                            <td><asp:Label runat="server" ID="lblEmployeeNo" Visible="true" Text="<%# Item.InfoUser.EmployeeNo %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblDepartmentName" Visible="true" Text="<%# Item.Department.DepartmentName %>"></asp:Label>  </td>   
                             <td><asp:Label runat="server" ID="lblDepartmentPhone1" Visible="true" Text="<%# Item.Duty.DutyName %>"></asp:Label>  </td>   
 <%--                            

@@ -12,7 +12,7 @@ using SsdMS.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using SsdMS.Logic;
-System.Data.Entity.Infrastructure;
+using System.Data.Entity.Infrastructure;
 namespace SsdMS.HR
 {
     public partial class ManageAddUser : System.Web.UI.Page
@@ -58,44 +58,29 @@ namespace SsdMS.HR
                 {
                     using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
                     {
-
                         //InfoUser
-                        var newInfoUser = new InfoUser();                        
+                        var newInfoUser = new InfoUser();
                         newInfoUser.UserName = txtUserName.Text;
                         newInfoUser.EmployeeNo = txtEmployeeNo.Text;
-                        //newInfoUser.BirthDate = (DateTime)txtBirthDate.Text;                        
+                        //newInfoUser.BirthDate = (DateTime)txtBirthDate.Text;  
+                        newInfoUser.BirthDate = DateTime.Now; //需修改
                         newInfoUser.Email = txtEmail.Text;
                         newInfoUser.Phone1 = txtPhone1.Text;
                         newInfoUser.Phone2 = txtPhone2.Text;
-
-                        //DepartmentDuty
-                        var newDepartmentDuty = new DepartmentDuty();
-                        newDepartmentDuty.DepartmentID = Int64.Parse(ddlDepartment.SelectedValue);
-                        newDepartmentDuty.DutyID = Int64.Parse(ddlDuty.SelectedValue);
-                        var insertedDepartmentDuty = context.DepartmentDuties.Add(newDepartmentDuty);
-                        //try
-                        //{
-                        //    context.SaveChanges();
-                        //}
-                        //catch(DbUpdateException)
-                        //Add to InfoUser
-                        //var insertedDepartmentDuty = context.DepartmentDuties.
-                        //                Where(dd => dd.DepartmentID == newDepartmentDuty.DepartmentID && dd.DutyID == newDepartmentDuty.DutyID).FirstOrDefault();
-                        if (insertedDepartmentDuty == null)
-                        {
-                            ErrorMessage.Text = "插入数据库出错!";
-                            return;
-                        }
-                        newInfoUser.DepartmentDuties.Add(insertedDepartmentDuty);
                         newInfoUser.ProfessionID = Int64.Parse(ddlProfession.SelectedValue);
-                        var insertedInfoUser = context.InfoUsers.Add(newInfoUser);
-                        insertedDepartmentDuty.InfoUser = insertedInfoUser;
-                        context.DepartmentDuties.Add(insertedDepartmentDuty);
-                        context.SaveChanges();
-
-                        //insertedInfoUser = context.InfoUsers.
-                        //Add to Application （需要先用context.savechages()之后再这样做）
-                        //
+                        try
+                        {
+                            context.InfoUsers.Add(newInfoUser);
+                            context.SaveChanges();
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            ModelState.AddModelError("", ex);
+                        }
+                        //获取InfoUser的Primary Key
+                        var insertedInfoUserID = context.InfoUsers.Max(p => p.InfoUserID);
+                        var insertedInfoUser = context.InfoUsers.Find(insertedInfoUserID);
+                       
                         var newUser = new ApplicationUser();
                         newUser.UserName = Account.Text;
                         newUser.Email = txtEmail.Text;
@@ -103,10 +88,41 @@ namespace SsdMS.HR
                         IdentityResult result = userManager.Create(newUser, Password.Text);
                         if (result.Succeeded)
                         {
+                            //成功才能加入InfoUser 的DepartmentDuty的信息.
+                            //DepartmentDuty
+                            var newDepartmentDuty = new DepartmentDuty();
+                            newDepartmentDuty.DepartmentID = Int64.Parse(ddlDepartment.SelectedValue);
+                            newDepartmentDuty.DutyID = Int64.Parse(ddlDuty.SelectedValue);
+                            newDepartmentDuty.InfoUser = insertedInfoUser;
+                            try
+                            {
+                                context.DepartmentDuties.Add(newDepartmentDuty);
+                                context.SaveChanges();
+
+                            }
+                            catch (DbUpdateException ex)
+                            {
+                                ModelState.AddModelError("", ex);
+                            }
+                            //获取刚插入的DepartmentDuty
+                            var insertedDepartmentDuty = context.DepartmentDuties.Find(context.DepartmentDuties.Max(p => p.DepartmentDutyID));
+
+                            //Add to InfoUser
+                            //insertedInfoUser.DepartmentDuties.Add(insertedDepartmentDuty);
+                            //context.InfoUsers.Add(insertedInfoUser);
+                            //context.SaveChanges();
                             Response.Redirect("ManageAddUser.aspx");
                         }
                         else
                         {
+                            //需要删除InfoUser表信息
+                            var deleteInfoUser = context.InfoUsers.Find(insertedInfoUserID);
+                            if (deleteInfoUser != null)
+                            {
+                                context.InfoUsers.Remove(deleteInfoUser);
+                                context.SaveChanges();
+                            }
+                            
                             ErrorMessage.Text = result.Errors.FirstOrDefault();
                         }
                     }

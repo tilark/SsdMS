@@ -27,7 +27,7 @@ namespace SsdMS.HR
         {
             IQueryable<SsdMS.Models.DepartmentDuty> query = null;
             ApplicationDbContext context = new ApplicationDbContext();
-            query = context.DepartmentDuties.Include(de => de.Department).Include(du => du.Duty);
+            query = context.DepartmentDuties.Include(de => de.Department).Include(du => du.Duty).Include(us => us.InfoUser);
             return query;
         }
 
