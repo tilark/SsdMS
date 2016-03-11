@@ -207,9 +207,11 @@
     <Content Include="Admin\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="HR\ChangeDepartmentDutyRoles.aspx" />
     <Content Include="HR\ManageAddUser.aspx" />
     <Content Include="HR\ManageDepartment.aspx" />
     <Content Include="HR\ManageDepartmentDuty.aspx" />
+    <Content Include="HR\ManageDetailUser.aspx" />
     <Content Include="HR\ManageDuty.aspx" />
     <Content Include="HR\ManageListUsers.aspx" />
     <Content Include="HR\ManageProfession.aspx" />
@@ -576,6 +578,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HR\ChangeDepartmentDutyRoles.aspx.cs">
+      <DependentUpon>ChangeDepartmentDutyRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ChangeDepartmentDutyRoles.aspx.designer.cs">
+      <DependentUpon>ChangeDepartmentDutyRoles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HR\ManageAddUser.aspx.cs">
       <DependentUpon>ManageAddUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -596,6 +605,13 @@
     </Compile>
     <Compile Include="HR\ManageDepartmentDuty.aspx.designer.cs">
       <DependentUpon>ManageDepartmentDuty.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR\ManageDetailUser.aspx.cs">
+      <DependentUpon>ManageDetailUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR\ManageDetailUser.aspx.designer.cs">
+      <DependentUpon>ManageDetailUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="HR\ManageDuty.aspx.cs">
       <DependentUpon>ManageDuty.aspx</DependentUpon>

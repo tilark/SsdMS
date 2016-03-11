@@ -63,7 +63,7 @@ namespace SsdMS.Logic
 
         }
         /// <summary>
-        /// 程序初始化时创建Administrators权限组和一个Administrator成员
+        /// 程序初始化时创建Administrators权限组和一个Administrator成员,失败！
         /// </summary>
         internal void CreateAdmin()
         {
@@ -196,6 +196,27 @@ namespace SsdMS.Logic
                     return roleManager.Roles.ToList();
                 }
             }
+        }
+        public Dictionary<string, string> GetRolesDic()
+        {
+            Dictionary<string, string> rolesDic = new Dictionary<string, string>();
+            rolesDic.Add("-1", "--请选择--");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                {
+                  var roleList = roleManager.Roles.ToList();
+                  foreach(var role in roleList)
+                  {
+                      if (String.Compare(role.Name, "Administrators") == 0)
+                      {
+                          continue;
+                      }
+                      rolesDic.Add(role.Id, role.Name);
+                  }
+                }
+            }
+            return rolesDic;
         }
     }
 }

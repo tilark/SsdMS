@@ -7,6 +7,9 @@ using System.Data.Entity;
 using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Data.Entity.Infrastructure;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System.Web.ModelBinding;
 namespace SsdMS.Logic
 {
@@ -22,6 +25,12 @@ namespace SsdMS.Logic
         {
 
         }
+        public IdentityResult CreateUser()
+        {
+            return IdentityResult.Success;
+        }
+        #region InfoUser操作
+        #endregion
         #region Duty操作
         public Dictionary<Int64, string> GetDutyDic()
         {

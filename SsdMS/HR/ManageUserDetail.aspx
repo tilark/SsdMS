@@ -97,10 +97,33 @@
                     <div class="form-group">
                         <asp:Label ID="Label8" AssociatedControlID="ddlProfession" runat="server" Text="职称" CssClass="col-md-4 control-label"></asp:Label>
                         <div class="col-md-8">
-                            <asp:DropDownList ID="ddlProfession" runat="server" CssClass="form-control"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlProfession" runat="server"  CssClass="form-control"></asp:DropDownList>
                             <asp:CompareValidator ID="CompareValidator3" runat="server" CssClass="text-danger" ErrorMessage="必须选择一个职称" ControlToValidate="ddlProfession" Type="Integer" ValueToCompare="-1" Operator="NotEqual"></asp:CompareValidator>
                         </div>        
-                    </div>        
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="Label10" AssociatedControlID="ddlDepartment" runat="server" Text="科室职称列表"  CssClass="col-md-4 control-label"></asp:Label>
+                        <div class="col-md-8">
+                            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <asp:ListBox ID="lboxDepartDuties" runat="server" CssClass="form-control" SelectionMode="Single"></asp:ListBox>
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnAddDepartDuties" EventName="Click" />
+                                    <asp:AsyncPostBackTrigger ControlID="btnDeleteDepartDuties" EventName="Click" />
+                                </Triggers>
+                            </asp:UpdatePanel> 
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-2 col-md-offset-2">
+                            <asp:Button runat="server" ID="btnAddDepartDuties" OnClick="btnAddDepartDuties_Click" Text="添加科室职务" CssClass="btn btn-primary" />
+                        </div>
+                        <div class="col-md-8">
+                            <asp:Button runat="server" ID="btnDeleteDepartDuties" OnClick="btnDeleteDepartDuties_Click" Text="删除科室职务" CssClass="btn btn-warning" />
+                  
+                        </div>
+                    </div>                   
                     <div class="form-group">
                         <asp:Label ID="Label6" AssociatedControlID="ddlDepartment" runat="server" Text="科室"  CssClass="col-md-4 control-label"></asp:Label>
                         <div class="col-md-8">
