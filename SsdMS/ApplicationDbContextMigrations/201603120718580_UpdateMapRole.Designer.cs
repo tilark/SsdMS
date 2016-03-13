@@ -7,13 +7,13 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddManagerUserInfo : IMigrationMetadata
+    public sealed partial class UpdateMapRole : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddManagerUserInfo));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateMapRole));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603091231100_AddManagerUserInfo"; }
+            get { return "201603120718580_UpdateMapRole"; }
         }
         
         string IMigrationMetadata.Source

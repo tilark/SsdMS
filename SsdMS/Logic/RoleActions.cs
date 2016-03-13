@@ -25,33 +25,65 @@ namespace SsdMS.Logic
                 {
                     using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
                     {
-                        if (!roleManager.RoleExists("普通用户"))
+                        if (!roleManager.RoleExists("查看本科室上报信息"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("普通用户"));
+                            var roleresult = roleManager.Create(new IdentityRole("查看本科室上报信息"));
                         }
-                        if (!roleManager.RoleExists("科室成员"))
+                        if (!roleManager.RoleExists("查看全院上报信息"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("科室成员"));
+                            var roleresult = roleManager.Create(new IdentityRole("查看全院上报信息"));
                         }
-                        if (!roleManager.RoleExists("科室组长"))
+                        if (!roleManager.RoleExists("新增本人上报信息"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("科室组长"));
+                            var roleresult = roleManager.Create(new IdentityRole("新增本人上报信息"));
                         }
-                        if (!roleManager.RoleExists("科室负责人"))
+                        if (!roleManager.RoleExists("修改本人上报信息"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("科室负责人"));
+                            var roleresult = roleManager.Create(new IdentityRole("修改本人上报信息"));
                         }
-                        if (!roleManager.RoleExists("质控办事员"))
+                        if (!roleManager.RoleExists("修改科室上报信息"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("质控办事员"));
+                            var roleresult = roleManager.Create(new IdentityRole("修改科室上报信息"));
                         }
-                        if (!roleManager.RoleExists("质控管理员"))
+                        if (!roleManager.RoleExists("修改全院上报信息"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("质控管理员"));
+                            var roleresult = roleManager.Create(new IdentityRole("修改全院上报信息"));
                         }
-                        if (!roleManager.RoleExists("上传员"))
+                        if (!roleManager.RoleExists("查看本科室报表"))
                         {
-                            var roleresult = roleManager.Create(new IdentityRole("上传员"));
+                            var roleresult = roleManager.Create(new IdentityRole("查看本科室报表"));
+                        }
+                        if (!roleManager.RoleExists("查看全院报表"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("查看全院报表"));
+                        }
+                        if (!roleManager.RoleExists("修改本人信息"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("修改本人信息"));
+                        }
+                        if (!roleManager.RoleExists("修改全院人员信息"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("修改全院人员信息"));
+                        }
+                        if (!roleManager.RoleExists("审核全院上报信息"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("审核全院上报信息"));
+                        }
+                        if (!roleManager.RoleExists("上传全院上报信息"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("上传全院上报信息"));
+                        }
+                        if (!roleManager.RoleExists("审核全院上报信息"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("审核全院上报信息"));
+                        }
+                        if (!roleManager.RoleExists("确认删除"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("确认删除"));
+                        }
+                        if (!roleManager.RoleExists("物理删除"))
+                        {
+                            var roleresult = roleManager.Create(new IdentityRole("物理删除"));
                         }
                         if (!roleManager.RoleExists("Administrators"))
                         {
@@ -200,7 +232,6 @@ namespace SsdMS.Logic
         public Dictionary<string, string> GetRolesDic()
         {
             Dictionary<string, string> rolesDic = new Dictionary<string, string>();
-            rolesDic.Add("-1", "--请选择--");
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
@@ -208,10 +239,6 @@ namespace SsdMS.Logic
                   var roleList = roleManager.Roles.ToList();
                   foreach(var role in roleList)
                   {
-                      if (String.Compare(role.Name, "Administrators") == 0)
-                      {
-                          continue;
-                      }
                       rolesDic.Add(role.Id, role.Name);
                   }
                 }

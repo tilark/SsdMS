@@ -46,7 +46,25 @@ namespace SsdMS.Models
         public DbSet<Models.Department> Departments { get; set; }
         public DbSet<Models.Duty> Duties { get; set; }
         public DbSet<Models.Profession> Professions { get; set; }
+        public DbSet<Models.MapRole> MapRoles { get; set; }
+        public DbSet<Models.TrueRole> TrueRoles { get; set; }
 
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
+            //将InfoUser中的InfoUserID与EmployeeNo作为联合主键
+            //modelBuilder.Entity<InfoUser>()
+            //    .HasKey(i => new { i.InfoUserID, i.EmployeeNo });
+
+            //modelBuilder.Entity<DepartmentDuty>()
+            //    .HasRequired(i => i.InfoUser)
+            //    .WithMany(i => i.DepartmentDuties)
+            //    .HasForeignKey(i => new { i.InfoUserID, i.EmployeeNo });
+            //将MapRole中的MapRoleID与MapRoleName作为联合主键，TrueRole新增MapRolename作为外键，方便初始化TrueRole
+            
+        }
     }
 }
 

@@ -3,7 +3,7 @@ namespace SsdMS.ApplicationDbContextMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddManagerUserInfo : DbMigration
+    public partial class DeleteCompositKeyMapRole : DbMigration
     {
         public override void Up()
         {

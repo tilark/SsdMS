@@ -84,7 +84,21 @@ namespace SsdMS.HR
                         if (query == null)
                         {
                             item.ProfessionName = txtEditProfessionName.Text;
-                            context.SaveChanges();
+                            bool saveFailed;
+                            do
+                            {
+                                saveFailed = false;
+                                try
+                                {
+                                    context.SaveChanges();
+                                }
+                                catch (DbUpdateConcurrencyException ex)
+                                {
+                                    saveFailed = true;
+                                    // Update the values of the entity that failed to save from the store 
+                                    ex.Entries.Single().Reload();
+                                }
+                            } while (saveFailed);
                         }
                     }
                 }
@@ -118,7 +132,21 @@ namespace SsdMS.HR
                 {
                     // 在此保存更改，例如 MyDataLayer.SaveChanges();
                     context.Professions.Remove(item);
-                    context.SaveChanges();
+                    bool saveFailed;
+                    do
+                    {
+                        saveFailed = false;
+                        try
+                        {
+                            context.SaveChanges();
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            saveFailed = true;
+                            // Update the values of the entity that failed to save from the store 
+                            ex.Entries.Single().Reload();
+                        }
+                    } while (saveFailed);
 
                 }
             }

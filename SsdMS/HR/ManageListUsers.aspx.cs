@@ -28,7 +28,8 @@ namespace SsdMS.HR
             IQueryable<SsdMS.Models.InfoUser> query = null;
             ApplicationDbContext context = new ApplicationDbContext();
             //query = context.InfoUsers.OrderBy(u => u.UserName);
-            query = context.InfoUsers.OrderBy(o => o.UserName);
+            query = context.InfoUsers.OrderBy(o => o.UserName).Include(i => i.MapRole)
+                .Include(i => i.DepartmentDuties);
             return query;
         }
 

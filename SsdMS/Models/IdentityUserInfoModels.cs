@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace SsdMS.Models
 {
     public class BaseTimeStamp
@@ -14,6 +15,10 @@ namespace SsdMS.Models
     
     public class InfoUser : BaseTimeStamp
     {
+        public InfoUser()
+        {
+            this.DepartmentDuties = new HashSet<DepartmentDuty>();
+        }
         [Key]
         [Display(Name = "用户编号")]
         [ScaffoldColumn(false)]
@@ -44,9 +49,20 @@ namespace SsdMS.Models
         public string Email { get; set; }
         [Display(Name = "简介")]
         public string InfoUserDescription { get; set; }
+        [Required, Display(Name ="创建日期")]
+        public DateTime CreateTime { get; set; }
+        [Display(Name = "修改日期")]
+
+        public DateTime ModifiedTime { get; set; }
+        [Display(Name = "上次登录日期")]
+        public DateTime LastLoginTime { get; set; }
+        [Required, Display(Name = "登陆次数")]
+        public Int64 LoginCount { get; set; }
         public Int64 ProfessionID { get; set; }
-        public ICollection<DepartmentDuty> DepartmentDuties { get; set; }
+        public Int64 MapRoleID { get; set; }
+        public virtual ICollection<DepartmentDuty> DepartmentDuties { get; private set; }
         public virtual Profession Profession { get; set; }
+        public virtual MapRole MapRole { get; set; }
 
     }
     public class DepartmentDuty : BaseTimeStamp
@@ -61,6 +77,7 @@ namespace SsdMS.Models
         public virtual Department Department { get; set; }
         public virtual Duty Duty { get; set; }
         public Int64 InfoUserID { get; set; }
+        //public string EmployeeNo { get; set; }
         public virtual InfoUser InfoUser { get; set; } 
 
     }
@@ -106,5 +123,26 @@ namespace SsdMS.Models
         public string ProfessionName { get; set; }
         [Display(Name = "职称描述")]
         public string ProfessionDescription { get; set; }
+    }
+    public class MapRole : BaseTimeStamp
+    {
+        public MapRole()
+        {
+            this.TrueRoles = new HashSet<TrueRole>();
+        }
+        [Key]
+        public Int64 MapRoleID { get; set; }
+        public string MapRoleName { get; set; }
+        public virtual ICollection<TrueRole> TrueRoles { get; private set; }
+        public string  MapRoleDescription { get; set; }
+    }
+    public class TrueRole : BaseTimeStamp
+    {
+        [Key]
+        public Int64 TrueRoleID { get; set; }
+        public string TrueRoleName { get; set; }
+        public string TrueRoleDescription { get; set; }
+        public Int64 MapRoleID { get; set; }
+        public virtual MapRole MapRole { get; set; }
     }
 }

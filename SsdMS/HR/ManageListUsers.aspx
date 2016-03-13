@@ -17,8 +17,8 @@
                                 <th>用户名</th>
                                 <th>工号</th>
                                 <th>工作电话</th>
-                                <th>住宅电话</th>
-                                <th>出生日期</th>
+                                <th>科室职务</th>
+                                <th>权限</th>
                                 <th>操作</th>
                                 <th></th>
                                 <th></th>
@@ -43,9 +43,13 @@
                             <td><asp:Label runat="server" ID="lblInfoUserName" Visible="true" Text="<%# Item.UserName %>"></asp:Label>  </td>  
                             <td><asp:Label runat="server" ID="lblEmployeeNo" Visible="true" Text="<%# Item.EmployeeNo %>"></asp:Label>  </td>
                             <td><asp:Label runat="server" ID="lblPhone1" Visible="true" Text="<%# Item.Phone1 %>"></asp:Label>  </td>   
-                            <td><asp:Label runat="server" ID="lblPhone2" Visible="true" Text="<%# Item.Phone2 %>"></asp:Label>  </td>  
-                            <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%# Item.BirthDate %>"></asp:Label>  </td>   
-                            <td><a href="ManageUserDetail.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">详情</a></td>
+                            <td>
+                                 </td>  
+<%--                            <td><asp:Label runat="server" ID="Label1" Visible="true" Text="<%# Item.DepartmentDuties.
+                                        Where(p => p.InfoUser == Item).FirstOrDefault().DutyID %>"></asp:Label>  </td>  --%>
+                            
+                            <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%#: Item.MapRole.MapRoleName %>"></asp:Label>  </td>   
+                            <td><a href="ManageDetailUser.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">详情</a></td>
                             <td><a href="ManageUserRoles.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">管理权限</a></td>
                             <td><a href="ManageResetPassword.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">重置密码</a></td>
                             <td><a href="ManageResetAccount.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">更改登录名</a></td>

@@ -75,7 +75,7 @@
         </div> 
     <div class="form-group">
             <div class="col-md-2 col-md-offset-2">
-                <asp:Button runat="server" ID="btnAddUser" OnClick="btnAddUser_Click" Text="新增" CssClass="btn btn-primary" />
+                <%--<asp:Button runat="server" ID="btnAddUser" OnClick="btnAddUser_Click" Text="新增" CssClass="btn btn-primary" />--%>
             </div>
             <div class="col-md-8">
                 <%--<asp:Button runat="server" ID="btnCancel" OnClick="btnCancel_Click" Text="取消" CssClass="btn btn-warning" />--%>

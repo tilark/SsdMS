@@ -56,11 +56,28 @@ namespace SsdMS.HR
                     if (ModelState.IsValid)
                     {
                         // 在此保存更改，例如 MyDataLayer.SaveChanges();
+                        //如果更改的名字与其他的相同，不进行更新
                         var query = context.Duties.Where(name => String.Compare(name.DutyName, txtDutyname.Text) == 0).FirstOrDefault();
                         if (query == null)
                         {
                             item.DutyName = txtDutyname.Text;
-                            context.SaveChanges();
+                            //context.SaveChanges();
+                            //测试下看在SaveChanges()时，数据库内的数据改变后，会如何操作，测试有效。
+                            bool saveFailed;
+                            do
+                            {
+                                saveFailed = false;
+                                try
+                                {
+                                    context.SaveChanges();
+                                }
+                                catch (DbUpdateConcurrencyException ex)
+                                {
+                                    saveFailed = true;
+                                    // Update the values of the entity that failed to save from the store 
+                                    ex.Entries.Single().Reload();
+                                }
+                            } while (saveFailed);
                         }
                     }
                 }
@@ -93,8 +110,21 @@ namespace SsdMS.HR
                 {
                     // 在此保存更改，例如 MyDataLayer.SaveChanges();
                     context.Duties.Remove(item);
-                    context.SaveChanges();
-                   
+                    bool saveFailed;
+                    do
+                    {
+                        saveFailed = false;
+                        try
+                        {
+                            context.SaveChanges();
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            saveFailed = true;
+                            // Update the values of the entity that failed to save from the store 
+                            ex.Entries.Single().Reload();
+                        }
+                    } while (saveFailed);
                 }
             }
         }

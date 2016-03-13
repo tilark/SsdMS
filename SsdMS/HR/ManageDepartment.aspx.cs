@@ -74,7 +74,21 @@ namespace SsdMS.HR
                             item.DepartmentPhone3 = txtEditDepartmentPhone3.Text;
                             item.DepartmentPhone4 = txtEditDepartmentPhone4.Text;
                             item.DepartmentDescription = txtEditDepartmentDescrip.Text;
-                            context.SaveChanges();
+                            bool saveFailed;
+                            do
+                            {
+                                saveFailed = false;
+                                try
+                                {
+                                    context.SaveChanges();
+                                }
+                                catch (DbUpdateConcurrencyException ex)
+                                {
+                                    saveFailed = true;
+                                    // Update the values of the entity that failed to save from the store 
+                                    ex.Entries.Single().Reload();
+                                }
+                            } while (saveFailed);
                         }
                         //query不为null，有两种情况，一种是更改自己的信息，需完成修改；另一种是B更名为了A，此时不能够完成修改。
                         //检查item.id与query.id是否相同，如果相同，说明改的是同一个，如果不同，但name却相同，则不能完成修改。
@@ -87,7 +101,21 @@ namespace SsdMS.HR
                                 item.DepartmentPhone3 = txtEditDepartmentPhone3.Text;
                                 item.DepartmentPhone4 = txtEditDepartmentPhone4.Text;
                                 item.DepartmentDescription = txtEditDepartmentDescrip.Text;
-                                context.SaveChanges();
+                                bool saveFailed;
+                                do
+                                {
+                                    saveFailed = false;
+                                    try
+                                    {
+                                        context.SaveChanges();
+                                    }
+                                    catch (DbUpdateConcurrencyException ex)
+                                    {
+                                        saveFailed = true;
+                                        // Update the values of the entity that failed to save from the store 
+                                        ex.Entries.Single().Reload();
+                                    }
+                                } while (saveFailed);
                             }
                         }
                     }
@@ -122,7 +150,21 @@ namespace SsdMS.HR
                 {
                     // 在此保存更改，例如 MyDataLayer.SaveChanges();
                     context.Departments.Remove(item);
-                    context.SaveChanges();
+                    bool saveFailed;
+                    do
+                    {
+                        saveFailed = false;
+                        try
+                        {
+                            context.SaveChanges();
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            saveFailed = true;
+                            // Update the values of the entity that failed to save from the store 
+                            ex.Entries.Single().Reload();
+                        }
+                    } while (saveFailed);
 
                 }
             }

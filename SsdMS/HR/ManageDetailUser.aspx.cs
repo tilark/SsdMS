@@ -18,9 +18,9 @@ namespace SsdMS.HR
 {
     public partial class ManageDetailUser : System.Web.UI.Page
     {
-        private static List<TempDepartmentDuty> listTempDepDuty;
-        private static List<string> listRoles;
-        private static string infoUserId;
+        //private static List<TempDepartmentDuty> listTempDepDuty;
+        //private static List<string> listRoles;
+        //private static string infoUserId;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -34,153 +34,145 @@ namespace SsdMS.HR
 
         }
 
-        private void btnUpdateUser_Click(object sender, EventArgs e)
-        {
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
-                {
-                    using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
-                    {
-                        //InfoUser
-                        var newInfoUser = new InfoUser();
-                        newInfoUser.UserName = txtUserName.Text;
-                        newInfoUser.EmployeeNo = txtEmployeeNo.Text;
-                        //newInfoUser.BirthDate = (DateTime)txtBirthDate.Text;  
-                        newInfoUser.BirthDate = DateTime.Now; //需修改
-                        newInfoUser.Email = txtEmail.Text;
-                        newInfoUser.Phone1 = txtPhone1.Text;
-                        newInfoUser.Phone2 = txtPhone2.Text;
-                        newInfoUser.ProfessionID = Int64.Parse(ddlProfession.SelectedValue);
-                        try
-                        {
-                            context.InfoUsers.Add(newInfoUser);
-                            context.SaveChanges();
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            ModelState.AddModelError("", ex);
-                        }
-                        //获取InfoUser的Primary Key
-                        var insertedInfoUserID = context.InfoUsers.Max(p => p.InfoUserID);
-                        var insertedInfoUser = context.InfoUsers.Find(insertedInfoUserID);
+        //private void btnUpdateUser_Click(object sender, EventArgs e)
+        //{
+        //    using (ApplicationDbContext context = new ApplicationDbContext())
+        //    {
+        //        using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+        //        {
+        //            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+        //            {
+        //                //InfoUser
+        //                var newInfoUser = new InfoUser();
+        //                newInfoUser.UserName = txtUserName.Text;
+        //                newInfoUser.EmployeeNo = txtEmployeeNo.Text;
+        //                //newInfoUser.BirthDate = (DateTime)txtBirthDate.Text;  
+        //                newInfoUser.BirthDate = DateTime.Now; //需修改
+        //                newInfoUser.Email = txtEmail.Text;
+        //                newInfoUser.Phone1 = txtPhone1.Text;
+        //                newInfoUser.Phone2 = txtPhone2.Text;
+        //                newInfoUser.ProfessionID = Int64.Parse(ddlProfession.SelectedValue);
+        //                try
+        //                {
+        //                    context.InfoUsers.Add(newInfoUser);
+        //                    context.SaveChanges();
+        //                }
+        //                catch (DbUpdateException ex)
+        //                {
+        //                    ModelState.AddModelError("", ex);
+        //                }
+        //                //获取InfoUser的Primary Key
+        //                var insertedInfoUserID = context.InfoUsers.Max(p => p.InfoUserID);
+        //                var insertedInfoUser = context.InfoUsers.Find(insertedInfoUserID);
 
                         
 
-                            //成功才能加入InfoUser 的DepartmentDuty的信息.
-                            //DepartmentDuty
-                            foreach (var departDuty in listTempDepDuty)
-                            {
-                                var tempDepartmentDuty = new DepartmentDuty();
-                                tempDepartmentDuty.DepartmentID = Int64.Parse(departDuty.DepartmentID);
-                                tempDepartmentDuty.DutyID = Int64.Parse(departDuty.DutyID);
-                                tempDepartmentDuty.InfoUser = insertedInfoUser;
-                                try
-                                {
-                                    context.DepartmentDuties.Add(tempDepartmentDuty);
-                                    context.SaveChanges();
+        //                    //成功才能加入InfoUser 的DepartmentDuty的信息.
+        //                    //DepartmentDuty
+        //                    foreach (var departDuty in listTempDepDuty)
+        //                    {
+        //                        var tempDepartmentDuty = new DepartmentDuty();
+        //                        tempDepartmentDuty.DepartmentID = Int64.Parse(departDuty.DepartmentID);
+        //                        tempDepartmentDuty.DutyID = Int64.Parse(departDuty.DutyID);
+        //                        tempDepartmentDuty.InfoUser = insertedInfoUser;
+        //                        try
+        //                        {
+        //                            context.DepartmentDuties.Add(tempDepartmentDuty);
+        //                            context.SaveChanges();
 
-                                }
-                                catch (DbUpdateException ex)
-                                {
-                                    ModelState.AddModelError("", ex);
-                                }
-                            }
+        //                        }
+        //                        catch (DbUpdateException ex)
+        //                        {
+        //                            ModelState.AddModelError("", ex);
+        //                        }
+        //                    }
 
                             
                        
-                        //用完ListTempDepDuty后删除
-                        if (listTempDepDuty != null)
-                        {
-                            listTempDepDuty = null;
-                        }
-                        if (listRoles != null)
-                        {
-                            listRoles = null;
-                        }
-                        Response.Redirect("ManageAddUser.aspx");
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// 将选中的科室与职务放入到列表框中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnAddDepartDuties_Click(object sender, EventArgs e)
-        {
-            if (listTempDepDuty == null)
-            {
-                listTempDepDuty = new List<TempDepartmentDuty>();
-            }
-            //需添加除重操作
-            TempDepartmentDuty temDepartmentDuty = new TempDepartmentDuty();
-            temDepartmentDuty.DepartmentID = ddlDepartment.SelectedValue;
-            temDepartmentDuty.DutyID = ddlDuty.SelectedValue;
-            temDepartmentDuty.DepartmentDutyName = ddlDepartment.SelectedItem.Text + "-" + ddlDuty.SelectedItem.Text;
-            //除重
-            if (listTempDepDuty.Find(d => d.DepartmentID == temDepartmentDuty.DepartmentID && d.DutyID == temDepartmentDuty.DutyID) == null)
-            {
-                listTempDepDuty.Add(temDepartmentDuty);
-                lboxDepartDuties.Items.Add(temDepartmentDuty.DepartmentDutyName);
-            }
+        //                //用完ListTempDepDuty后删除
+        //                if (listTempDepDuty != null)
+        //                {
+        //                    listTempDepDuty = null;
+        //                }
+        //                if (listRoles != null)
+        //                {
+        //                    listRoles = null;
+        //                }
+        //                Response.Redirect("ManageAddUser.aspx");
+        //            }
+        //        }
+        //    }
+        //}
 
-        }
-        /// <summary>
-        /// 将科室职务从列表框中删除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnDeleteDepartDuties_Click(object sender, EventArgs e)
-        {
-            if (listTempDepDuty != null)
-            {
-                var queryBox = lboxDepartDuties.SelectedItem;
-                var departmentDuty = listTempDepDuty.Find(d => d.DepartmentDutyName == queryBox.Text);
-                if (departmentDuty != null)
-                {
-                    listTempDepDuty.Remove(departmentDuty);
-                    lboxDepartDuties.Items.Remove(queryBox);
-                }
-            }
 
-        }
-        /// <summary>
-        /// 增加权限到列表中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnAddRoles_Click(object sender, EventArgs e)
+        // id 参数应与控件上设置的 DataKeyNames 值匹配
+        // 或用值提供程序特性装饰，例如 [QueryString]int id
+        public SsdMS.Models.InfoUser fvInfoUser_GetItem([QueryString] Int64? infoUserID)
         {
-            if (listRoles == null)
-            {
-                listRoles = new List<string>();
-            }
-            var role = ddlRole.SelectedItem.Text;
-            //需再增加一个过滤条件，人事管理员不能将用户添加到Administrators组中
-            if (!listRoles.Contains(role))
-            {
-                listRoles.Add(role);
-                lboxRoles.Items.Add(role);
-            }
+            InfoUser queryUser = new InfoUser(); ;
+            ApplicationDbContext context = new ApplicationDbContext();
+            queryUser = context.InfoUsers.Where(user => user.InfoUserID == infoUserID).FirstOrDefault();
+            return queryUser;
         }
-        /// <summary>
-        /// 将权限从列表中删除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnDeleteRoles_Click(object sender, EventArgs e)
+
+        // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        public void fvInfoUser_UpdateItem(Int64 infoUserID)
         {
-            if (listRoles != null)
+            TextBox txtUserName = new TextBox();
+            txtUserName = (TextBox)fvInfoUser.FindControl("txtUserName");
+            TextBox txtEmployeeNo = new TextBox();
+            txtEmployeeNo = (TextBox)fvInfoUser.FindControl("txtEmployeeNo");
+            TextBox txtBirthDate = new TextBox();
+            txtBirthDate = (TextBox)fvInfoUser.FindControl("txtBirthDate");
+            TextBox txtEmail = new TextBox();
+            txtEmail = (TextBox)fvInfoUser.FindControl("txtEmail");
+
+            TextBox txtPhone1 = new TextBox();
+            txtPhone1 = (TextBox)fvInfoUser.FindControl("txtPhone1");
+
+            TextBox txtPhone2 = new TextBox();
+            txtPhone2 = (TextBox)fvInfoUser.FindControl("txtPhone2");
+            using (ApplicationDbContext context = new ApplicationDbContext())
             {
-                var role = lboxRoles.SelectedItem.Text;
-                if (listRoles.Contains(role))
+                SsdMS.Models.InfoUser item = null;
+                // 在此加载该项，例如 item = MyDataLayer.Find(id);
+                item = context.InfoUsers.Find(infoUserID);
+                if (item == null)
                 {
-                    listRoles.Remove(role);
-                    lboxRoles.Items.Remove(role);
+                    // 未找到该项
+                    ModelState.AddModelError("", String.Format("未找到 id 为 {0} 的项", infoUserID));
+                    return;
+                }
+                TryUpdateModel(item);
+                if (ModelState.IsValid)
+                {
+                    // 在此保存更改，例如 MyDataLayer.SaveChanges();
+                    item.UserName = txtUserName.Text;
+                    item.Email = txtEmail.Text;
+                    item.EmployeeNo = txtEmployeeNo.Text;
+                    item.BirthDate = DateTime.Parse(txtBirthDate.Text);
+                    item.Phone1 = txtPhone1.Text;
+                    item.Phone2 = txtPhone2.Text;
+                    item.ModifiedTime = DateTime.Now;
+                    ErrorMessage.Text = "更新成功！";
+                    bool saveFailed;
+                    do
+                    {
+                        saveFailed = false;
+                        try
+                        {
+                            context.SaveChanges();
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            saveFailed = true;
+                            // Update the values of the entity that failed to save from the store 
+                            ex.Entries.Single().Reload();
+                        }
+                    } while (saveFailed);
                 }
             }
+            
         }
     }
 }

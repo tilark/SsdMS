@@ -171,6 +171,8 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Admin\ListMapRoles.aspx" />
+    <Content Include="Admin\ManageMapRoles.aspx" />
     <Content Include="Admin\ManageRoles.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -217,7 +219,6 @@
     <Content Include="HR\ManageProfession.aspx" />
     <Content Include="HR\ManageResetAccount.aspx" />
     <Content Include="HR\ManageResetPassword.aspx" />
-    <Content Include="HR\ManageUserDetail.aspx" />
     <Content Include="HR\ManageUserRoles.aspx" />
     <Content Include="HR\TestDepartmentDutyToMulti.aspx" />
     <Content Include="HR\Web.config">
@@ -377,6 +378,20 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\ListMapRoles.aspx.cs">
+      <DependentUpon>ListMapRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ListMapRoles.aspx.designer.cs">
+      <DependentUpon>ListMapRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageMapRoles.aspx.cs">
+      <DependentUpon>ManageMapRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageMapRoles.aspx.designer.cs">
+      <DependentUpon>ManageMapRoles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ManageRoles.aspx.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -384,9 +399,25 @@
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationDbContextMigrations\201603091231100_AddManagerUserInfo.cs" />
-    <Compile Include="ApplicationDbContextMigrations\201603091231100_AddManagerUserInfo.Designer.cs">
-      <DependentUpon>201603091231100_AddManagerUserInfo.cs</DependentUpon>
+    <Compile Include="ApplicationDbContextMigrations\201603120636387_InitInfoUser.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603120636387_InitInfoUser.Designer.cs">
+      <DependentUpon>201603120636387_InitInfoUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603120718580_UpdateMapRole.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603120718580_UpdateMapRole.Designer.cs">
+      <DependentUpon>201603120718580_UpdateMapRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603120741281_UpdateTrueRoleInMapRole.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603120741281_UpdateTrueRoleInMapRole.Designer.cs">
+      <DependentUpon>201603120741281_UpdateTrueRoleInMapRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603121002495_AddTrueRoleDBSet.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603121002495_AddTrueRoleDBSet.Designer.cs">
+      <DependentUpon>201603121002495_AddTrueRoleDBSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603130954553_DeleteCompositKeyMapRole.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603130954553_DeleteCompositKeyMapRole.Designer.cs">
+      <DependentUpon>201603130954553_DeleteCompositKeyMapRole.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -648,13 +679,6 @@
     <Compile Include="HR\ManageResetPassword.aspx.designer.cs">
       <DependentUpon>ManageResetPassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="HR\ManageUserDetail.aspx.cs">
-      <DependentUpon>ManageUserDetail.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HR\ManageUserDetail.aspx.designer.cs">
-      <DependentUpon>ManageUserDetail.aspx</DependentUpon>
-    </Compile>
     <Compile Include="HR\ManageUserRoles.aspx.cs">
       <DependentUpon>ManageUserRoles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -701,8 +725,20 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ApplicationDbContextMigrations\201603091231100_AddManagerUserInfo.resx">
-      <DependentUpon>201603091231100_AddManagerUserInfo.cs</DependentUpon>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603120636387_InitInfoUser.resx">
+      <DependentUpon>201603120636387_InitInfoUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603120718580_UpdateMapRole.resx">
+      <DependentUpon>201603120718580_UpdateMapRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603120741281_UpdateTrueRoleInMapRole.resx">
+      <DependentUpon>201603120741281_UpdateTrueRoleInMapRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603121002495_AddTrueRoleDBSet.resx">
+      <DependentUpon>201603121002495_AddTrueRoleDBSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603130954553_DeleteCompositKeyMapRole.resx">
+      <DependentUpon>201603130954553_DeleteCompositKeyMapRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

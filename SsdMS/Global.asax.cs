@@ -18,6 +18,8 @@ namespace SsdMS
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RoleActions roleAction = new RoleActions();
             roleAction.CreateBasicRoles();
+            InfoUserActions infoUserAction = new InfoUserActions();
+            infoUserAction.CreateBasicMapRoles();
         }
     }
 }
