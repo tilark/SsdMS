@@ -1,5 +1,9 @@
 ﻿<%@ Page Title="重置密码" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageResetPassword.aspx.cs" Inherits="SsdMS.HR.ManageResetPassword" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+        <p>
+        <asp:HyperLink ID="HyperLink1" runat="server" CssClass="btn btn-primary" NavigateUrl="~/HR/ManageListUsers.aspx">返回管理用户界面</asp:HyperLink>
+    </p>
+
     <div class="form-horizontal">
         <h4>输入新密码</h4>
         <hr />

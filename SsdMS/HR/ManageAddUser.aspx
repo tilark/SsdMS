@@ -119,7 +119,7 @@
             <asp:Label ID="Label10" AssociatedControlID="ddlRole" runat="server" Text="权限" CssClass="col-md-2 control-label"></asp:Label>
             <div class="col-md-3">
             <asp:DropDownList ID="ddlRole" runat="server" CssClass="form-control"></asp:DropDownList>  
-            <%--<asp:CompareValidator ID="CompareValidator4" runat="server" CssClass="text-danger" ErrorMessage="必须选择一个权限" ControlToValidate="ddlRole" Type="String" ValueToCompare="-1" Operator="NotEqual"></asp:CompareValidator>--%>
+            <asp:CompareValidator ID="CompareValidator4" runat="server" CssClass="text-danger" ErrorMessage="必须选择一个权限" ControlToValidate="ddlRole" Type="String" ValueToCompare="-1" Operator="NotEqual"></asp:CompareValidator>
             </div>      
         </div>
                                                     

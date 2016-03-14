@@ -28,27 +28,18 @@ namespace SsdMS.ApplicationDbContextMigrations
             //    );
             //
             //context.Departments.AddOrUpdate(
-            //  new Department { DepartmentName = "科室1" },
-            //  new Department { DepartmentName = "科室2" },
-            //  new Department { DepartmentName = "科室3" },
             //  new Department { DepartmentName = "Departmet1" },
             //  new Department { DepartmentName = "Departmet2" }
             //  );
             //context.SaveChanges();
 
             //context.Duties.AddOrUpdate(
-            //    new Duty { DutyName = "职务1" },
-            //    new Duty { DutyName = "职务2" },
-            //    new Duty { DutyName = "职务3" },
             //    new Duty { DutyName = "Duty1" },
             //    new Duty { DutyName = "Duty2" }
             //    );
             //context.SaveChanges();
 
             //context.Professions.AddOrUpdate(
-            //    new Profession { ProfessionName = "职称1" },
-            //    new Profession { ProfessionName = "职称2" },
-            //    new Profession { ProfessionName = "职称3" },
             //    new Profession { ProfessionName = "Profession1" },
             //    new Profession { ProfessionName = "Profession2" }
             //    );

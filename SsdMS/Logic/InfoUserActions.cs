@@ -571,6 +571,23 @@ namespace SsdMS.Logic
         {
             return IdentityResult.Success;
         }
+        #region DepartmentDuty操作
+        public Dictionary<Int64, string> GetDepartmentDutyDic(Int64 infoUserID)
+        {
+            Dictionary<Int64, string> DepartmentDutyDic = new Dictionary<long, string>();
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var queryDepartmentDuty = context.DepartmentDuties.Where(d => d.InfoUserID == infoUserID)
+                    .Include(d => d.Department).Include(d => d.Duty);
+                foreach (var query in queryDepartmentDuty)
+                {
+                    var departmentDutyName = query.Department.DepartmentName + "-" + query.Duty.DutyName;
+                    DepartmentDutyDic.Add(query.DepartmentDutyID, departmentDutyName);
+                }
+            }
+            return DepartmentDutyDic;
+        }
+        #endregion
         #region InfoUser操作
         #endregion
         #region Duty操作
