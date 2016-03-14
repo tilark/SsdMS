@@ -18,8 +18,6 @@ namespace SsdMS.HR
 {
     public partial class ChangeDepartmentDutyRoles : System.Web.UI.Page
     {
-        private static List<TempDepartmentDuty> listTempDepDuty;
-        private static List<string> listRoles;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -43,29 +41,43 @@ namespace SsdMS.HR
             ddlDuty.DataTextField = "Value";
             ddlDuty.DataBind();
 
-            //Role DropDown Bind
-            ddlRole.DataSource = new RoleActions().GetRolesDic();
-            ddlRole.DataValueField = "Key";
-            ddlRole.DataTextField = "Value";
-            ddlRole.DataBind();
+            //MapRole DropDown Bind
+            ddlMapRole.DataSource =  infoUserAction.GetMapRoleDic();
+            ddlMapRole.DataValueField = "Key";
+            ddlMapRole.DataTextField = "Value";
+            ddlMapRole.DataBind();
 
+            DepartmentDutyBind();
+            MapRoleBind();
+        }
+        private void DepartmentDutyBind()
+        {
+            //DepartmentDuty Bind
             Label lblInfoUser = new Label();
             lblInfoUser = (Label)fvInfoUser.FindControl("lblInfoUserID");
             if (lblInfoUser != null)
             {
                 var lblInfoUserID = Int64.Parse(lblInfoUser.Text);
                 //DepartmentDuty ListBox Bind
-                lboxDepartDuties.DataSource = infoUserAction.GetDepartmentDutyDic(lblInfoUserID);
+                lboxDepartDuties.DataSource = new InfoUserActions().GetDepartmentDutyDic(lblInfoUserID);
                 lboxDepartDuties.DataValueField = "Key";
                 lboxDepartDuties.DataTextField = "Value";
                 lboxDepartDuties.DataBind();
             }
-            
-            //MapRole Bind
-            //ddlMapRole.DataSource = new InfoUserActions().GetMapRoleWithAdminDic();
-            //ddlMapRole.DataTextField = "Value";
-            //ddlMapRole.DataValueField = "Key";
-            //ddlMapRole.DataBind();
+        }
+
+        private void MapRoleBind()
+        {
+            Label lblInfoUser = new Label();
+            lblInfoUser = (Label)fvInfoUser.FindControl("lblInfoUserID");
+            if(lblInfoUser != null)
+            {
+                var lblInfoUserID = Int64.Parse(lblInfoUser.Text);
+                lboxRoles.DataSource = new InfoUserActions().GetInfoUserMapRoleDic(lblInfoUserID);
+                lboxRoles.DataValueField = "Key";
+                lboxRoles.DataTextField = "Value";
+                lboxRoles.DataBind();
+            }
         }
         // id 参数应与控件上设置的 DataKeyNames 值匹配
         // 或用值提供程序特性装饰，例如 [QueryString]int id
@@ -84,22 +96,39 @@ namespace SsdMS.HR
         /// <param name="e"></param>
         protected void btnAddDepartDuties_Click(object sender, EventArgs e)
         {
-            if (listTempDepDuty == null)
+            if( Int64.Parse(ddlDepartment.SelectedValue) < 0 || Int64.Parse(ddlDuty.SelectedValue) < 0)
             {
-                listTempDepDuty = new List<TempDepartmentDuty>();
+                return;
             }
-            //需添加除重操作
-            TempDepartmentDuty temDepartmentDuty = new TempDepartmentDuty();
-            temDepartmentDuty.DepartmentID = ddlDepartment.SelectedValue;
-            temDepartmentDuty.DutyID = ddlDuty.SelectedValue;
-            temDepartmentDuty.DepartmentDutyName = ddlDepartment.SelectedItem.Text + "-" + ddlDuty.SelectedItem.Text;
-            //除重
-            if (listTempDepDuty.Find(d => d.DepartmentID == temDepartmentDuty.DepartmentID && d.DutyID == temDepartmentDuty.DutyID) == null)
+            Label lblInfoUser = new Label();
+            lblInfoUser = (Label)fvInfoUser.FindControl("lblInfoUserID");
+            if (lblInfoUser != null)
             {
-                listTempDepDuty.Add(temDepartmentDuty);
-                lboxDepartDuties.Items.Add(temDepartmentDuty.DepartmentDutyName);
+                var lblInfoUserID = Int64.Parse(lblInfoUser.Text);
+                var newDepartmentDuty = new DepartmentDuty();
+                newDepartmentDuty.DepartmentID = Int64.Parse(ddlDepartment.SelectedValue);
+                newDepartmentDuty.DutyID = Int64.Parse(ddlDuty.SelectedValue);
+                using (ApplicationDbContext context = new ApplicationDbContext())
+                {
+                    var infoUser = context.InfoUsers.Find(lblInfoUserID);
+                    if(infoUser != null)
+                    {
+                        //除重操作
+                        var query = infoUser.DepartmentDuties
+                            .Where(d => d.DepartmentID == newDepartmentDuty.DepartmentID && d.DutyID == newDepartmentDuty.DutyID).FirstOrDefault();
+                        //将infouser添加到departmentduty中，就能建立连接
+                        if(query != null)
+                        {
+                            //已有重复的科室与职务，不添加
+                            return;
+                        }
+                        newDepartmentDuty.InfoUser = infoUser;
+                        context.DepartmentDuties.Add(newDepartmentDuty);
+                        context.SaveChanges();
+                    }
+                }
+                DepartmentDutyBind();
             }
-
         }
         /// <summary>
         /// 将科室职务从列表框中删除
@@ -108,17 +137,35 @@ namespace SsdMS.HR
         /// <param name="e"></param>
         protected void btnDeleteDepartDuties_Click(object sender, EventArgs e)
         {
-            if (listTempDepDuty != null)
+            if(lboxDepartDuties.SelectedItem != null)
             {
-                var queryBox = lboxDepartDuties.SelectedItem;
-                var departmentDuty = listTempDepDuty.Find(d => d.DepartmentDutyName == queryBox.Text);
-                if (departmentDuty != null)
+                //从数据库中删除
+                using(ApplicationDbContext context = new ApplicationDbContext())
                 {
-                    listTempDepDuty.Remove(departmentDuty);
-                    lboxDepartDuties.Items.Remove(queryBox);
+                    var departmentDutyID = Int64.Parse(lboxDepartDuties.SelectedValue);
+                    var item = context.DepartmentDuties.Find(departmentDutyID);
+                    if(item != null)
+                    {
+                        context.DepartmentDuties.Remove(item);
+                        bool saveFailed;
+                        do
+                        {
+                            saveFailed = false;
+                            try
+                            {
+                                context.SaveChanges();
+                            }
+                            catch (DbUpdateConcurrencyException ex)
+                            {
+                                saveFailed = true;
+                                // Update the values of the entity that failed to save from the store 
+                                ex.Entries.Single().Reload();
+                            }
+                        } while (saveFailed);
+                    }
                 }
+                DepartmentDutyBind();
             }
-
         }
         /// <summary>
         /// 增加权限到列表中
@@ -127,17 +174,35 @@ namespace SsdMS.HR
         /// <param name="e"></param>
         protected void btnAddRoles_Click(object sender, EventArgs e)
         {
-            if (listRoles == null)
+            if( Int64.Parse(ddlMapRole.SelectedValue) < 0)
             {
-                listRoles = new List<string>();
+                return;
             }
-            var role = ddlRole.SelectedItem.Text;
-            //需再增加一个过滤条件，人事管理员不能将用户添加到Administrators组中
-            if (!listRoles.Contains(role))
+            Label lblInfoUser = new Label();
+            lblInfoUser = (Label)fvInfoUser.FindControl("lblInfoUserID");
+            if (lblInfoUser != null)
             {
-                listRoles.Add(role);
-                lboxRoles.Items.Add(role);
+                var lblInfoUserID = Int64.Parse(lblInfoUser.Text);
+                using (ApplicationDbContext context = new ApplicationDbContext())
+                {
+                    var mapRoleID = Int64.Parse(ddlMapRole.SelectedValue);
+                    var query = context.InfoUserMapRoles
+                        .Where(info => info.InfoUserID == lblInfoUserID && info.MapRoleID == mapRoleID).FirstOrDefault();
+                    if (query == null)
+                    {
+                        InfoUserMapRole item = new InfoUserMapRole();
+                        item.InfoUserID = lblInfoUserID;
+                        item.MapRoleID = mapRoleID;
+                        context.InfoUserMapRoles.Add(item);
+                        context.SaveChanges();
+                        //还需添加TrueRole
+                    }
+                }
+                MapRoleBind();
+
             }
+
+
         }
         /// <summary>
         /// 将权限从列表中删除
@@ -146,15 +211,36 @@ namespace SsdMS.HR
         /// <param name="e"></param>
         protected void btnDeleteRoles_Click(object sender, EventArgs e)
         {
-            if (listRoles != null)
+            if(lboxRoles.SelectedItem != null)
             {
-                var role = lboxRoles.SelectedItem.Text;
-                if (listRoles.Contains(role))
+                using (ApplicationDbContext context = new ApplicationDbContext())
                 {
-                    listRoles.Remove(role);
-                    lboxRoles.Items.Remove(role);
+                    Int64 infoUserMapRoleID = Int64.Parse(lboxRoles.SelectedValue);
+                    var item = context.InfoUserMapRoles.Find(infoUserMapRoleID);
+                    if(item != null)
+                    {
+                        context.InfoUserMapRoles.Remove(item);
+                        bool saveFailed;
+                        do
+                        {
+                            saveFailed = false;
+                            try
+                            {
+                                context.SaveChanges();
+                            }
+                            catch (DbUpdateConcurrencyException ex)
+                            {
+                                saveFailed = true;
+                                // Update the values of the entity that failed to save from the store 
+                                ex.Entries.Single().Reload();
+                            }
+                        } while (saveFailed);
+                        //还需要删除TrueRole
+                    }
                 }
+                MapRoleBind();
             }
+
         }
     }
 }

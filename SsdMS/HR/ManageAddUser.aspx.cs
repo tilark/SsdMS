@@ -84,7 +84,7 @@ namespace SsdMS.HR
                         newInfoUser.Phone2 = txtPhone2.Text;
                         newInfoUser.ProfessionID = Int64.Parse(ddlProfession.SelectedValue);
                         //添加MapRole
-                        newInfoUser.MapRoleID = Int64.Parse(ddlRole.SelectedValue);
+                        //newInfoUser.MapRoleID = Int64.Parse(ddlRole.SelectedValue);
                         try
                         {
                             context.InfoUsers.Add(newInfoUser);
@@ -122,6 +122,13 @@ namespace SsdMS.HR
                             ModelState.AddModelError("", ex.Message);
                             return;
                         }
+                        //添加MapRole
+                        //newInfoUser.MapRoleID = Int64.Parse(ddlRole.SelectedValue);
+                        InfoUserMapRole infoUserMapRole = new InfoUserMapRole();
+                        infoUserMapRole.InfoUserID = insertedInfoUser.InfoUserID;
+                        infoUserMapRole.MapRoleID = Int64.Parse(ddlRole.SelectedValue);
+                        context.InfoUserMapRoles.Add(infoUserMapRole);
+                        context.SaveChanges();
 
                         var newUser = new ApplicationUser();
                         newUser.UserName = Account.Text;
@@ -136,7 +143,7 @@ namespace SsdMS.HR
                             if (mapRole != null)
                             {
                                 //var trueRoleNames = mapRole.TrueRoleNames;
-                                foreach(var roleName in mapRole.TrueRoles)
+                                foreach (var roleName in mapRole.TrueRoles)
                                 {
                                     var resultRole = userManager.AddToRole(newUser.Id, roleName.TrueRoleName);
                                     if (!resultRole.Succeeded)

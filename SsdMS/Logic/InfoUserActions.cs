@@ -40,7 +40,7 @@ namespace SsdMS.Logic
                 string TrueRoleName5 = "修改科室上报信息";
                 string TrueRoleName6 = "修改全院上报信息";
                 string TrueRoleName7 = "确认删除";
-                string TrueRoleName8 = "物理删除";
+                //string TrueRoleName8 = "物理删除";
                 string TrueRoleName9 = "查看本科室报表";
                 string TrueRoleName10 = "查看全院报表";
                 string TrueRoleName11 = "修改本人信息";
@@ -658,6 +658,20 @@ namespace SsdMS.Logic
                 }
             }
             return mapRoleDic;
+        }
+        public Dictionary<Int64, string> GetInfoUserMapRoleDic(Int64 infoUserID)
+        {
+            Dictionary<Int64, string> infoUserMapRoleDic = new Dictionary<Int64, string>();
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var queryMapRole = context.InfoUserMapRoles.Where(i => i.InfoUserID == infoUserID).Include(i => i.MapRole);
+                foreach (var query in queryMapRole)
+                {
+
+                    infoUserMapRoleDic.Add(query.InfoUserMapRoleID, query.MapRole.MapRoleName);
+                }
+            }
+            return infoUserMapRoleDic;
         }
         public Dictionary<Int64, string> GetMapRoleWithAdminDic()
         {

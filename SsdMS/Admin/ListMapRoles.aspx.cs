@@ -37,11 +37,11 @@ namespace SsdMS.Admin
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
-                var infoUser = context.InfoUsers.Where(i => i.MapRoleID == MapRoleID).FirstOrDefault();
-                //不为NULL，说明infoUser中存在该角色，不能删除
-                if (infoUser != null)
+                //在InfoUserMapRole中是否有MapRole与删除项关联，有则不能删除
+                var infoUserMapRole = context.InfoUserMapRoles.Where(i => i.MapRoleID == MapRoleID).FirstOrDefault();
+                if (infoUserMapRole != null)
                 {
-                    ModelState.AddModelError("", String.Format("在{0}中存在该角色，请更改后再删除", infoUser.UserName));
+                    ModelState.AddModelError("", String.Format("在用户{0}项中存在该角色，请更改后再删除", infoUserMapRole.InfoUserID));
                     return;
                 }
                 var item =  context.MapRoles.Find(MapRoleID);
@@ -83,7 +83,7 @@ namespace SsdMS.Admin
                     // Save changes here
                     using (ApplicationDbContext context = new ApplicationDbContext())
                     {
-                        //在Duty表中查找一下，看是否存在这个txtDutyname，如果存在，不添加
+                        //在Duty表中查找一下，txtMapRoleName，如果存在，不添加
                         var query = context.MapRoles.Where(n => String.Compare(n.MapRoleName, txtMapRoleName.Text) == 0).FirstOrDefault();
                         if (query == null)
                         {

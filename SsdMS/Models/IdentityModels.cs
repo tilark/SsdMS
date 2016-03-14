@@ -48,7 +48,7 @@ namespace SsdMS.Models
         public DbSet<Models.Profession> Professions { get; set; }
         public DbSet<Models.MapRole> MapRoles { get; set; }
         public DbSet<Models.TrueRole> TrueRoles { get; set; }
-
+        public DbSet<Models.InfoUserMapRole> InfoUserMapRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

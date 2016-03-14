@@ -419,6 +419,10 @@
     <Compile Include="ApplicationDbContextMigrations\201603130954553_DeleteCompositKeyMapRole.Designer.cs">
       <DependentUpon>201603130954553_DeleteCompositKeyMapRole.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603140901396_AddInfoUserMapRole.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603140901396_AddInfoUserMapRole.Designer.cs">
+      <DependentUpon>201603140901396_AddInfoUserMapRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -739,6 +743,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ApplicationDbContextMigrations\201603130954553_DeleteCompositKeyMapRole.resx">
       <DependentUpon>201603130954553_DeleteCompositKeyMapRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603140901396_AddInfoUserMapRole.resx">
+      <DependentUpon>201603140901396_AddInfoUserMapRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

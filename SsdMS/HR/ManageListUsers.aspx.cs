@@ -29,7 +29,7 @@ namespace SsdMS.HR
             IQueryable<SsdMS.Models.InfoUser> query = null;
             ApplicationDbContext context = new ApplicationDbContext();
             //query = context.InfoUsers.OrderBy(u => u.UserName);
-            query = context.InfoUsers.OrderBy(o => o.UserName).Include(i => i.MapRole)
+            query = context.InfoUsers.OrderBy(o => o.UserName).Include(i => i.InfoUserMapRole)
                 .Include(i => i.DepartmentDuties);
             return query;
         }
@@ -52,6 +52,21 @@ namespace SsdMS.HR
             ApplicationDbContext context = new ApplicationDbContext();
             var infoUserID = Int64.Parse(lblInfoUserID);
             quey = context.DepartmentDuties.Where(d => d.InfoUserID == infoUserID).Include(d => d.Department).Include(d => d.Duty);
+            return quey;
+        }
+
+        // 返回类型可以更改为 IEnumerable，但是为了支持
+        // 分页和排序，必须添加以下参数:
+        //     int maximumRows
+        //     int startRowIndex
+        //     out int totalRowCount
+        //     string sortByExpression
+        public IQueryable<SsdMS.Models.InfoUserMapRole> lvInfoUserMapRole_GetData([Control] string lblInfoUserID)
+        {
+            IQueryable<SsdMS.Models.InfoUserMapRole> quey = null;
+            ApplicationDbContext context = new ApplicationDbContext();
+            var infoUserID = Int64.Parse(lblInfoUserID);
+            quey = context.InfoUserMapRoles.Where(info => info.InfoUserID == infoUserID).Include(info => info.MapRole);
             return quey;
         }
     }

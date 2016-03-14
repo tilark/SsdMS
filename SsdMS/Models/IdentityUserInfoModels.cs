@@ -18,6 +18,8 @@ namespace SsdMS.Models
         public InfoUser()
         {
             this.DepartmentDuties = new HashSet<DepartmentDuty>();
+            this.InfoUserMapRole = new HashSet<InfoUserMapRole>();
+
         }
         [Key]
         [Display(Name = "用户编号")]
@@ -59,10 +61,12 @@ namespace SsdMS.Models
         [Required, Display(Name = "登陆次数")]
         public Int64 LoginCount { get; set; }
         public Int64 ProfessionID { get; set; }
-        public Int64 MapRoleID { get; set; }
+        //public Int64 MapRoleID { get; set; }
         public virtual ICollection<DepartmentDuty> DepartmentDuties { get; private set; }
+        public virtual ICollection<InfoUserMapRole> InfoUserMapRole { get; private set; }
+
         public virtual Profession Profession { get; set; }
-        public virtual MapRole MapRole { get; set; }
+        //public virtual MapRole MapRole { get; set; }
 
     }
     public class DepartmentDuty : BaseTimeStamp
@@ -129,12 +133,14 @@ namespace SsdMS.Models
         public MapRole()
         {
             this.TrueRoles = new HashSet<TrueRole>();
-        }
+            this.InfoUserMapRole = new HashSet<InfoUserMapRole>();
+        }        
         [Key]
         public Int64 MapRoleID { get; set; }
         public string MapRoleName { get; set; }
         public virtual ICollection<TrueRole> TrueRoles { get; private set; }
         public string  MapRoleDescription { get; set; }
+        public virtual ICollection<InfoUserMapRole> InfoUserMapRole { get; private set; }
     }
     public class TrueRole : BaseTimeStamp
     {
@@ -144,5 +150,15 @@ namespace SsdMS.Models
         public string TrueRoleDescription { get; set; }
         public Int64 MapRoleID { get; set; }
         public virtual MapRole MapRole { get; set; }
+    }
+    public class InfoUserMapRole : BaseTimeStamp
+    {
+        [Key]
+        public Int64 InfoUserMapRoleID { get; set; }
+        public Int64 InfoUserID { get; set; }
+        public Int64 MapRoleID { get; set; }
+        public virtual InfoUser InfoUser { get; set; }
+        public virtual MapRole MapRole { get; set; }
+
     }
 }

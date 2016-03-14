@@ -42,19 +42,28 @@
 
                             <td><asp:Label runat="server" ID="lblInfoUserName" Visible="true" Text="<%# Item.UserName %>"></asp:Label>  </td>  
                             <td><asp:Label runat="server" ID="lblEmployeeNo" Visible="true" Text="<%# Item.EmployeeNo %>"></asp:Label>  </td>
-                            <td><asp:Label runat="server" ID="lblPhone1" Visible="true" Text="<%# Item.Phone1 %>"></asp:Label>  </td>   
-                            <td>
+                            <td><asp:Label runat="server" ID="lblPhone1" Visible="true" Text="<%# Item.Phone1 %>"></asp:Label>
                                 <asp:Label ID="lblInfoUserID" runat="server" Text="<%# Item.InfoUserID %>" Visible="false"></asp:Label>
-                                <asp:FormView ID="fvDepartmentDuty" runat="server" ItemType="SsdMS.Models.DepartmentDuty" DataKeyNames="DepartmentDutyID"
-                                   SelectMethod="fvDepartmentDuty_GetData" BorderStyle="NotSet" >
+                            </td>   
+                            <td>
+                                <asp:ListView ID="fvDepartmentDuty" runat="server" ItemType="SsdMS.Models.DepartmentDuty" DataKeyNames="DepartmentDutyID"
+                                   SelectMethod="fvDepartmentDuty_GetData" >
                                     <ItemTemplate>
-                                        <asp:Label ID="lblDepartment" runat="server" Text="<%# Item.Department.DepartmentName %>"></asp:Label>
-                                        <asp:Label ID="lblDuty" runat="server" Text="<%# Item.Duty.DutyName %>"></asp:Label>
+                                        <asp:Label  runat="server" Text="<%# Item.Department.DepartmentName %>"></asp:Label>
+                                        -
+                                        <asp:Label  runat="server" Text="<%# Item.Duty.DutyName %>"></asp:Label>
+                                        <br />
                                     </ItemTemplate>
-                                </asp:FormView>
+                                </asp:ListView>
                             </td>  
-                            
-                            <td><asp:Label runat="server" ID="lblBirthDate" Visible="true" Text="<%#: Item.MapRole.MapRoleName %>"></asp:Label>  </td>   
+                            <td>
+                                <asp:ListView ID="lvInfoUserMapRole" runat="server" ItemType="SsdMS.Models.InfoUserMapRole" DataKeyNames="InfoUserMapRoleID"
+                                    SelectMethod="lvInfoUserMapRole_GetData">
+                                    <ItemTemplate>
+                                        <asp:Label  runat="server" Text="<%# Item.MapRole.MapRoleName %>"></asp:Label>
+                                        <br />
+                                    </ItemTemplate>
+                                </asp:ListView> </td>   
                             <td><a href="ManageDetailUser.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">详情</a></td>
                             <td><a href="ChangeDepartmentDutyRoles.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">管理权限</a></td>
                             <td><a href="ManageResetPassword.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">重置密码</a></td>
