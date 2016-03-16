@@ -68,6 +68,8 @@
                             <td><a href="ChangeDepartmentDutyRoles.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">管理权限</a></td>
                             <td><a href="ManageResetPassword.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">重置密码</a></td>
                             <td><a href="ManageResetAccount.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">更改登录名</a></td>
+                            <td><a href="CheckUserRoles.aspx?infouserID=<%#:Item.InfoUserID %>" class="btn btn-primary">检查权限</a></td>
+
                             <td>                      
                                 <asp:Button ID="DeleteButton" runat="server" Text="删除" CommandName="Delete" CssClass="btn btn-danger" OnClientClick="javascript:return confirm('确认删除选中的用户记录？');"/> 
                             </td>

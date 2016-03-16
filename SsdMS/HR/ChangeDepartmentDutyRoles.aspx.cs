@@ -195,7 +195,37 @@ namespace SsdMS.HR
                         item.MapRoleID = mapRoleID;
                         context.InfoUserMapRoles.Add(item);
                         context.SaveChanges();
-                        //还需添加TrueRole
+
+                        //将TrueRole添加到User中。
+                        using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                        {
+                            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                            {
+                                var newUser = context.Users.Where(u => u.InfoUserID == lblInfoUserID).FirstOrDefault();
+                                if(newUser == null)
+                                {
+                                    return;
+                                }
+                                var mapRole = context.MapRoles.Find(mapRoleID);
+                                if (mapRole != null)
+                                {
+                                    //var trueRoleNames = mapRole.TrueRoleNames;
+                                    foreach (var roleName in mapRole.TrueRoles)
+                                    {
+                                        if (userManager.IsInRole(newUser.Id, roleName.TrueRoleName))
+                                        {
+                                            continue;
+                                        }
+                                        var resultRole = userManager.AddToRole(newUser.Id, roleName.TrueRoleName);
+                                        if (!resultRole.Succeeded)
+                                        {
+                                            ModelState.AddModelError("", String.Format("权限 {0} 不存在，添加失败！ ", roleName.TrueRoleName));
+                                            continue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 MapRoleBind();
@@ -219,6 +249,37 @@ namespace SsdMS.HR
                     var item = context.InfoUserMapRoles.Find(infoUserMapRoleID);
                     if(item != null)
                     {
+                        //需要删除TrueRole
+                        using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                        {
+                            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                            {
+                                var infoUserID = item.InfoUserID;
+                                var newUser = context.Users.Where(u => u.InfoUserID == infoUserID).FirstOrDefault();
+                                if (newUser == null)
+                                {
+                                    return;
+                                }
+                                var mapRole = item.MapRole;
+                                if (mapRole != null)
+                                {
+                                    //var trueRoleNames = mapRole.TrueRoleNames;
+                                    foreach (var roleName in mapRole.TrueRoles)
+                                    {
+                                        if (! userManager.IsInRole(newUser.Id, roleName.TrueRoleName))
+                                        {
+                                            continue;
+                                        }
+                                        var resultRole = userManager.RemoveFromRole(newUser.Id, roleName.TrueRoleName);
+                                        if (!resultRole.Succeeded)
+                                        {
+                                            ModelState.AddModelError("", String.Format("权限 {0} 不存在，添加失败！ ", roleName.TrueRoleName));
+                                            continue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         context.InfoUserMapRoles.Remove(item);
                         bool saveFailed;
                         do
@@ -235,7 +296,7 @@ namespace SsdMS.HR
                                 ex.Entries.Single().Reload();
                             }
                         } while (saveFailed);
-                        //还需要删除TrueRole
+                        
                     }
                 }
                 MapRoleBind();
