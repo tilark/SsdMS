@@ -587,6 +587,63 @@ namespace SsdMS.Logic
             }
             return DepartmentDutyDic;
         }
+        /// <summary>
+        /// 向用户添加科室与职务
+        /// </summary>
+        /// <param name="infoUserID"></param>
+        /// <param name="newDepartmentDuty"></param>
+        public void AddDepartmentDuty(Int64 infoUserID, DepartmentDuty newDepartmentDuty)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var infoUser = context.InfoUsers.Find(infoUserID);
+                if (infoUser != null)
+                {
+                    //除重操作
+                    var query = infoUser.DepartmentDuties
+                        .Where(d => d.DepartmentID == newDepartmentDuty.DepartmentID && d.DutyID == newDepartmentDuty.DutyID).FirstOrDefault();
+                    //将infouser添加到departmentduty中，就能建立连接
+                    if (query != null)
+                    {
+                        //已有重复的科室与职务，不添加
+                        return;
+                    }
+                    newDepartmentDuty.InfoUser = infoUser;
+                    context.DepartmentDuties.Add(newDepartmentDuty);
+                    context.SaveChanges();
+                }
+            }
+        }
+        /// <summary>
+        /// 根据departmentDutyID删除InfoUser与科室职务的联系
+        /// </summary>
+        /// <param name="departmentDutyID"></param>
+        public void DeleteDepartmentDuty(Int64 departmentDutyID)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var item = context.DepartmentDuties.Find(departmentDutyID);
+                if (item != null)
+                {
+                    context.DepartmentDuties.Remove(item);
+                    bool saveFailed;
+                    do
+                    {
+                        saveFailed = false;
+                        try
+                        {
+                            context.SaveChanges();
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            saveFailed = true;
+                            // Update the values of the entity that failed to save from the store 
+                            ex.Entries.Single().Reload();
+                        }
+                    } while (saveFailed);
+                }
+            }
+        }
         #endregion
         #region InfoUser操作
         #endregion

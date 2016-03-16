@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 using SsdMS.Models;
 using System.Data.Entity;
 using System.Web.ModelBinding;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 namespace SsdMS.HR
 {
     public partial class CheckUserRoles : System.Web.UI.Page
@@ -25,7 +28,16 @@ namespace SsdMS.HR
             queryUser = context.Users.Include(i => i.InfoUser).Where(user => user.InfoUserID == infoUserID).FirstOrDefault();
             //GridView1.DataSource = 
             var userRoles = queryUser.Roles.Where(r => r.UserId == queryUser.Id);
-            GridView1.DataSource = userRoles;
+            List<string> roleNameList = new List<string>();
+            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+            {
+                foreach (var userRole in userRoles)
+                {
+                    var roleNames = roleManager.FindById(userRole.RoleId);
+                    roleNameList.Add(roleNames.Name);
+                }
+            }
+            GridView1.DataSource = roleNameList;
             GridView1.DataBind();
             return queryUser;
         }

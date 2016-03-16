@@ -108,25 +108,7 @@ namespace SsdMS.HR
                 var newDepartmentDuty = new DepartmentDuty();
                 newDepartmentDuty.DepartmentID = Int64.Parse(ddlDepartment.SelectedValue);
                 newDepartmentDuty.DutyID = Int64.Parse(ddlDuty.SelectedValue);
-                using (ApplicationDbContext context = new ApplicationDbContext())
-                {
-                    var infoUser = context.InfoUsers.Find(lblInfoUserID);
-                    if(infoUser != null)
-                    {
-                        //除重操作
-                        var query = infoUser.DepartmentDuties
-                            .Where(d => d.DepartmentID == newDepartmentDuty.DepartmentID && d.DutyID == newDepartmentDuty.DutyID).FirstOrDefault();
-                        //将infouser添加到departmentduty中，就能建立连接
-                        if(query != null)
-                        {
-                            //已有重复的科室与职务，不添加
-                            return;
-                        }
-                        newDepartmentDuty.InfoUser = infoUser;
-                        context.DepartmentDuties.Add(newDepartmentDuty);
-                        context.SaveChanges();
-                    }
-                }
+                new InfoUserActions().AddDepartmentDuty(lblInfoUserID, newDepartmentDuty);
                 DepartmentDutyBind();
             }
         }
@@ -139,31 +121,9 @@ namespace SsdMS.HR
         {
             if(lboxDepartDuties.SelectedItem != null)
             {
+                var departmentDutyID = Int64.Parse(lboxDepartDuties.SelectedValue);
                 //从数据库中删除
-                using(ApplicationDbContext context = new ApplicationDbContext())
-                {
-                    var departmentDutyID = Int64.Parse(lboxDepartDuties.SelectedValue);
-                    var item = context.DepartmentDuties.Find(departmentDutyID);
-                    if(item != null)
-                    {
-                        context.DepartmentDuties.Remove(item);
-                        bool saveFailed;
-                        do
-                        {
-                            saveFailed = false;
-                            try
-                            {
-                                context.SaveChanges();
-                            }
-                            catch (DbUpdateConcurrencyException ex)
-                            {
-                                saveFailed = true;
-                                // Update the values of the entity that failed to save from the store 
-                                ex.Entries.Single().Reload();
-                            }
-                        } while (saveFailed);
-                    }
-                }
+                new InfoUserActions().DeleteDepartmentDuty(departmentDutyID);
                 DepartmentDutyBind();
             }
         }
@@ -183,51 +143,8 @@ namespace SsdMS.HR
             if (lblInfoUser != null)
             {
                 var lblInfoUserID = Int64.Parse(lblInfoUser.Text);
-                using (ApplicationDbContext context = new ApplicationDbContext())
-                {
-                    var mapRoleID = Int64.Parse(ddlMapRole.SelectedValue);
-                    var query = context.InfoUserMapRoles
-                        .Where(info => info.InfoUserID == lblInfoUserID && info.MapRoleID == mapRoleID).FirstOrDefault();
-                    if (query == null)
-                    {
-                        InfoUserMapRole item = new InfoUserMapRole();
-                        item.InfoUserID = lblInfoUserID;
-                        item.MapRoleID = mapRoleID;
-                        context.InfoUserMapRoles.Add(item);
-                        context.SaveChanges();
-
-                        //将TrueRole添加到User中。
-                        using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
-                        {
-                            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
-                            {
-                                var newUser = context.Users.Where(u => u.InfoUserID == lblInfoUserID).FirstOrDefault();
-                                if(newUser == null)
-                                {
-                                    return;
-                                }
-                                var mapRole = context.MapRoles.Find(mapRoleID);
-                                if (mapRole != null)
-                                {
-                                    //var trueRoleNames = mapRole.TrueRoleNames;
-                                    foreach (var roleName in mapRole.TrueRoles)
-                                    {
-                                        if (userManager.IsInRole(newUser.Id, roleName.TrueRoleName))
-                                        {
-                                            continue;
-                                        }
-                                        var resultRole = userManager.AddToRole(newUser.Id, roleName.TrueRoleName);
-                                        if (!resultRole.Succeeded)
-                                        {
-                                            ModelState.AddModelError("", String.Format("权限 {0} 不存在，添加失败！ ", roleName.TrueRoleName));
-                                            continue;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                var mapRoleID = Int64.Parse(ddlMapRole.SelectedValue);
+                new RoleActions().AddMapTrueRole(lblInfoUserID, mapRoleID);
                 MapRoleBind();
 
             }
@@ -241,64 +158,10 @@ namespace SsdMS.HR
         /// <param name="e"></param>
         protected void btnDeleteRoles_Click(object sender, EventArgs e)
         {
-            if(lboxRoles.SelectedItem != null)
+            if (lboxRoles.SelectedItem != null)
             {
-                using (ApplicationDbContext context = new ApplicationDbContext())
-                {
-                    Int64 infoUserMapRoleID = Int64.Parse(lboxRoles.SelectedValue);
-                    var item = context.InfoUserMapRoles.Find(infoUserMapRoleID);
-                    if(item != null)
-                    {
-                        //需要删除TrueRole
-                        using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
-                        {
-                            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
-                            {
-                                var infoUserID = item.InfoUserID;
-                                var newUser = context.Users.Where(u => u.InfoUserID == infoUserID).FirstOrDefault();
-                                if (newUser == null)
-                                {
-                                    return;
-                                }
-                                var mapRole = item.MapRole;
-                                if (mapRole != null)
-                                {
-                                    //var trueRoleNames = mapRole.TrueRoleNames;
-                                    foreach (var roleName in mapRole.TrueRoles)
-                                    {
-                                        if (! userManager.IsInRole(newUser.Id, roleName.TrueRoleName))
-                                        {
-                                            continue;
-                                        }
-                                        var resultRole = userManager.RemoveFromRole(newUser.Id, roleName.TrueRoleName);
-                                        if (!resultRole.Succeeded)
-                                        {
-                                            ModelState.AddModelError("", String.Format("权限 {0} 不存在，添加失败！ ", roleName.TrueRoleName));
-                                            continue;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        context.InfoUserMapRoles.Remove(item);
-                        bool saveFailed;
-                        do
-                        {
-                            saveFailed = false;
-                            try
-                            {
-                                context.SaveChanges();
-                            }
-                            catch (DbUpdateConcurrencyException ex)
-                            {
-                                saveFailed = true;
-                                // Update the values of the entity that failed to save from the store 
-                                ex.Entries.Single().Reload();
-                            }
-                        } while (saveFailed);
-                        
-                    }
-                }
+                Int64 infoUserMapRoleID = Int64.Parse(lboxRoles.SelectedValue);
+                new RoleActions().DeleteMapTrueRole(infoUserMapRoleID);
                 MapRoleBind();
             }
 

@@ -7,6 +7,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using SsdMS.Models;
 using System.Data.Entity;
+using System.Web.ModelBinding;
+using System.Data.Entity.Infrastructure;
+
 namespace SsdMS.Logic
 {
     /// <summary>
@@ -229,6 +232,144 @@ namespace SsdMS.Logic
                 }
             }
         }
+        #region MapRole TrueRole操作
+        public void AddMapTrueRole(Int64 infoUserID, Int64 mapRoleID)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var query = context.InfoUserMapRoles
+                    .Where(info => info.InfoUserID == infoUserID && info.MapRoleID == mapRoleID).FirstOrDefault();
+                if (query == null)
+                {
+                    InfoUserMapRole item = new InfoUserMapRole();
+                    item.InfoUserID = infoUserID;
+                    item.MapRoleID = mapRoleID;
+                    context.InfoUserMapRoles.Add(item);
+                    context.SaveChanges();
+                    //将TrueRole添加到User中。
+                    using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                    {
+                        using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                        {
+                            var newUser = context.Users.Where(u => u.InfoUserID == infoUserID).FirstOrDefault();
+                            if (newUser == null)
+                            {
+                                return;
+                            }
+                            var mapRole = context.MapRoles.Find(mapRoleID);
+                            if (mapRole != null)
+                            {
+                                //var trueRoleNames = mapRole.TrueRoleNames;
+                                foreach (var roleName in mapRole.TrueRoles)
+                                {
+                                    if (userManager.IsInRole(newUser.Id, roleName.TrueRoleName))
+                                    {
+                                        continue;
+                                    }
+                                    var resultRole = userManager.AddToRole(newUser.Id, roleName.TrueRoleName);
+                                    if (!resultRole.Succeeded)
+                                    {
+                                        //ModelState.AddModelError("", String.Format("权限 {0} 不存在，添加失败！ ", roleName.TrueRoleName));
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除MapRole中的权限，如果该角色中的权限与其他角色重复，不删除
+        /// </summary>
+        /// <param name="infoUserMapRoleID">InfoUserMapRoleID 连接InfoUser与MapRole</param>
+        public void DeleteMapTrueRole(Int64 infoUserMapRoleID)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var item = context.InfoUserMapRoles.Find(infoUserMapRoleID);
+                if (item != null)
+                {
+                    //需要删除TrueRole
+                    using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                    {
+                        using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                        {
+                            var infoUserID = item.InfoUserID;
+                            var newUser = context.Users.Where(u => u.InfoUserID == infoUserID).FirstOrDefault();
+                            if (newUser == null)
+                            {
+                                return;
+                            }
+                            var mapRole = item.MapRole;
+                            if (mapRole != null)
+                            {
+                                var infoUserMapRoles = context.InfoUserMapRoles.Where(i => i.MapRoleID != mapRole.MapRoleID && i.InfoUserID == infoUserID).Include(i => i.MapRole).Include(i => i.MapRole.TrueRoles);
+
+                                foreach (var roleName in mapRole.TrueRoles)
+                                {
+                                    if (!userManager.IsInRole(newUser.Id, roleName.TrueRoleName))
+                                    {
+                                        continue;
+                                    }
+                                    bool canDelete = true;
+                                    //需将该权限与拥有的角色作对比，如果在其他角色中存在，则不能删除。只需在其他
+                                    //任何一个角色中存在该权限，都不能够删除。
+                                    foreach (var leftMapRole in infoUserMapRoles)
+                                    {
+                                        foreach (var leftTrueRole in leftMapRole.MapRole.TrueRoles)
+                                        {
+                                            if (String.Compare(roleName.TrueRoleName, leftTrueRole.TrueRoleName) == 0)
+                                            {
+                                                canDelete = false;
+                                                //之后都不必再比较
+                                                break;
+                                            }
+                                        }
+                                        if (!canDelete) { break; }
+                                    }
+                                    if (canDelete)
+                                    {
+                                        var resultRole = userManager.RemoveFromRole(newUser.Id, roleName.TrueRoleName);
+                                        if (!resultRole.Succeeded)
+                                        {
+                                            //ModelState.AddModelError("", String.Format("权限 {0} 不存在，添加失败！ ", roleName.TrueRoleName));
+
+                                            continue;
+                                        }
+                                    }
+
+                                }
+                            }
+                            context.InfoUserMapRoles.Remove(item);
+                            //client win
+                            bool saveFailed;
+                            do
+                            {
+                                saveFailed = false;
+                                try
+                                {
+                                    context.SaveChanges();
+                                }
+                                catch (DbUpdateConcurrencyException ex)
+                                {
+                                    saveFailed = true;
+
+                                    // Update original values from the database 
+                                    var entry = ex.Entries.Single();
+                                    entry.OriginalValues.SetValues(entry.GetDatabaseValues());
+                                }
+
+                            } while (saveFailed);
+
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
         public Dictionary<string, string> GetRolesDic()
         {
             Dictionary<string, string> rolesDic = new Dictionary<string, string>();
