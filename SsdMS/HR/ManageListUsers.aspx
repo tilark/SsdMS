@@ -9,6 +9,7 @@
          <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <p><asp:ValidationSummary ShowModelStateErrors="true" runat="server" /></p>
+                <asp:Label ID="Message" runat="server" Text=""></asp:Label>
                 <asp:ListView runat="server" ID="lvInfoUser" ItemType="SsdMS.Models.InfoUser" DataKeyNames="InfoUserID"                     
                     SelectMethod="lvInfoUser_GetData" DeleteMethod="lvInfoUser_DeleteItem">
                     <LayoutTemplate>

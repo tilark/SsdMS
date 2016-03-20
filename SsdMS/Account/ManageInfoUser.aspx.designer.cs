@@ -7,19 +7,10 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace SsdMS.HR {
+namespace SsdMS.Account {
     
     
-    public partial class ManageListUsers {
-        
-        /// <summary>
-        /// HyperLink3 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLink3;
+    public partial class ManageInfoUser {
         
         /// <summary>
         /// UpdatePanel1 控件。
@@ -31,21 +22,30 @@ namespace SsdMS.HR {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// Message 控件。
+        /// ValidationSummary1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Message;
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// lvInfoUser 控件。
+        /// ErrorMessage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lvInfoUser;
+        protected global::System.Web.UI.WebControls.Label ErrorMessage;
+        
+        /// <summary>
+        /// fvInfoUser 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FormView fvInfoUser;
     }
 }

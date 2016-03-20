@@ -162,6 +162,7 @@
     <Content Include="Account\Lockout.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
+    <Content Include="Account\ManageInfoUser.aspx" />
     <Content Include="Account\ManageLogins.aspx" />
     <Content Include="Account\ManagePassword.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
@@ -174,6 +175,7 @@
     <Content Include="Admin\ListMapRoles.aspx" />
     <Content Include="Admin\ManageMapRoles.aspx" />
     <Content Include="Admin\ManageRoles.aspx" />
+    <Content Include="Admin\ManageUserRoles.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -316,6 +318,13 @@
     <Compile Include="Account\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Account\ManageInfoUser.aspx.cs">
+      <DependentUpon>ManageInfoUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ManageInfoUser.aspx.designer.cs">
+      <DependentUpon>ManageInfoUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\ManageLogins.aspx.cs">
       <DependentUpon>ManageLogins.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -399,6 +408,13 @@
     </Compile>
     <Compile Include="Admin\ManageRoles.aspx.designer.cs">
       <DependentUpon>ManageRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageUserRoles.aspx.cs">
+      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageUserRoles.aspx.designer.cs">
+      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\201603120636387_InitInfoUser.cs" />
     <Compile Include="ApplicationDbContextMigrations\201603120636387_InitInfoUser.Designer.cs">

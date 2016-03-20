@@ -17,6 +17,11 @@
                 <h4>更改你的帐户设置</h4>
                 <hr />
                 <dl class="dl-horizontal">
+                    <dt>个人信息:</dt>
+                    <dd>
+                        <asp:HyperLink NavigateUrl="/Account/ManageInfoUser" Text="[更改个人信息]" ID="HyperLink1" runat="server" />
+
+                    </dd>
                     <dt>密码:</dt>
                     <dd>
                         <asp:HyperLink NavigateUrl="/Account/ManagePassword" Text="[更改]" Visible="false" ID="ChangePassword" runat="server" />

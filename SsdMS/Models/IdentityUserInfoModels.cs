@@ -12,7 +12,7 @@ namespace SsdMS.Models
         [Timestamp]
         public Byte[] TimeStamp { get; set; }
     }
-    
+
     public class InfoUser : BaseTimeStamp
     {
         public InfoUser()
@@ -27,17 +27,17 @@ namespace SsdMS.Models
         public Int64 InfoUserID { get; set; }
         [MaxLength(20), Display(Name = "工号")]
         public string EmployeeNo { get; set; }
-         [Display(Name = "姓名")]
+        [Display(Name = "姓名")]
         public string UserName { get; set; }
-         [Display(Name = "出生日期")]
+        [Display(Name = "出生日期")]
         public DateTime BirthDate { get; set; }
-        [Display(Name = "身份证"),MaxLength(30)]
+        [Display(Name = "身份证"), MaxLength(30)]
         public string IDCard { get; set; }
         [Display(Name = "联系地址")]
         public string Address { get; set; }
-         [MaxLength(20), Display(Name = "性别")]
-        public string Sex {get; set;}
-       [MaxLength(30), Display(Name = "工作电话")]
+        [MaxLength(20), Display(Name = "性别")]
+        public string Sex { get; set; }
+        [MaxLength(30), Display(Name = "工作电话")]
         public string Phone1 { get; set; }
         [MaxLength(30), Display(Name = "住宅电话")]
         public string Phone2 { get; set; }
@@ -51,7 +51,7 @@ namespace SsdMS.Models
         public string Email { get; set; }
         [Display(Name = "简介")]
         public string InfoUserDescription { get; set; }
-        [Required, Display(Name ="创建日期")]
+        [Required, Display(Name = "创建日期")]
         public DateTime CreateTime { get; set; }
         [Display(Name = "修改日期")]
 
@@ -82,7 +82,7 @@ namespace SsdMS.Models
         public virtual Duty Duty { get; set; }
         public Int64 InfoUserID { get; set; }
         //public string EmployeeNo { get; set; }
-        public virtual InfoUser InfoUser { get; set; } 
+        public virtual InfoUser InfoUser { get; set; }
 
     }
     public class Department : BaseTimeStamp
@@ -101,7 +101,7 @@ namespace SsdMS.Models
         public string DepartmentPhone3 { get; set; }
         [MaxLength(30), Display(Name = "科室电话号码4")]
         public string DepartmentPhone4 { get; set; }
-         [Display(Name = "科室描述")]
+        [Display(Name = "科室描述")]
         public string DepartmentDescription { get; set; }
 
     }
@@ -111,7 +111,7 @@ namespace SsdMS.Models
         [Display(Name = "职务编号")]
         [ScaffoldColumn(false)]
         public Int64 DutyID { get; set; }
-         [Display(Name = "职务"), MaxLength(50)]
+        [Display(Name = "职务"), MaxLength(50)]
         public string DutyName { get; set; }
         [Display(Name = "职务描述")]
         public string DutyDescription { get; set; }
@@ -134,12 +134,12 @@ namespace SsdMS.Models
         {
             this.TrueRoles = new HashSet<TrueRole>();
             this.InfoUserMapRole = new HashSet<InfoUserMapRole>();
-        }        
+        }
         [Key]
         public Int64 MapRoleID { get; set; }
         public string MapRoleName { get; set; }
         public virtual ICollection<TrueRole> TrueRoles { get; private set; }
-        public string  MapRoleDescription { get; set; }
+        public string MapRoleDescription { get; set; }
         public virtual ICollection<InfoUserMapRole> InfoUserMapRole { get; private set; }
     }
     public class TrueRole : BaseTimeStamp

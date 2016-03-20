@@ -10,7 +10,16 @@
 namespace SsdMS.Admin {
     
     
-    public partial class ManageMapRoles {
+    public partial class ManageUserRoles {
+        
+        /// <summary>
+        /// HyperLink1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
         
         /// <summary>
         /// UpdatePanel1 控件。
@@ -40,40 +49,22 @@ namespace SsdMS.Admin {
         protected global::System.Web.UI.WebControls.Label Message;
         
         /// <summary>
-        /// Label7 控件。
+        /// fvUserRoles 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.FormView fvUserRoles;
         
         /// <summary>
-        /// lboxRoles 控件。
+        /// lblUserId 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lboxRoles;
-        
-        /// <summary>
-        /// btnAddRoles 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddRoles;
-        
-        /// <summary>
-        /// btnDeleteRoles 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeleteRoles;
+        protected global::System.Web.UI.WebControls.Label lblUserId;
         
         /// <summary>
         /// Label12 控件。
@@ -94,30 +85,48 @@ namespace SsdMS.Admin {
         protected global::System.Web.UI.UpdatePanel UpdatePanel3;
         
         /// <summary>
-        /// ddlMapRole 控件。
+        /// lboxUserRoles 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMapRole;
+        protected global::System.Web.UI.WebControls.ListBox lboxUserRoles;
         
         /// <summary>
-        /// CompareValidator2 控件。
+        /// btnAddRoles 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator2;
+        protected global::System.Web.UI.WebControls.Button btnAddRoles;
         
         /// <summary>
-        /// lboxTrueRoles 控件。
+        /// btnDeleteRoles 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lboxTrueRoles;
+        protected global::System.Web.UI.WebControls.Button btnDeleteRoles;
+        
+        /// <summary>
+        /// Label7 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label7;
+        
+        /// <summary>
+        /// lboxRoles 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lboxRoles;
     }
 }

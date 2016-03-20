@@ -20,6 +20,7 @@ namespace SsdMS.Logic
         public RoleActions()
         {
         }
+        #region 添加BasicRoles
         internal void CreateBasicRoles()
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
@@ -97,6 +98,7 @@ namespace SsdMS.Logic
             }
 
         }
+        #endregion
         /// <summary>
         /// 程序初始化时创建Administrators权限组和一个Administrator成员,失败！
         /// </summary>
@@ -157,6 +159,7 @@ namespace SsdMS.Logic
                 }
             }
         }
+        #region 添加与删除权限名
         /// <summary>
         /// 新增一个Role组，如果已经存在，提示增加失败
         /// </summary>
@@ -222,16 +225,8 @@ namespace SsdMS.Logic
             }
             return deleteResult;
         }
-        public List<IdentityRole> GetRolesList()
-        {
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
-                {
-                    return roleManager.Roles.ToList();
-                }
-            }
-        }
+        #endregion
+        
         #region MapRole TrueRole操作
         public void AddMapTrueRole(Int64 infoUserID, Int64 mapRoleID)
         {
@@ -370,6 +365,17 @@ namespace SsdMS.Logic
         }
         #endregion
 
+        #region 获取Role列表
+        public List<IdentityRole> GetRolesList()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                {
+                    return roleManager.Roles.ToList();
+                }
+            }
+        }
         public Dictionary<string, string> GetRolesDic()
         {
             Dictionary<string, string> rolesDic = new Dictionary<string, string>();
@@ -386,5 +392,44 @@ namespace SsdMS.Logic
             }
             return rolesDic;
         }
+        #endregion
+        #region 用户权限操作
+        public IList<string> GetUserRoles(string id)
+        {
+            using(ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    return userManager.GetRoles(id);
+                }
+            }
+        }
+        public IdentityResult AddUserToRole(string id, string roleName)
+        {
+            IdentityResult result = IdentityResult.Failed("添加用户至权限表失败！");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    result = userManager.AddToRole(id, roleName);
+                }
+            }
+            return result;
+        }
+        public IdentityResult RemoveUserFromRole(string id, string roleName)
+        {
+            IdentityResult result = IdentityResult.Failed("删除用户权限失败！");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    result = userManager.RemoveFromRoles(id, roleName);
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

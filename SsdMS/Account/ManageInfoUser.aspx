@@ -1,20 +1,16 @@
-﻿<%@ Page Title="更改用户资料" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageDetailUser.aspx.cs" Inherits="SsdMS.HR.ManageDetailUser" %>
+﻿<%@ Page Title="更改个人信息" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageInfoUser.aspx.cs" Inherits="SsdMS.Account.ManageInfoUser" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <p>
-        <asp:HyperLink ID="HyperLink1" runat="server" CssClass="btn btn-primary" NavigateUrl="~/HR/ManageListUsers.aspx">返回管理用户界面</asp:HyperLink>
-    </p>
-    <p></p>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <asp:ValidationSummary ID="ValidationSummary1" ShowModelStateErrors="true" CssClass="text-danger" runat="server" />
             <p>
                 <asp:Label ID="ErrorMessage" runat="server"></asp:Label></p>
         </ContentTemplate>
-    </asp:UpdatePanel>
+        </asp:UpdatePanel>
 
         
             <%--添加 InfoUser信息--%>
-        <h3>用户详情</h3>
+        <h3>更改个人信息</h3>
             <asp:FormView ID="fvInfoUser" runat="server" ItemType="SsdMS.Models.InfoUser" DataKeyNames="InfoUserID"
                 SelectMethod="fvInfoUser_GetItem" UpdateMethod="fvInfoUser_UpdateItem" DefaultMode="Edit">
                 <EditItemTemplate>
@@ -29,17 +25,18 @@
                         </div>
                         <div class="form-group">
                                 <asp:Label ID="Label2" AssociatedControlID="txtEmployeeNo" runat="server" Text="工号" CssClass="col-md-4 control-label"></asp:Label>
-                                <div class="col-md-8">
+                            <div class="col-md-8">
                                 <asp:TextBox ID="txtEmployeeNo" runat="server" CssClass="form-control" Text="<%#Item.EmployeeNo %>"></asp:TextBox>
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="txtUserName"
                                         CssClass="text-danger" ErrorMessage="“工号”字段是必填字段。" />
-                                </div>
+                                <asp:Label ID="lblinfoUserID" runat="server" Visible="false" Text="<%# Item.InfoUserID %>"></asp:Label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <asp:Label ID="Label3" AssociatedControlID="txtBirthDate" runat="server" Text="出生日期" CssClass="col-md-4 control-label"></asp:Label>
                                 <div class="col-md-8">
                                 <asp:TextBox ID="txtBirthDate" runat="server" CssClass="form-control" Text="<%#Item.BirthDate %>"></asp:TextBox>
-                                <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtUserName"
+                                    <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txtUserName"
                                         CssClass="text-danger" ErrorMessage="“出生日期”字段是必填字段。" />--%>
                             </div>
                         </div>
@@ -67,18 +64,21 @@
                                     ErrorMessage="电话号码输入有误" ValidationExpression="^\d{11,}" ControlToValidate="txtPhone2"></asp:RegularExpressionValidator>            
                                 </div>            
                         </div>  
-                                               
+                        <div class="form-group">
+                            <asp:Label ID="Label6" AssociatedControlID="lboxDepartmentDuty" runat="server" Text="科室职务"  CssClass="col-md-4 control-label"></asp:Label>
+                                <div class="col-md-8">
+                                    <asp:ListBox ID="lboxDepartmentDuty" CssClass="form-control" runat="server"></asp:ListBox>                        
+                                </div> 
+                        </div>                      
                         <div class="form-group">
                             <div class="col-md-2 col-md-offset-2">
                                 <asp:Button runat="server" ID="btnUpdateUser" CommandName="Update" Text="更新" CssClass="btn btn-primary" />
                             </div>
                             <div class="col-md-6 col-md-offset-2">
-                                <%--<asp:Button runat="server" ID="btnCancel" OnClick="btnCancel_Click" Text="取消" CssClass="btn btn-warning" />--%>
-                                <asp:HyperLink ID="linkCancel" NavigateUrl="~/HR/ManageListUsers.aspx" CssClass="btn btn-warning" runat="server">取消</asp:HyperLink>
+                                <asp:HyperLink ID="linkCancel" NavigateUrl="Manage.aspx" CssClass="btn btn-warning" runat="server">取消</asp:HyperLink>
                             </div>
                         </div>
                     </div>
                 </EditItemTemplate>
             </asp:FormView>
-        
 </asp:Content>

@@ -16,7 +16,22 @@ namespace SsdMS.HR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                //Label lblAdminRole = new Label();
+                //lblAdminRole = (Label)fvUserRoles.FindControl("lblAdminRole");
+                //if (lblAdminRole != null)
+                //{
+                //    //if (User.IsInRole("Administrators"))
+                //    //{
+                //    //    lblAdminRole.Visible = true;
+                //    //}
+                //    //else
+                //    //{
+                //    //    lblAdminRole.Visible = false;
+                //    //}
+                //}
+            }
         }
 
         // id 参数应与控件上设置的 DataKeyNames 值匹配
@@ -26,19 +41,12 @@ namespace SsdMS.HR
             ApplicationUser queryUser = new ApplicationUser(); ;
             ApplicationDbContext context = new ApplicationDbContext();
             queryUser = context.Users.Include(i => i.InfoUser).Where(user => user.InfoUserID == infoUserID).FirstOrDefault();
-            //GridView1.DataSource = 
-            var userRoles = queryUser.Roles.Where(r => r.UserId == queryUser.Id);
-            List<string> roleNameList = new List<string>();
-            using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+            using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
             {
-                foreach (var userRole in userRoles)
-                {
-                    var roleNames = roleManager.FindById(userRole.RoleId);
-                    roleNameList.Add(roleNames.Name);
-                }
+                var listRoleNames = userManager.GetRoles(queryUser.Id);
+                GridView1.DataSource = listRoleNames;
+                GridView1.DataBind();
             }
-            GridView1.DataSource = roleNameList;
-            GridView1.DataBind();
             return queryUser;
         }
     }

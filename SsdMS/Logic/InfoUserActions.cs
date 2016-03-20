@@ -646,6 +646,65 @@ namespace SsdMS.Logic
         }
         #endregion
         #region InfoUser操作
+        public IdentityResult DeleteInfoUser(Int64 infoUserId)
+        {
+            IdentityResult result = IdentityResult.Failed("删除用户失败!");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    var item = context.InfoUsers.Find(infoUserId);
+                    if(item != null)
+                    {
+                        //会将Application User删除吗,可以删除
+                        context.InfoUsers.Remove(item);
+                        bool saveFailed;
+                        do
+                        {
+                            saveFailed = false;
+                            try
+                            {
+                                context.SaveChanges();
+                            }
+                            catch (DbUpdateConcurrencyException ex)
+                            {
+                                saveFailed = true;
+                                // Update the values of the entity that failed to save from the store 
+                                ex.Entries.Single().Reload();
+                            }
+                        } while (saveFailed);
+                        result = IdentityResult.Success;
+                    }
+                }
+            }
+                    return result;
+        }
+        #endregion
+        #region ChangeAccount操作
+        public IdentityResult ChangeAccount(string Id, string newAccount)
+        {
+            IdentityResult result = IdentityResult.Failed("更改登录名失败！");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    SsdMS.Models.ApplicationUser item = null;
+                    item = context.Users.Find(Id);
+                    if (item != null)
+                    {
+                        var query = context.Users.Where(u => String.Compare(u.UserName, newAccount) == 0).FirstOrDefault();
+                        if (query == null)
+                        {
+                            //无重复登录名，更改
+                            item.UserName = newAccount;
+                            result = userManager.Update(item);
+                        }
+                    }
+
+                }
+                return result;
+            }
+        }
         #endregion
         #region Duty操作
         public Dictionary<Int64, string> GetDutyDic()
@@ -745,7 +804,30 @@ namespace SsdMS.Logic
             return mapRoleDic;
         }
         #endregion
-
+        #region Password操作
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Application User id</param>
+        /// <param name="Password">输入的密码</param>
+        /// <returns></returns>
+        public IdentityResult ResetPassword(string id, string Password)
+        {
+            IdentityResult result = IdentityResult.Failed("重置密码失败！");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    result = userManager.RemovePassword(id);
+                    if (result.Succeeded)
+                    {
+                        result = userManager.AddPassword(id, Password);
+                    }
+                }
+            }
+            return result;
+        }
+        #endregion
 
     }
 }

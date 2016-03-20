@@ -1,9 +1,17 @@
 ﻿<%@ Page Title="管理角色" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageMapRoles.aspx.cs" Inherits="SsdMS.Admin.ManageMapRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h3>管理角色</h3>
-       <p>
-           <asp:ValidationSummary ID="ValidationSummary1" ShowModelStateErrors="true" runat="server" />
-       </p>    
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <p><asp:ValidationSummary ID="ValidationSummary1" ShowModelStateErrors="true" runat="server" /></p> 
+            <p><asp:Label ID="Message" runat="server" Text=""></asp:Label></p>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="btnAddRoles" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="btnDeleteRoles" EventName="Click" />
+        </Triggers>
+    </asp:UpdatePanel>
+   
         <%--添加Role的列表至ListBox，多选--%>
         <div class="col-md-5">
             <div class="form-group">

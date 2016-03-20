@@ -35,9 +35,21 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
-        public void lvInfoUser_DeleteItem(int id)
+        public void lvInfoUser_DeleteItem(Int64 infoUserID)
         {
-
+            var result = new InfoUserActions().DeleteInfoUser(infoUserID);
+            if (result.Succeeded)
+            {
+                Message.Text = "删除用户成功！";
+            }
+            else
+            {
+                Message.Text = String.Empty;
+                foreach(var errorMessage in result.Errors)
+                {
+                    Message.Text += errorMessage;
+                }
+            }
         }
 
         // 返回类型可以更改为 IEnumerable，但是为了支持

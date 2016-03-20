@@ -4,37 +4,54 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.AspNet.Identity;
+using SsdMS.Logic;
 using SsdMS.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Web.ModelBinding;
-namespace SsdMS.HR
+namespace SsdMS.Account
 {
-    public partial class ManageDetailUser : System.Web.UI.Page
+    public partial class ManageInfoUser : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                //infoUserId = [QueryString] Int64? infoUserID;
-                initDetailUser();
+                lboxBind();
             }
         }
-        private void initDetailUser()
+
+        private void lboxBind()
         {
-
+            //ErrorMessage.Text = fvInfoUser.DataKey.Value.ToString();
+            Label lblinfoUserID = new Label();
+            lblinfoUserID = (Label)fvInfoUser.FindControl("lblinfoUserID");
+            if(lblinfoUserID == null)
+            {
+                return;
+            }
+            var infoUserID = Int64.Parse(lblinfoUserID.Text);
+            ListBox lboxDepartmentDuty = new ListBox();
+            lboxDepartmentDuty = (ListBox)fvInfoUser.FindControl("lboxDepartmentDuty");
+            if(lboxDepartmentDuty == null)
+            {
+                return;
+            }
+            lboxDepartmentDuty.DataSource = new InfoUserActions().GetDepartmentDutyDic(infoUserID);
+            lboxDepartmentDuty.DataValueField = "Key";
+            lboxDepartmentDuty.DataTextField = "Value";
+            lboxDepartmentDuty.DataBind();
         }
-
         // id 参数应与控件上设置的 DataKeyNames 值匹配
         // 或用值提供程序特性装饰，例如 [QueryString]int id
-        public SsdMS.Models.InfoUser fvInfoUser_GetItem([QueryString] Int64? infoUserID)
+        public SsdMS.Models.InfoUser fvInfoUser_GetItem()
         {
-            InfoUser queryUser = new InfoUser(); ;
+            var userName = User.Identity.Name;
             ApplicationDbContext context = new ApplicationDbContext();
-            queryUser = context.InfoUsers.Where(user => user.InfoUserID == infoUserID).FirstOrDefault();
-            return queryUser;
+            var user = context.Users.Include(u => u.InfoUser).Where(u => String.Compare(u.UserName, userName) == 0).FirstOrDefault();
+            var query = user.InfoUser;
+            //ErrorMessage.Text = fvInfoUser.DataKey.Value.ToString();
+            return query;
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
@@ -94,7 +111,6 @@ namespace SsdMS.HR
                     } while (saveFailed);
                 }
             }
-            
         }
     }
 }
