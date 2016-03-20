@@ -63,7 +63,7 @@ namespace SsdMS.Logic
                     var newMapRoleID = context.MapRoles.Max(m => m.MapRoleID);
                     keShiChengYuanRole = context.MapRoles.Find(newMapRoleID);
                 }
-                if((keShiChengYuanRole.TrueRoles.Where(t => String.Compare(t.TrueRoleName, TrueRoleName3)==0).FirstOrDefault()) == null)
+                if ((keShiChengYuanRole.TrueRoles.Where(t => String.Compare(t.TrueRoleName, TrueRoleName3) == 0).FirstOrDefault()) == null)
                 {
                     var newTrueRole1 = new TrueRole();
                     newTrueRole1.MapRole = keShiChengYuanRole;
@@ -168,7 +168,7 @@ namespace SsdMS.Logic
 
                     context.SaveChanges();
                 }
-               
+
                 #endregion
 
                 #region 科室负责人 5个权限
@@ -228,7 +228,7 @@ namespace SsdMS.Logic
                 }
 
 
-                    
+
                 #endregion
 
                 #region 质控办事员 9个权限
@@ -320,7 +320,7 @@ namespace SsdMS.Logic
 
                 #endregion
 
-                #region 质控管理员 5个权限
+                #region 质控管理员 4个权限
                 var zhiKongGuanLiYuan = context.MapRoles.
                       Where(m => String.Compare(m.MapRoleName, "质控管理员") == 0).FirstOrDefault();
                 if (zhiKongGuanLiYuan == null)
@@ -340,14 +340,7 @@ namespace SsdMS.Logic
                     context.TrueRoles.Add(newTrueRole51);
                     context.SaveChanges();
                 }
-                if ((zhiKongGuanLiYuan.TrueRoles.Where(t => String.Compare(t.TrueRoleName, TrueRoleName2) == 0).FirstOrDefault() == null))
-                {
-                    var newTrueRole52 = new TrueRole();
-                    newTrueRole52.MapRole = zhiKongGuanLiYuan;
-                    newTrueRole52.TrueRoleName = TrueRoleName2;
-                    context.TrueRoles.Add(newTrueRole52);
-                    context.SaveChanges();
-                }
+
                 if ((zhiKongGuanLiYuan.TrueRoles.Where(t => String.Compare(t.TrueRoleName, TrueRoleName9) == 0).FirstOrDefault() == null))
                 {
                     var newTrueRole53 = new TrueRole();
@@ -559,18 +552,15 @@ namespace SsdMS.Logic
                     context.TrueRoles.Add(newTrueRole815);
                     context.SaveChanges();
                 }
-                    
+
                 #endregion
-                
+
 
 
 
             }
         }
-        public IdentityResult CreateUser()
-        {
-            return IdentityResult.Success;
-        }
+
         #region DepartmentDuty操作
         public Dictionary<Int64, string> GetDepartmentDutyDic(Int64 infoUserID)
         {
@@ -645,7 +635,86 @@ namespace SsdMS.Logic
             }
         }
         #endregion
-        #region InfoUser操作
+        #region InfoUser操作        
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="account">The account.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="infoUser">The information user.</param>
+        /// <param name="departmentDuty">The department duty.</param>
+        /// <param name="infoUserMapRole">The information user map role.</param>
+        /// <returns>IdentityResult.</returns>
+        public IdentityResult CreateUser(string account, string password, InfoUser infoUser, DepartmentDuty departmentDuty, InfoUserMapRole infoUserMapRole)
+        {
+            IdentityResult result = IdentityResult.Failed("增加新用户失败！");
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                {
+                    using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+                    {
+                        if (infoUser == null)
+                        {
+                            return result;
+                        }
+                        //创建infoUser
+                        context.InfoUsers.Add(infoUser);
+                        context.SaveChanges();
+                        if (departmentDuty != null)
+                        {
+                            //创建DepartmentDuty
+                            departmentDuty.InfoUserID = infoUser.InfoUserID;
+                            context.DepartmentDuties.Add(departmentDuty);
+                            context.SaveChanges();
+                        }
+                        if (infoUserMapRole != null)
+                        {
+                            //创建InfoUserMapRoleMapRole
+                            infoUserMapRole.InfoUserID = infoUser.InfoUserID;
+                            context.InfoUserMapRoles.Add(infoUserMapRole);
+                            context.SaveChanges();
+                        }
+                        var newUser = new ApplicationUser();
+                        newUser.UserName = account;
+                        newUser.Email = infoUser.Email;
+                        newUser.InfoUser = infoUser;
+                        IdentityResult createResult = userManager.Create(newUser, password);
+                        if (createResult.Succeeded)
+                        {
+                            //添加权限
+                            var mapRoleID = infoUserMapRole.MapRoleID;
+                            var mapRole = context.MapRoles.Find(mapRoleID);
+                            if (mapRole != null)
+                            {
+                                //var trueRoleNames = mapRole.TrueRoleNames;
+                                foreach (var roleName in mapRole.TrueRoles)
+                                {
+                                    var resultRole = userManager.AddToRole(newUser.Id, roleName.TrueRoleName);
+                                    if (!resultRole.Succeeded)
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            result = IdentityResult.Success;
+                        }
+                        else
+                        {
+                            //需要删除InfoUser表信息,会级联删除DepartmentDuty的信息
+                            var deleteInfoUser = context.InfoUsers.Find(infoUser.InfoUserID);
+                            if (deleteInfoUser != null)
+                            {
+                                context.InfoUsers.Remove(deleteInfoUser);
+                                //Client win
+                                context.SaveChanges();
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
         public IdentityResult DeleteInfoUser(Int64 infoUserId)
         {
             IdentityResult result = IdentityResult.Failed("删除用户失败!");
@@ -654,8 +723,14 @@ namespace SsdMS.Logic
                 using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
                 {
                     var item = context.InfoUsers.Find(infoUserId);
-                    if(item != null)
+                    if (item != null)
                     {
+                        //人事管理员不能删除Administrator的用户
+                        if (item.UserName == "Administrator")
+                        {
+                            result = IdentityResult.Failed("无权限删除该用户！");
+                            return result;
+                        }
                         //会将Application User删除吗,可以删除
                         context.InfoUsers.Remove(item);
                         bool saveFailed;
@@ -677,7 +752,7 @@ namespace SsdMS.Logic
                     }
                 }
             }
-                    return result;
+            return result;
         }
         #endregion
         #region ChangeAccount操作
@@ -726,7 +801,7 @@ namespace SsdMS.Logic
         #region Department操作
         public Dictionary<Int64, string> GetDepartmentDic()
         {
-            Dictionary<Int64, string> departmentDic = new Dictionary<Int64,string>();
+            Dictionary<Int64, string> departmentDic = new Dictionary<Int64, string>();
             departmentDic.Add(-1, "--请选择--");
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -761,7 +836,7 @@ namespace SsdMS.Logic
         {
             Dictionary<Int64, string> mapRoleDic = new Dictionary<Int64, string>();
             mapRoleDic.Add(-1, "--请选择--");
-            using(ApplicationDbContext context = new ApplicationDbContext())
+            using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 var queryMapRole = context.MapRoles;
                 foreach (var query in queryMapRole)

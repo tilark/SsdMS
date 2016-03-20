@@ -24,7 +24,7 @@ namespace SsdMS.HR
         {
             ApplicationUser queryUser = new ApplicationUser(); ;
             ApplicationDbContext context = new ApplicationDbContext();
-            queryUser = context.Users.Include(i => i.InfoUser).Where(user => user.InfoUserID == infoUserID).FirstOrDefault();
+            queryUser = context.Users.Include(i => i.InfoUser).Where(user => user.InfoUserID == infoUserID && String.Compare(user.UserName, "Administrator") != 0).FirstOrDefault();
             return queryUser;
         }
 

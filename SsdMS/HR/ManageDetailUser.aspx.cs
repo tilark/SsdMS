@@ -33,7 +33,8 @@ namespace SsdMS.HR
         {
             InfoUser queryUser = new InfoUser(); ;
             ApplicationDbContext context = new ApplicationDbContext();
-            queryUser = context.InfoUsers.Where(user => user.InfoUserID == infoUserID).FirstOrDefault();
+            //不允许修改"Administrator"的内容
+            queryUser = context.InfoUsers.Where(user => user.InfoUserID == infoUserID && String.Compare(user.UserName, "Administrator") != 0).FirstOrDefault();
             return queryUser;
         }
 
@@ -42,6 +43,7 @@ namespace SsdMS.HR
         {
             TextBox txtUserName = new TextBox();
             txtUserName = (TextBox)fvInfoUser.FindControl("txtUserName");
+
             TextBox txtEmployeeNo = new TextBox();
             txtEmployeeNo = (TextBox)fvInfoUser.FindControl("txtEmployeeNo");
             TextBox txtBirthDate = new TextBox();
