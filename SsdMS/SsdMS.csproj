@@ -177,6 +177,8 @@
     <Content Include="Admin\ManageRoles.aspx" />
     <Content Include="Admin\ManageUserRoles.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -222,17 +224,22 @@
     <Content Include="HR\ManageProfession.aspx" />
     <Content Include="HR\ManageResetAccount.aspx" />
     <Content Include="HR\ManageResetPassword.aspx" />
-    <Content Include="HR\ManageUserRoles.aspx" />
-    <Content Include="HR\TestDepartmentDutyToMulti.aspx" />
     <Content Include="HR\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
@@ -439,6 +446,10 @@
     <Compile Include="ApplicationDbContextMigrations\201603140901396_AddInfoUserMapRole.cs" />
     <Compile Include="ApplicationDbContextMigrations\201603140901396_AddInfoUserMapRole.Designer.cs">
       <DependentUpon>201603140901396_AddInfoUserMapRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationDbContextMigrations\201603240810038_AddDocumentInfo.cs" />
+    <Compile Include="ApplicationDbContextMigrations\201603240810038_AddDocumentInfo.Designer.cs">
+      <DependentUpon>201603240810038_AddDocumentInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationDbContextMigrations\Configuration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -707,20 +718,6 @@
     <Compile Include="HR\ManageResetPassword.aspx.designer.cs">
       <DependentUpon>ManageResetPassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="HR\ManageUserRoles.aspx.cs">
-      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HR\ManageUserRoles.aspx.designer.cs">
-      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HR\TestDepartmentDutyToMulti.aspx.cs">
-      <DependentUpon>TestDepartmentDutyToMulti.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HR\TestDepartmentDutyToMulti.aspx.designer.cs">
-      <DependentUpon>TestDepartmentDutyToMulti.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Logic\InfoUserActions.cs" />
     <Compile Include="Logic\RoleActions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -748,6 +745,13 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -770,6 +774,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ApplicationDbContextMigrations\201603140901396_AddInfoUserMapRole.resx">
       <DependentUpon>201603140901396_AddInfoUserMapRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationDbContextMigrations\201603240810038_AddDocumentInfo.resx">
+      <DependentUpon>201603240810038_AddDocumentInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

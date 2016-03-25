@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-16-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-16-2016
+// ***********************************************************************
+// <copyright file="ManageDepartmentDuty.aspx.cs" company="Hewlett-Packard">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +21,21 @@ using System.Data.Entity;
 using SsdMS.Logic;
 using SsdMS.Models;
 using System.Data.Entity.Infrastructure;
+/// <summary>
+/// The HR namespace.
+/// </summary>
 namespace SsdMS.HR
 {
+    /// <summary>
+    /// 管理科室职务，真实发布项目时需删除
+    /// </summary>
     public partial class ManageDepartmentDuty : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,6 +47,10 @@ namespace SsdMS.HR
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+        /// <summary>
+        /// 获取科室职务信息.
+        /// </summary>
+        /// <returns>IQueryable&lt;SsdMS.Models.DepartmentDuty&gt;.</returns>
         public IQueryable<SsdMS.Models.DepartmentDuty> lvDepartmentDuty_GetData()
         {
             IQueryable<SsdMS.Models.DepartmentDuty> query = null;
@@ -32,6 +60,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 删除科室职务信息.
+        /// </summary>
+        /// <param name="departmentDutyID">The department duty identifier.</param>
         public void lvDepartmentDuty_DeleteItem(Int64 departmentDutyID)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())

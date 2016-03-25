@@ -20,6 +20,7 @@ namespace SsdMS
             roleAction.CreateBasicRoles();
             InfoUserActions infoUserAction = new InfoUserActions();
             infoUserAction.CreateBasicMapRoles();
+            roleAction.CreateAdmin();
         }
     }
 }

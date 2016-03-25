@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-17-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-17-2016
+// ***********************************************************************
+// <copyright file="ManageUserRoles.aspx.cs" company="Free">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,8 +24,14 @@ using System.Web.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+/// <summary>
+/// The Admin namespace.
+/// </summary>
 namespace SsdMS.Admin
 {
+    /// <summary>
+    /// 管理用户权限.
+    /// </summary>
     public partial class ManageUserRoles : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -22,6 +41,9 @@ namespace SsdMS.Admin
                 initDatabind();
             }
         }
+        /// <summary>
+        /// Initializes the databind.
+        /// </summary>
         private void initDatabind()
         {
             //Role ListBox Bind
@@ -31,6 +53,9 @@ namespace SsdMS.Admin
             lboxRoles.DataBind();
             lboxUserRolesBind();
         }
+        /// <summary>
+        /// Lboxes the user roles bind.
+        /// </summary>
         private void lboxUserRolesBind()
         {
             var userId = lblUserId.Text;
@@ -42,6 +67,11 @@ namespace SsdMS.Admin
         }
         // id 参数应与控件上设置的 DataKeyNames 值匹配
         // 或用值提供程序特性装饰，例如 [QueryString]int id
+        /// <summary>
+        /// 获取角色拥有的权限.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>SsdMS.Models.ApplicationUser.</returns>
         public SsdMS.Models.ApplicationUser fvUserRoles_GetItem([QueryString] string id)
         {
             ApplicationUser queryUser = new ApplicationUser(); ;

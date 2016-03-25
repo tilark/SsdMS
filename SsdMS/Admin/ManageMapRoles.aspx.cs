@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-16-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-16-2016
+// ***********************************************************************
+// <copyright file="ManageMapRoles.aspx.cs" company="Free">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,8 +26,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using SsdMS.Logic;
 using System.Data.Entity.Infrastructure;
+/// <summary>
+/// The Admin namespace.
+/// </summary>
 namespace SsdMS.Admin
 {
+    /// <summary>
+    /// 管理角色权限.
+    /// </summary>
     public partial class ManageMapRoles : System.Web.UI.Page
     {
         //private static List<string> listRoles;
@@ -25,6 +44,9 @@ namespace SsdMS.Admin
                 initDatabind();
             }
         }
+        /// <summary>
+        /// Initializes the databind.
+        /// </summary>
         private void initDatabind()
         {
             //Role ListBox Bind
@@ -121,6 +143,9 @@ namespace SsdMS.Admin
                 }
             }
         }
+        /// <summary>
+        /// Lboxes the true role bind.
+        /// </summary>
         private void lboxTrueRoleBind()
         {
             var mapRoleID = Int64.Parse(ddlMapRole.SelectedValue);

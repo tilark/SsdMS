@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-16-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-16-2016
+// ***********************************************************************
+// <copyright file="ManageDuty.aspx.cs" company="Free">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,10 +22,21 @@ using SsdMS.Logic;
 using SsdMS.Models;
 using System.Data.Entity.Infrastructure;
 
+/// <summary>
+/// The HR namespace.
+/// </summary>
 namespace SsdMS.HR
 {
+    /// <summary>
+    /// 管理职务
+    /// </summary>
     public partial class ManageDuty : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -25,6 +49,10 @@ namespace SsdMS.HR
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+        /// <summary>
+        /// 获取职务信息.
+        /// </summary>
+        /// <returns>IQueryable&lt;SsdMS.Models.Duty&gt;.</returns>
         public IQueryable<SsdMS.Models.Duty> lvDuty_GetData()
         {
             IQueryable<SsdMS.Models.Duty> query = null;
@@ -35,6 +63,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 更改职务信息.
+        /// </summary>
+        /// <param name="dutyID">The duty identifier.</param>
         public void lvDuty_UpdateItem(Int64 dutyID)
         {
             TextBox txtDutyname = new TextBox();
@@ -85,6 +117,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 删除职务信息.
+        /// </summary>
+        /// <param name="dutyID">The duty identifier.</param>
         public void lvDuty_DeleteItem(Int64 dutyID)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
@@ -129,6 +165,9 @@ namespace SsdMS.HR
             }
         }
 
+        /// <summary>
+        /// 增加新的职务信息.
+        /// </summary>
         public void lvDuty_InsertItem()
         {
             var item = new SsdMS.Models.Duty();

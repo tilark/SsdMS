@@ -18,6 +18,7 @@ namespace SsdMS.Account
             if (!IsPostBack)
             {
                 lboxBind();
+                professionDataBind();
             }
         }
 
@@ -26,14 +27,14 @@ namespace SsdMS.Account
             //ErrorMessage.Text = fvInfoUser.DataKey.Value.ToString();
             Label lblinfoUserID = new Label();
             lblinfoUserID = (Label)fvInfoUser.FindControl("lblinfoUserID");
-            if(lblinfoUserID == null)
+            if (lblinfoUserID == null)
             {
                 return;
             }
             var infoUserID = Int64.Parse(lblinfoUserID.Text);
             ListBox lboxDepartmentDuty = new ListBox();
             lboxDepartmentDuty = (ListBox)fvInfoUser.FindControl("lboxDepartmentDuty");
-            if(lboxDepartmentDuty == null)
+            if (lboxDepartmentDuty == null)
             {
                 return;
             }
@@ -41,6 +42,27 @@ namespace SsdMS.Account
             lboxDepartmentDuty.DataValueField = "Key";
             lboxDepartmentDuty.DataTextField = "Value";
             lboxDepartmentDuty.DataBind();
+        }
+
+        private void professionDataBind()
+        {
+            Label lblProfessionID = new Label();
+            lblProfessionID = (Label)fvInfoUser.FindControl("lblProfessionID");
+            if (lblProfessionID != null)
+            {
+                InfoUserActions infoUserAction = new InfoUserActions();
+                var professionDic = infoUserAction.GetProfessionDic();
+                DropDownList ddlProfession = new DropDownList();
+                ddlProfession = (DropDownList)fvInfoUser.FindControl("ddlProfession");
+                if (ddlProfession != null)
+                {
+                    ddlProfession.DataSource = professionDic;
+                    ddlProfession.DataTextField = "Value";
+                    ddlProfession.DataValueField = "Key";
+                    ddlProfession.SelectedValue = String.IsNullOrEmpty(lblProfessionID.Text) ? (0).ToString() : (lblProfessionID.Text);
+                    ddlProfession.DataBind();
+                }
+            }
         }
         // id 参数应与控件上设置的 DataKeyNames 值匹配
         // 或用值提供程序特性装饰，例如 [QueryString]int id
@@ -71,6 +93,8 @@ namespace SsdMS.Account
 
             TextBox txtPhone2 = new TextBox();
             txtPhone2 = (TextBox)fvInfoUser.FindControl("txtPhone2");
+            DropDownList ddlProfession = new DropDownList();
+            ddlProfession = (DropDownList)fvInfoUser.FindControl("ddlProfession");
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 SsdMS.Models.InfoUser item = null;
@@ -93,6 +117,8 @@ namespace SsdMS.Account
                     item.Phone1 = txtPhone1.Text;
                     item.Phone2 = txtPhone2.Text;
                     item.ModifiedTime = DateTime.Now;
+                    item.ProfessionID = Int64.Parse(ddlProfession.SelectedValue);
+
                     ErrorMessage.Text = "更新成功！";
                     bool saveFailed;
                     do
@@ -110,7 +136,10 @@ namespace SsdMS.Account
                         }
                     } while (saveFailed);
                 }
+                Response.Redirect(String.Format("ManageInfoUser.aspx?infoUserID={0}", item.InfoUserID));
+
             }
+
         }
     }
 }

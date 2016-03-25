@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-16-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-25-2016
+// ***********************************************************************
+// <copyright file="ManageRoles.aspx.cs" company="Free">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,8 +19,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SsdMS.Logic;
 using Microsoft.AspNet.Identity;
+/// <summary>
+/// The Admin namespace.
+/// </summary>
 namespace SsdMS.Admin
 {
+    /// <summary>
+    /// 管理权限.
+    /// </summary>
     public partial class ManageRoles : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -19,6 +38,9 @@ namespace SsdMS.Admin
                 gdBind();
             }
         }
+        /// <summary>
+        /// Gds the bind.
+        /// </summary>
         private void gdBind()
         {
             RoleActions roleAction = new RoleActions();
@@ -65,8 +87,6 @@ namespace SsdMS.Admin
                 IdentityResult addResult = roleAction.AddRole(txtAddRole.Text);
                 if (addResult.Succeeded)
                 {
-                    //lblAddRole.Text = String.Empty;
-                    //lblAddRole.Text = "添加成功";
                     Response.Redirect("ManageRoles.aspx");
                 }
                 else

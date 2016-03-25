@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-21-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-21-2016
+// ***********************************************************************
+// <copyright file="InfoUserActions.cs" company="Hewlett-Packard">
+//     Copyright ©  2016
+// </copyright>
+// <summary>Identity Application User自定义的用户信息InfoUser的操作，包括科室、职务、职称、角色</summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,16 +24,19 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System.Web.ModelBinding;
+/// <summary>
+/// The Logic namespace.
+/// </summary>
 namespace SsdMS.Logic
 {
-    public class TempDepartmentDuty
-    {
-        public string DepartmentID { get; set; }
-        public string DutyID { get; set; }
-        public string DepartmentDutyName { get; set; }
-    }
+    /// <summary>
+    /// 自定义的用户信息InfoUser的操作，包括科室、职务、职称、角色
+    /// </summary>
     public class InfoUserActions
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InfoUserActions" /> class.
+        /// </summary>
         public InfoUserActions()
         {
 
@@ -562,6 +578,11 @@ namespace SsdMS.Logic
         }
 
         #region DepartmentDuty操作
+        /// <summary>
+        /// 获取DepartmentDuty的键/值列表
+        /// </summary>
+        /// <param name="infoUserID">The information user identifier.</param>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetDepartmentDutyDic(Int64 infoUserID)
         {
             Dictionary<Int64, string> DepartmentDutyDic = new Dictionary<long, string>();
@@ -578,11 +599,11 @@ namespace SsdMS.Logic
             return DepartmentDutyDic;
         }
         /// <summary>
-        /// 向用户添加科室与职务
+        /// 将科室与职务添加到InfoUser
         /// </summary>
-        /// <param name="infoUserID"></param>
-        /// <param name="newDepartmentDuty"></param>
-        public void AddDepartmentDuty(Int64 infoUserID, DepartmentDuty newDepartmentDuty)
+        /// <param name="infoUserID">The information user identifier.</param>
+        /// <param name="newDepartmentDuty">The new department duty.</param>
+        public void AddDepartmentDutyToInfoUser(Int64 infoUserID, DepartmentDuty newDepartmentDuty)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -605,10 +626,10 @@ namespace SsdMS.Logic
             }
         }
         /// <summary>
-        /// 根据departmentDutyID删除InfoUser与科室职务的联系
+        /// 根据departmentDutyID从InfoUser中删除科室职务
         /// </summary>
-        /// <param name="departmentDutyID"></param>
-        public void DeleteDepartmentDuty(Int64 departmentDutyID)
+        /// <param name="departmentDutyID">The department duty identifier.</param>
+        public void DeleteDepartmentDutyFromInfoUser(Int64 departmentDutyID)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -637,15 +658,16 @@ namespace SsdMS.Logic
         #endregion
         #region InfoUser操作        
         /// <summary>
-        /// Creates the user.
+        /// 创建新的用户.
         /// </summary>
-        /// <param name="account">The account.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="account">登录帐号名.</param>
+        /// <param name="password">登录密码.</param>
         /// <param name="infoUser">The information user.</param>
         /// <param name="departmentDuty">The department duty.</param>
         /// <param name="infoUserMapRole">The information user map role.</param>
+        /// <param name="profession">The profession</param>
         /// <returns>IdentityResult.</returns>
-        public IdentityResult CreateUser(string account, string password, InfoUser infoUser, DepartmentDuty departmentDuty, InfoUserMapRole infoUserMapRole)
+        public IdentityResult CreateUser(string account, string password, InfoUser infoUser, DepartmentDuty departmentDuty, Profession profession, InfoUserMapRole infoUserMapRole)
         {
             IdentityResult result = IdentityResult.Failed("增加新用户失败！");
             using (ApplicationDbContext context = new ApplicationDbContext())
@@ -659,6 +681,7 @@ namespace SsdMS.Logic
                             return result;
                         }
                         //创建infoUser
+                        infoUser.ProfessionID = profession.ProfessionID;
                         context.InfoUsers.Add(infoUser);
                         context.SaveChanges();
                         if (departmentDuty != null)
@@ -679,8 +702,8 @@ namespace SsdMS.Logic
                         newUser.UserName = account;
                         newUser.Email = infoUser.Email;
                         newUser.InfoUser = infoUser;
-                        IdentityResult createResult = userManager.Create(newUser, password);
-                        if (createResult.Succeeded)
+                        result = userManager.Create(newUser, password);
+                        if (result.Succeeded)
                         {
                             //添加权限
                             var mapRoleID = infoUserMapRole.MapRoleID;
@@ -697,7 +720,6 @@ namespace SsdMS.Logic
                                     }
                                 }
                             }
-                            result = IdentityResult.Success;
                         }
                         else
                         {
@@ -707,7 +729,25 @@ namespace SsdMS.Logic
                             {
                                 context.InfoUsers.Remove(deleteInfoUser);
                                 //Client win
-                                context.SaveChanges();
+                                bool saveFailed;
+                                do
+                                {
+                                    saveFailed = false;
+                                    try
+                                    {
+                                        context.SaveChanges();
+                                    }
+                                    catch (DbUpdateConcurrencyException ex)
+                                    {
+                                        saveFailed = true;
+
+                                        // Update original values from the database 
+                                        var entry = ex.Entries.Single();
+                                        entry.OriginalValues.SetValues(entry.GetDatabaseValues());
+                                    }
+
+                                } while (saveFailed);
+
                             }
                         }
                     }
@@ -715,6 +755,11 @@ namespace SsdMS.Logic
             }
             return result;
         }
+        /// <summary>
+        /// 删除用户，包括登录信息.
+        /// </summary>
+        /// <param name="infoUserId">The information user identifier.</param>
+        /// <returns>IdentityResult.</returns>
         public IdentityResult DeleteInfoUser(Int64 infoUserId)
         {
             IdentityResult result = IdentityResult.Failed("删除用户失败!");
@@ -756,6 +801,12 @@ namespace SsdMS.Logic
         }
         #endregion
         #region ChangeAccount操作
+        /// <summary>
+        /// 更改登录名.
+        /// </summary>
+        /// <param name="Id">Application User id</param>
+        /// <param name="newAccount">新的登录名.</param>
+        /// <returns>IdentityResult.</returns>
         public IdentityResult ChangeAccount(string Id, string newAccount)
         {
             IdentityResult result = IdentityResult.Failed("更改登录名失败！");
@@ -782,6 +833,10 @@ namespace SsdMS.Logic
         }
         #endregion
         #region Duty操作
+        /// <summary>
+        /// 获取职务Duty的键/值列表.
+        /// </summary>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetDutyDic()
         {
             Dictionary<Int64, string> DutyDic = new Dictionary<Int64, string>();
@@ -799,6 +854,10 @@ namespace SsdMS.Logic
 
         #endregion
         #region Department操作
+        /// <summary>
+        /// 获取科室的键/值列表.
+        /// </summary>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetDepartmentDic()
         {
             Dictionary<Int64, string> departmentDic = new Dictionary<Int64, string>();
@@ -816,6 +875,10 @@ namespace SsdMS.Logic
 
         #endregion
         #region Profession操作
+        /// <summary>
+        /// 获取职称的键/值列表.
+        /// </summary>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetProfessionDic()
         {
             Dictionary<Int64, string> ProfessionDic = new Dictionary<Int64, string>();
@@ -830,8 +893,13 @@ namespace SsdMS.Logic
             }
             return ProfessionDic;
         }
+       
         #endregion
         #region MapRole操作
+        /// <summary>
+        /// 获取MapRole的键/值列表，不包含“超级管理员”.
+        /// </summary>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetMapRoleDic()
         {
             Dictionary<Int64, string> mapRoleDic = new Dictionary<Int64, string>();
@@ -850,6 +918,11 @@ namespace SsdMS.Logic
             }
             return mapRoleDic;
         }
+        /// <summary>
+        /// 获取InfoUserMapRole的键/值列表.
+        /// </summary>
+        /// <param name="infoUserID">The information user identifier.</param>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetInfoUserMapRoleDic(Int64 infoUserID)
         {
             Dictionary<Int64, string> infoUserMapRoleDic = new Dictionary<Int64, string>();
@@ -864,6 +937,10 @@ namespace SsdMS.Logic
             }
             return infoUserMapRoleDic;
         }
+        /// <summary>
+        /// 获取MapRole的键/值列表，包含“超级管理员”.
+        /// </summary>
+        /// <returns>Dictionary&lt;Int64, System.String&gt;.</returns>
         public Dictionary<Int64, string> GetMapRoleWithAdminDic()
         {
             Dictionary<Int64, string> mapRoleDic = new Dictionary<Int64, string>();
@@ -881,11 +958,11 @@ namespace SsdMS.Logic
         #endregion
         #region Password操作
         /// <summary>
-        /// 
+        /// 重置用户登录密码.
         /// </summary>
         /// <param name="id">Application User id</param>
         /// <param name="Password">输入的密码</param>
-        /// <returns></returns>
+        /// <returns>IdentityResult.</returns>
         public IdentityResult ResetPassword(string id, string Password)
         {
             IdentityResult result = IdentityResult.Failed("重置密码失败！");

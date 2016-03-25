@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 52166
+// Created          : 03-16-2016
+//
+// Last Modified By : 52166
+// Last Modified On : 03-16-2016
+// ***********************************************************************
+// <copyright file="ManageDepartment.aspx.cs" company="Hewlett-Packard">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +21,21 @@ using System.Data.Entity;
 using SsdMS.Logic;
 using SsdMS.Models;
 using System.Data.Entity.Infrastructure;
+/// <summary>
+/// The HR namespace.
+/// </summary>
 namespace SsdMS.HR
 {
+    /// <summary>
+    /// 增、删、改科室信息
+    /// </summary>
     public partial class ManageDepartment : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,6 +47,10 @@ namespace SsdMS.HR
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+        /// <summary>
+        /// 获取当前科室信息列表.
+        /// </summary>
+        /// <returns>IQueryable&lt;SsdMS.Models.Department&gt;.</returns>
         public IQueryable<SsdMS.Models.Department> lvDepartment_GetData()
         {
             IQueryable<SsdMS.Models.Department> query = null;
@@ -33,6 +61,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 更改科室信息.
+        /// </summary>
+        /// <param name="DepartmentID">The department identifier.</param>
         public void lvDepartment_UpdateItem(Int64 DepartmentID)
         {
             TextBox txtDepartmentname = new TextBox();
@@ -124,6 +156,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 删除科室信息.
+        /// </summary>
+        /// <param name="DepartmentID">The department identifier.</param>
         public void lvDepartment_DeleteItem(Int64 DepartmentID)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
@@ -170,6 +206,9 @@ namespace SsdMS.HR
             }
         }
 
+        /// <summary>
+        /// 增加新的科室信息.
+        /// </summary>
         public void lvDepartment_InsertItem()
         {
             var item = new SsdMS.Models.Department();

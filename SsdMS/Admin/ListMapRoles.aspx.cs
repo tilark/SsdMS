@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-16-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-16-2016
+// ***********************************************************************
+// <copyright file="ListMapRoles.aspx.cs" company="Free">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +22,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using SsdMS.Logic;
 using System.Data.Entity.Infrastructure;
+/// <summary>
+/// The Admin namespace.
+/// </summary>
 namespace SsdMS.Admin
 {
+    /// <summary>
+    /// 角色列表
+    /// </summary>
     public partial class ListMapRoles : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -24,6 +43,10 @@ namespace SsdMS.Admin
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+        /// <summary>
+        /// 获取角色信息.
+        /// </summary>
+        /// <returns>IQueryable&lt;SsdMS.Models.MapRole&gt;.</returns>
         public IQueryable<SsdMS.Models.MapRole> lvMapRole_GetData()
         {
             IQueryable<SsdMS.Models.MapRole> query = null;
@@ -33,6 +56,10 @@ namespace SsdMS.Admin
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 删除角色信息.
+        /// </summary>
+        /// <param name="MapRoleID">The map role identifier.</param>
         public void lvMapRole_DeleteItem(Int64 MapRoleID)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
@@ -70,6 +97,9 @@ namespace SsdMS.Admin
             }
         }
 
+        /// <summary>
+        /// 增加新的角色信息.
+        /// </summary>
         public void lvMapRole_InsertItem()
         {
             var item = new SsdMS.Models.MapRole();

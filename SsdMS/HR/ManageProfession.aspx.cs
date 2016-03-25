@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : SsdMS
+// Author           : 刘林
+// Created          : 03-16-2016
+//
+// Last Modified By : 刘林
+// Last Modified On : 03-16-2016
+// ***********************************************************************
+// <copyright file="ManageProfession.aspx.cs" company="Free">
+//     Copyright ©  2016
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +21,14 @@ using System.Data.Entity;
 using SsdMS.Models;
 using System.Data.Entity.Infrastructure;
 
+/// <summary>
+/// The HR namespace.
+/// </summary>
 namespace SsdMS.HR
 {
+    /// <summary>
+    /// 管理职称.
+    /// </summary>
     public partial class ManageProfession : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -17,6 +36,9 @@ namespace SsdMS.HR
 
         }
 
+        /// <summary>
+        /// 增加新的职称.
+        /// </summary>
         public void lvProfession_InsertItem()
         {
             var item = new SsdMS.Models.Profession();
@@ -50,6 +72,10 @@ namespace SsdMS.HR
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+        /// <summary>
+        /// 获取职称信息
+        /// </summary>
+        /// <returns>IQueryable&lt;SsdMS.Models.Profession&gt;.</returns>
         public IQueryable<SsdMS.Models.Profession> lvProfession_GetData()
         {
             IQueryable<SsdMS.Models.Profession> query = null;
@@ -59,6 +85,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 更改职称信息
+        /// </summary>
+        /// <param name="professionID">The profession identifier.</param>
         public void lvProfession_UpdateItem(Int64 professionID)
         {
             TextBox txtEditProfessionName = new TextBox();
@@ -107,6 +137,10 @@ namespace SsdMS.HR
         }
 
         // id 参数名应该与控件上设置的 DataKeyNames 值匹配
+        /// <summary>
+        /// 删除职称信息
+        /// </summary>
+        /// <param name="professionID">The profession identifier.</param>
         public void lvProfession_DeleteItem(Int64 professionID)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
